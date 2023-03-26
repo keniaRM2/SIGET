@@ -6215,13 +6215,13 @@ var History = function (_Module) {
       if (changeDelta.ops.length === 0) return;
       this.stack.redo = [];
       var undoDelta = this.quill.getContents().diff(oldDelta);
-      var timestamp = Date.now();
-      if (this.lastRecorded + this.options.delay > timestamp && this.stack.undo.length > 0) {
+      var Timestamp = Date.now();
+      if (this.lastRecorded + this.options.delay > Timestamp && this.stack.undo.length > 0) {
         var delta = this.stack.undo.pop();
         undoDelta = undoDelta.compose(delta.undo);
         changeDelta = delta.redo.compose(changeDelta);
       } else {
-        this.lastRecorded = timestamp;
+        this.lastRecorded = Timestamp;
       }
       this.stack.undo.push({
         redo: changeDelta,

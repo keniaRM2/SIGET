@@ -3,9 +3,9 @@ package utez.edu.mx.dao.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.sql.Timestamp;
+import java.sql.Timestamp;
+import java.sql.Timestamp;
 
 @Entity
 @Table(name = "cita", indexes = {
@@ -22,19 +22,19 @@ public class Cita {
 
     @NotNull
     @Column(name = "fecha_cita", nullable = false)
-    private LocalDate fechaCita;
+    private Timestamp fechaCita;
 
     @NotNull
     @Column(name = "hora_inicio", nullable = false)
-    private LocalTime horaInicio;
+    private Timestamp horaInicio;
 
     @NotNull
     @Column(name = "hora_fin", nullable = false)
-    private LocalTime horaFin;
+    private Timestamp horaFin;
 
     @NotNull
     @Column(name = "fecha_registro", nullable = false)
-    private Instant fechaRegistro;
+    private Timestamp fechaRegistro;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -67,35 +67,35 @@ public class Cita {
         this.id = id;
     }
 
-    public LocalDate getFechaCita() {
+    public Timestamp getFechaCita() {
         return fechaCita;
     }
 
-    public void setFechaCita(LocalDate fechaCita) {
+    public void setFechaCita(Timestamp fechaCita) {
         this.fechaCita = fechaCita;
     }
 
-    public LocalTime getHoraInicio() {
+    public Timestamp getHoraInicio() {
         return horaInicio;
     }
 
-    public void setHoraInicio(LocalTime horaInicio) {
+    public void setHoraInicio(Timestamp horaInicio) {
         this.horaInicio = horaInicio;
     }
 
-    public LocalTime getHoraFin() {
+    public Timestamp getHoraFin() {
         return horaFin;
     }
 
-    public void setHoraFin(LocalTime horaFin) {
+    public void setHoraFin(Timestamp horaFin) {
         this.horaFin = horaFin;
     }
 
-    public Instant getFechaRegistro() {
+    public Timestamp getFechaRegistro() {
         return fechaRegistro;
     }
 
-    public void setFechaRegistro(Instant fechaRegistro) {
+    public void setFechaRegistro(Timestamp fechaRegistro) {
         this.fechaRegistro = fechaRegistro;
     }
 

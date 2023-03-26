@@ -3,7 +3,7 @@ package utez.edu.mx.dao.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
-import java.time.Instant;
+import java.sql.Timestamp;
 
 @Entity
 @Table(name = "bitacora_acceso", indexes = {
@@ -16,10 +16,10 @@ public class BitacoraAcceso {
 
     @NotNull
     @Column(name = "fecha_inicio", nullable = false)
-    private Instant fechaInicio;
+    private Timestamp fechaInicio;
 
     @Column(name = "fecha_fin")
-    private Instant fechaFin;
+    private Timestamp fechaFin;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -34,19 +34,19 @@ public class BitacoraAcceso {
         this.id = id;
     }
 
-    public Instant getFechaInicio() {
+    public Timestamp getFechaInicio() {
         return fechaInicio;
     }
 
-    public void setFechaInicio(Instant fechaInicio) {
+    public void setFechaInicio(Timestamp fechaInicio) {
         this.fechaInicio = fechaInicio;
     }
 
-    public Instant getFechaFin() {
+    public Timestamp getFechaFin() {
         return fechaFin;
     }
 
-    public void setFechaFin(Instant fechaFin) {
+    public void setFechaFin(Timestamp fechaFin) {
         this.fechaFin = fechaFin;
     }
 

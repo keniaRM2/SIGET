@@ -3,7 +3,7 @@ package utez.edu.mx.dao.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
-import java.time.LocalTime;
+import java.sql.Timestamp;
 
 @Entity
 @Table(name = "horario", indexes = {
@@ -18,11 +18,11 @@ public class Horario {
 
     @NotNull
     @Column(name = "hora_inicio", nullable = false)
-    private LocalTime horaInicio;
+    private Timestamp horaInicio;
 
     @NotNull
     @Column(name = "hora_fin", nullable = false)
-    private LocalTime horaFin;
+    private Timestamp horaFin;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -47,19 +47,19 @@ public class Horario {
         this.id = id;
     }
 
-    public LocalTime getHoraInicio() {
+    public Timestamp getHoraInicio() {
         return horaInicio;
     }
 
-    public void setHoraInicio(LocalTime horaInicio) {
+    public void setHoraInicio(Timestamp horaInicio) {
         this.horaInicio = horaInicio;
     }
 
-    public LocalTime getHoraFin() {
+    public Timestamp getHoraFin() {
         return horaFin;
     }
 
-    public void setHoraFin(LocalTime horaFin) {
+    public void setHoraFin(Timestamp horaFin) {
         this.horaFin = horaFin;
     }
 
