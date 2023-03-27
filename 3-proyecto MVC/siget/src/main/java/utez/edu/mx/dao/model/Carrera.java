@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
+import lombok.Data;
+
+@Data
 @Entity
 @Table(name = "carrera", indexes = {
         @Index(name = "fk_carrera_division_academica1_idx", columnList = "division_academica_id"),
@@ -11,6 +14,7 @@ import jakarta.validation.constraints.Size;
 })
 public class Carrera {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_carrera", nullable = false)
     private Integer id;
 
@@ -23,29 +27,5 @@ public class Carrera {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "division_academica_id", nullable = false)
     private DivisionAcademica divisionAcademica;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public DivisionAcademica getDivisionAcademica() {
-        return divisionAcademica;
-    }
-
-    public void setDivisionAcademica(DivisionAcademica divisionAcademica) {
-        this.divisionAcademica = divisionAcademica;
-    }
 
 }

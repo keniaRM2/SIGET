@@ -7,6 +7,10 @@ import java.sql.Timestamp;
 import java.sql.Timestamp;
 import java.sql.Timestamp;
 
+
+import lombok.Data;
+
+@Data
 @Entity
 @Table(name = "cita", indexes = {
         @Index(name = "fk_cita_estado1_idx", columnList = "estado_id"),
@@ -17,6 +21,7 @@ import java.sql.Timestamp;
 })
 public class Cita {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_cita", nullable = false)
     private Integer id;
 
@@ -58,85 +63,5 @@ public class Cita {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "empleado_id")
     private Empleado empleado;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Timestamp getFechaCita() {
-        return fechaCita;
-    }
-
-    public void setFechaCita(Timestamp fechaCita) {
-        this.fechaCita = fechaCita;
-    }
-
-    public Timestamp getHoraInicio() {
-        return horaInicio;
-    }
-
-    public void setHoraInicio(Timestamp horaInicio) {
-        this.horaInicio = horaInicio;
-    }
-
-    public Timestamp getHoraFin() {
-        return horaFin;
-    }
-
-    public void setHoraFin(Timestamp horaFin) {
-        this.horaFin = horaFin;
-    }
-
-    public Timestamp getFechaRegistro() {
-        return fechaRegistro;
-    }
-
-    public void setFechaRegistro(Timestamp fechaRegistro) {
-        this.fechaRegistro = fechaRegistro;
-    }
-
-    public Alumno getAlumno() {
-        return alumno;
-    }
-
-    public void setAlumno(Alumno alumno) {
-        this.alumno = alumno;
-    }
-
-    public Servicio getServicio() {
-        return servicio;
-    }
-
-    public void setServicio(Servicio servicio) {
-        this.servicio = servicio;
-    }
-
-    public Estado getEstado() {
-        return estado;
-    }
-
-    public void setEstado(Estado estado) {
-        this.estado = estado;
-    }
-
-    public Ventanilla getVentanilla() {
-        return ventanilla;
-    }
-
-    public void setVentanilla(Ventanilla ventanilla) {
-        this.ventanilla = ventanilla;
-    }
-
-    public Empleado getEmpleado() {
-        return empleado;
-    }
-
-    public void setEmpleado(Empleado empleado) {
-        this.empleado = empleado;
-    }
 
 }

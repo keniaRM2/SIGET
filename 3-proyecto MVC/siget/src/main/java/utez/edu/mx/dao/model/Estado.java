@@ -4,12 +4,17 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
+
+import lombok.Data;
+
+@Data
 @Entity
 @Table(name = "estado", indexes = {
         @Index(name = "fk_estado_tipo_estado1_idx", columnList = "tipo_estado_id")
 })
 public class Estado {
     @Id
+@GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_estado", nullable = false)
     private Integer id;
 
@@ -26,37 +31,5 @@ public class Estado {
     @Size(max = 20)
     @Column(name = "color", length = 20)
     private String color;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public TipoEstado getTipoEstado() {
-        return tipoEstado;
-    }
-
-    public void setTipoEstado(TipoEstado tipoEstado) {
-        this.tipoEstado = tipoEstado;
-    }
-
-    public String getColor() {
-        return color;
-    }
-
-    public void setColor(String color) {
-        this.color = color;
-    }
 
 }

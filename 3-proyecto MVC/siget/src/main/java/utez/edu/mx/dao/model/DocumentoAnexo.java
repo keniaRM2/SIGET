@@ -3,6 +3,9 @@ package utez.edu.mx.dao.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
+import lombok.Data;
+
+@Data
 @Entity
 @Table(name = "documento_anexo", indexes = {
         @Index(name = "fk_documento_anexo_cita1_idx", columnList = "cita_id"),
@@ -10,6 +13,7 @@ import jakarta.validation.constraints.NotNull;
 })
 public class DocumentoAnexo {
     @Id
+@GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_documento_anexo", nullable = false)
     private Integer id;
 
@@ -27,36 +31,5 @@ public class DocumentoAnexo {
     @JoinColumn(name = "documento_id", nullable = false)
     private Documento documento;
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public byte[] getDocumentoAnexo() {
-        return documentoAnexo;
-    }
-
-    public void setDocumentoAnexo(byte[] documentoAnexo) {
-        this.documentoAnexo = documentoAnexo;
-    }
-
-    public Cita getCita() {
-        return cita;
-    }
-
-    public void setCita(Cita cita) {
-        this.cita = cita;
-    }
-
-    public Documento getDocumento() {
-        return documento;
-    }
-
-    public void setDocumento(Documento documento) {
-        this.documento = documento;
-    }
 
 }

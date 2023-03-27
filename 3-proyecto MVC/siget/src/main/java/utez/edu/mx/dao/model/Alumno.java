@@ -4,6 +4,10 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
+
+import lombok.Data;
+
+@Data
 @Entity
 @Table(name = "alumno", indexes = {
         @Index(name = "fk_alumno_carrera1_idx", columnList = "carrera_id"),
@@ -30,37 +34,5 @@ public class Alumno {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "carrera_id", nullable = false)
     private Carrera carrera;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getMatricula() {
-        return matricula;
-    }
-
-    public void setMatricula(String matricula) {
-        this.matricula = matricula;
-    }
-
-    public Persona getPersona() {
-        return persona;
-    }
-
-    public void setPersona(Persona persona) {
-        this.persona = persona;
-    }
-
-    public Carrera getCarrera() {
-        return carrera;
-    }
-
-    public void setCarrera(Carrera carrera) {
-        this.carrera = carrera;
-    }
 
 }
