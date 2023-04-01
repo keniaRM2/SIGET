@@ -1311,7 +1311,7 @@ thead {
 
 
 .fondo-login{
-  background-image: url(../img/fondo_login.jpg) ;
+  background-image: url(../img/fondo_login_borroso.png) ;
   background-repeat: no-repeat;
   background-position: 50%;
   background-size: cover;
