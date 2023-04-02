@@ -34,11 +34,7 @@ public class EmpleadoController extends BaseController{
     @GetMapping(value = PathConstants.REGISTRAR_EMPLEADO)
     public String registrarEmpleado(Model model){
 
-        model.addAttribute("empleados", empleadoService.listarEmpleados());
-        model.addAttribute("dias", diaService.listarDias());
-        model.addAttribute("ventanillas", ventanillaService.listarVentanillas());
-
-        model.addAttribute("empleado", empleadoService.obtenerEmpleadoRegistro());
+        model.addAttribute("empleado",new Empleado());
 
         return TemplatesConstants.FORMULARIO_EMPLEADO;
     }

@@ -26,18 +26,4 @@ public class EmpleadoServiceImpl implements EmpleadoService {
         return empleadoRepository.findAll(Sort.by("id").ascending());
     }
 
-    @Override
-    public Empleado obtenerEmpleadoRegistro() {
-
-        Usuario usuario = new Usuario();
-        Persona persona = new Persona();
-        persona.setUsuario(usuario);
-
-        Empleado empleado = new Empleado();
-        empleado.setPersona(persona);
-        empleado.setHorarios(new ArrayList<>());
-        empleado.getHorarios().add(new Horario());
-
-        return empleado;
-    }
 }
