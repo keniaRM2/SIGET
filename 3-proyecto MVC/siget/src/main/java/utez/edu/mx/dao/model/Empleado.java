@@ -6,6 +6,8 @@ import jakarta.validation.constraints.Size;
 
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 @Entity
 @Table(name = "empleado", indexes = {
@@ -29,5 +31,9 @@ public class Empleado{
     @OneToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "persona_id", nullable = false)
     private Persona persona;
+
+
+    @OneToMany(mappedBy="empleado")
+    private List<Horario> horarios;
 
 }

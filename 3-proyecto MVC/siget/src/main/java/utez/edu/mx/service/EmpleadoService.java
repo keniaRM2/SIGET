@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface EmpleadoService {
     List<Empleado> listarEmpleados();
+
+    Empleado obtenerEmpleadoRegistro();
 }

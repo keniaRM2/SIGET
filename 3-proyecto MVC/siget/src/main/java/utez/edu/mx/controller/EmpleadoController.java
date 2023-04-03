@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import utez.edu.mx.core.constants.PathConstants;
 import utez.edu.mx.core.constants.TemplatesConstants;
+import utez.edu.mx.dao.model.Empleado;
 import utez.edu.mx.service.DiaService;
 import utez.edu.mx.service.EmpleadoService;
 import utez.edu.mx.service.VentanillaService;
@@ -32,9 +33,13 @@ public class EmpleadoController extends BaseController{
 
     @GetMapping(value = PathConstants.REGISTRAR_EMPLEADO)
     public String registrarEmpleado(Model model){
+
         model.addAttribute("empleados", empleadoService.listarEmpleados());
         model.addAttribute("dias", diaService.listarDias());
         model.addAttribute("ventanillas", ventanillaService.listarVentanillas());
+
+        model.addAttribute("empleado", empleadoService.obtenerEmpleadoRegistro());
+
         return TemplatesConstants.FORMULARIO_EMPLEADO;
     }
 }

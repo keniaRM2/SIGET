@@ -38,7 +38,8 @@
 
 
                             <!-- Custom Styled Validation -->
-                            <form class="row g-3 needs-validation mt-2" novalidate>
+                            <form class="row g-3 needs-validation mt-2" novalidate method="POST"
+                                  th:object="${empleado}">
                                 <h5><strong>Información personal </strong></h5>
                                 <hr/>
                                 <div class="row mb-4 mt-2">
@@ -117,7 +118,8 @@
                                     <div class="col-md-3">
                                         <label for="username" class="form-label">Correo electrónico*</label>
                                         <div class="input-group has-validation">
-                                            <input type="email" class="form-control" aria-describedby="inputGroupPrepend"
+                                            <input type="email" class="form-control"
+                                                   aria-describedby="inputGroupPrepend"
                                                    autocomplete="off" aria-autocomplete="none"
                                                    placeholder="Ingrese..."
                                                    id="username" name="persona.usuario.username"
@@ -131,7 +133,8 @@
                                     <div class="col-md-3">
                                         <label for="password" class="form-label">Contraseña*</label>
                                         <div class="input-group has-validation">
-                                            <input type="password" class="form-control" aria-describedby="inputGroupPrepend"
+                                            <input type="password" class="form-control"
+                                                   aria-describedby="inputGroupPrepend"
                                                    placeholder="Ingrese..."
                                                    autocomplete="off" aria-autocomplete="none"
                                                    id="password" name="persona.usuario.password"
@@ -145,7 +148,8 @@
                                     <div class="col-md-3">
                                         <label for="passwordTwo" class="form-label">Contraseña (confirmación)*</label>
                                         <div class="input-group has-validation">
-                                            <input type="password" class="form-control" aria-describedby="inputGroupPrepend"
+                                            <input type="password" class="form-control"
+                                                   aria-describedby="inputGroupPrepend"
                                                    placeholder="Ingrese..."
                                                    autocomplete="off" aria-autocomplete="none"
                                                    id="passwordTwo"
@@ -165,17 +169,20 @@
                                         <span>
                                             Agregar horario
                                         </span>
-                                        <button class="btn btn-link font-icon btn-lg" type="button" >
+                                        <button class="btn btn-link font-icon btn-lg" type="button">
                                             <i class="bx bxs-plus-circle text-green-light"></i>
                                         </button>
                                     </div>
                                     <div class="col-10">
-                                        <div class="row">
+                                        <div class="row" th:each="horario: ${empleado.horarios}">
                                             <div class="col-md-3">
                                                 <label for="dia" class="form-label">Día</label>
                                                 <div class="input-group has-validation">
-                                                    <select class="form-select" name="dia" id="dia" required>
+
+                                                    <select class="form-control" name="dia" id="dia" required>
                                                         <option selected disabled value="">Seleccione...</option>
+                                                        <option th:each="dia: ${dias}" th:value="${dia.id}"
+                                                                th:text="${dia.nombre}"></option>
                                                     </select>
                                                     <div class="invalid-feedback">
                                                         Ingrese un valor valido.
@@ -185,9 +192,13 @@
                                             <div class="col-md-3">
                                                 <label for="ventanilla" class="form-label">Ventanilla</label>
                                                 <div class="input-group has-validation">
-                                                    <select class="form-select" id="ventanilla" required>
+                                                    <select class="form-control" name="ventanilla" id="ventanilla" required>
                                                         <option selected disabled value="">Seleccione...</option>
+                                                        <option th:each="ventanilla: ${ventanillas}"
+                                                                th:value="${ventanilla.id}"
+                                                                th:text="${ventanilla.nombre}"></option>
                                                     </select>
+
                                                     <div class="invalid-feedback">
                                                         Ingrese un valor valido.
                                                     </div>
@@ -196,7 +207,8 @@
                                             <div class="col-md-3">
                                                 <label for="horaInicio" class="form-label">Hora inicio*</label>
                                                 <div class="input-group has-validation">
-                                                    <input type="time" class="form-control" aria-describedby="inputGroupPrepend"
+                                                    <input type="time" class="form-control"
+                                                           aria-describedby="inputGroupPrepend"
                                                            placeholder="Ingrese..."
                                                            autocomplete="off" aria-autocomplete="none"
                                                            id="horaInicio"
@@ -210,7 +222,8 @@
                                             <div class="col-md-3">
                                                 <label for="horaFin" class="form-label">Hora fin*</label>
                                                 <div class="input-group has-validation">
-                                                    <input type="time" class="form-control" aria-describedby="inputGroupPrepend"
+                                                    <input type="time" class="form-control"
+                                                           aria-describedby="inputGroupPrepend"
                                                            placeholder="Ingrese..."
                                                            autocomplete="off" aria-autocomplete="none"
                                                            id="horaFin"
