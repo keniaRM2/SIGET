@@ -16,8 +16,9 @@ import lombok.Data;
         @Index(name = "fk_horario_empleado1_idx", columnList = "empleado_id")
 })
 public class Horario {
+
     @Id
-@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_horario", nullable = false)
     private Integer id;
 

@@ -1,6 +1,7 @@
 package utez.edu.mx.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import utez.edu.mx.dao.model.Dia;
 import utez.edu.mx.dao.repository.DiaRepository;
@@ -16,6 +17,6 @@ public class DiaServiceImpl implements DiaService {
 
     @Override
     public List<Dia> listarDias() {
-        return diaRepository.findAll();
+        return diaRepository.findAll(Sort.by("id").ascending());
     }
 }

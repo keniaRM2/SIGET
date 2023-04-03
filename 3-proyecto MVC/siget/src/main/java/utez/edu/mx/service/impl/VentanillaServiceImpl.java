@@ -1,6 +1,7 @@
 package utez.edu.mx.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import utez.edu.mx.dao.model.Ventanilla;
 import utez.edu.mx.dao.repository.VentanillaRepository;
@@ -17,6 +18,6 @@ public class VentanillaServiceImpl implements VentanillaService {
 
     @Override
     public List<Ventanilla> listarVentanillas() {
-        return ventanillaRepository.findAll();
+        return ventanillaRepository.findAll(Sort.by("nombre").ascending());
     }
 }
