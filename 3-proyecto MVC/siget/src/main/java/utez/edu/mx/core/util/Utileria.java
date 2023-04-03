@@ -2,9 +2,9 @@ package utez.edu.mx.core.util;
 
 import java.util.List;
 
-public class GeneralUtil {
+public class Utileria {
 
-    private GeneralUtil() {
+    private Utileria() {
     }
 
     public static boolean  isNull(Object object) {

@@ -1321,4 +1321,40 @@ thead {
 .form-label {
   margin-bottom: 0.5rem;
   font-weight: bold;
+  color: black;
+}
+
+.btn-success {
+  --bs-btn-color: #fff;
+  --bs-btn-bg: #238A74;
+  --bs-btn-border-color: #238A74;
+  --bs-btn-hover-color: #fff;
+  --bs-btn-hover-bg: #238A74;
+  --bs-btn-hover-border-color: #238A74;
+  --bs-btn-focus-shadow-rgb: 60,153,110;
+  --bs-btn-active-color: #fff;
+  --bs-btn-active-bg: #238A74;
+  --bs-btn-active-border-color: #238A74;
+  --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+  --bs-btn-disabled-color: #fff;
+  --bs-btn-disabled-bg: #238A74;
+  --bs-btn-disabled-border-color: #238A74
+}
+
+.form-control {
+  display: block;
+  width: 100%;
+  padding: .375rem .75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #212529;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #919191;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border-radius: .375rem;
+  transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }
