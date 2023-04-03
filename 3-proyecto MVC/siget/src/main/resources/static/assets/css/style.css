@@ -1317,3 +1317,8 @@ thead {
   background-size: cover;
   min-height: 100vh;
 }
+
+.form-label {
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+}

@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 import lombok.Data;
+import org.hibernate.annotations.Formula;
 
 @Data
 @Entity
@@ -28,4 +29,18 @@ public class Persona {
     @Size(max = 45)
     @Column(name = "segundo_apellido", length = 45)
     private String segundoApellido;
+
+    @Formula(value ="CONCAT(nombre, ' ', primer_apellido, ' ', IFNULL(segundo_apellido, ''))")
+    private String nombreCompleto;
+
+    @OneToOne(mappedBy = "persona")
+    private Usuario usuario;
+    public Persona() {
+    }
+
+    public Persona(String nombre, String primerApellido, String segundoApellido) {
+        this.nombre = nombre;
+        this.primerApellido = primerApellido;
+        this.segundoApellido = segundoApellido;
+    }
 }

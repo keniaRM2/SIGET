@@ -23,4 +23,10 @@ public class TipoServicio {
     @Column(name = "nombre", nullable = false, length = 45)
     private String nombre;
 
+    public TipoServicio() {
+    }
+
+    public TipoServicio(String nombre) {
+        this.nombre = nombre;
+    }
 }

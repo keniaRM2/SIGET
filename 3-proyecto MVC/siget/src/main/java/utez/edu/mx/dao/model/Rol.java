@@ -17,12 +17,16 @@ public class Rol {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_rol")
     private Long id;
+
     @Column
-    private String nombre;
+    private String authority;
+
+//    @Column
+//    private String nombre;
 //    @ManyToMany(mappedBy = "roles")
 //    private List<Usuario> users = new ArrayList<>();
 
-    public Rol(String nombre) {
-        this.nombre = nombre;
+    public Rol(String authority) {
+        this.authority = authority;
     }
 }

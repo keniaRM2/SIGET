@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/bootstrap :: head}"></head>
+
+<body>
+
+
+<div id="siget">
+
+    <!-- HEADER, inciio -->
+    <nav th:replace="~{fragments/header :: header}"></nav>
+    <!-- HEADER, fin -->
+
+    <!--   ASIDE, INICIO-->
+    <nav th:replace="~{fragments/aside :: aside}"></nav>
+    <!--   ASIDE, FIN-->
+
+
+    <main id="main" class="main">
+
+        <div class="pagetitle">
+            <h1><strong>Registrar empleado</strong></h1>
+            <nav>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">Gestión de usuarios</a></li>
+                    <li class="breadcrumb-item active">Empleados</li>
+                </ol>
+            </nav>
+        </div><!-- End Page Title -->
+
+        <section class="section">
+            <div class="row">
+                <div class="col-lg-12">
+
+                    <div class="card">
+                        <div class="card-body">
+
+
+                            <!-- Custom Styled Validation -->
+                            <form class="row g-3 needs-validation mt-4" novalidate>
+
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <label for="numeroEmpleado" class="form-label">No. empleado</label>
+                                        <div class="input-group has-validation">
+                                            <input type="text" class="form-control" aria-describedby="inputGroupPrepend" placeholder="Ingrese..."
+                                                   id="numeroEmpleado" name="numeroEmpleado"
+                                                   th:maxlength="20"
+                                                   th:required="true"/>
+                                            <div class="invalid-feedback">
+                                                Ingrese un valor valido.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label for="nombre" class="form-label">Nombre</label>
+                                        <div class="input-group has-validation">
+                                            <input type="text" class="form-control" aria-describedby="inputGroupPrepend" placeholder="Ingrese..."
+                                                   id="nombre" name="nombre"
+                                                   th:maxlength="45"
+                                                   th:required="true"/>
+                                            <div class="invalid-feedback">
+                                                Ingrese un valor valido.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label for="primerApellido" class="form-label">Primer apellido</label>
+                                        <div class="input-group has-validation">
+                                            <input type="text" class="form-control" aria-describedby="inputGroupPrepend" placeholder="Ingrese..."
+                                                   id="primerApellido" name="primerApellido"
+                                                   th:maxlength="45"
+                                                   th:required="true"/>
+                                            <div class="invalid-feedback">
+                                                Ingrese un valor valido.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label for="segundoApellido" class="form-label">Segundo apellido
+                                            (opcional)</label>
+                                        <div class="input-group has-validation">
+                                            <input type="text" class="form-control" aria-describedby="inputGroupPrepend" placeholder="Ingrese..."
+                                                   id="segundoApellido" name="segundoApellido"
+                                                   th:maxlength="45"/>
+                                            <div class="invalid-feedback">
+                                                Ingrese un valor valido.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <label for="validationCustom04" class="form-label">State</label>
+                                        <select class="form-select" id="validationCustom04" required>
+                                            <option selected disabled value="">Choose...</option>
+                                            <option>...</option>
+                                        </select>
+                                        <div class="invalid-feedback">
+                                            Please select a valid state.
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-2 offset-md-4">
+                                        <button class="btn btn-danger" type="button">
+                                            <i class="bi bi-skip-start-circle"></i> Volver
+                                        </button>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <button class="btn btn-success" type="submit">
+                                            Guardar <i class="bi bi-skip-end-circle"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </form><!-- End Custom Styled Validation -->
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+
+
+</div>
+
+<div th:replace="~{fragments/scrypt :: div}"></div>
+
+</body>
+</html>

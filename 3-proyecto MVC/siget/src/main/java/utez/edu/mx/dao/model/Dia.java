@@ -13,7 +13,7 @@ import lombok.Data;
 })
 public class Dia {
     @Id
-@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_dia", nullable = false)
     private Integer id;
 
@@ -22,5 +22,10 @@ public class Dia {
     @Column(name = "nombre", nullable = false, length = 45)
     private String nombre;
 
+    public Dia() {
+    }
 
+    public Dia(String nombre) {
+        this.nombre = nombre;
+    }
 }

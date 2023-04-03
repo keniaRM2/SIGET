@@ -20,4 +20,10 @@ public class DivisionAcademica {
     @Column(name = "nombre", nullable = false, length = 45)
     private String nombre;
 
+    public DivisionAcademica() {
+    }
+
+    public DivisionAcademica(String nombre) {
+        this.nombre = nombre;
+    }
 }

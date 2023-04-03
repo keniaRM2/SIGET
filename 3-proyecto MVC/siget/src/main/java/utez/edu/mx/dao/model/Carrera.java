@@ -18,9 +18,9 @@ public class Carrera {
     @Column(name = "id_carrera", nullable = false)
     private Integer id;
 
-    @Size(max = 45)
+    @Size(max = 255)
     @NotNull
-    @Column(name = "nombre", nullable = false, length = 45)
+    @Column(name = "nombre", nullable = false)
     private String nombre;
 
     @NotNull
@@ -28,4 +28,11 @@ public class Carrera {
     @JoinColumn(name = "division_academica_id", nullable = false)
     private DivisionAcademica divisionAcademica;
 
+    public Carrera() {
+    }
+
+    public Carrera(String nombre, DivisionAcademica divisionAcademica) {
+        this.nombre = nombre;
+        this.divisionAcademica = divisionAcademica;
+    }
 }

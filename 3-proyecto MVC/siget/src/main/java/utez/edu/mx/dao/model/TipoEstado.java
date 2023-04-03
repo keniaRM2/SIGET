@@ -18,4 +18,11 @@ public class TipoEstado {
     @NotNull
     @Column(name = "nombre", nullable = false, length = 45)
     private String nombre;
+
+    public TipoEstado() {
+    }
+
+    public TipoEstado(String nombre) {
+        this.nombre = nombre;
+    }
 }

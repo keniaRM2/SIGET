@@ -17,7 +17,7 @@ import lombok.Data;
 })
 public class Servicio {
     @Id
-@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_servicio", nullable = false)
     private Integer id;
 
@@ -31,7 +31,7 @@ public class Servicio {
     private String descripcion;
 
     @Column(name = "costo", precision = 19, scale = 4)
-    private BigDecimal costo;
+    private Double costo;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -42,4 +42,14 @@ public class Servicio {
     @Column(name = "estatus", nullable = false)
     private Integer estatus;
 
+    public Servicio() {
+    }
+
+    public Servicio(String nombre, String descripcion, Double costo, TipoServicio tipoServicio, Integer estatus) {
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.costo = costo;
+        this.tipoServicio = tipoServicio;
+        this.estatus = estatus;
+    }
 }

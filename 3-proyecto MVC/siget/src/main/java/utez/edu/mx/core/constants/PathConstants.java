@@ -1,5 +1,8 @@
 package utez.edu.mx.core.constants;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class PathConstants {
 
     public static final String ALL_SUBPATHS = "/**";
@@ -13,6 +16,9 @@ public class PathConstants {
 
     public static final String ERROR = "/error";
     public static final String ERROR_ALL_SUBPATHS = ERROR+ALL_SUBPATHS;
+    private static final String EMPLEADO_CONTROLLER = "/empleado";
+    public static final String LISTAR_EMPLEADOS = EMPLEADO_CONTROLLER;
+    public static final String REGISTRAR_EMPLEADO = EMPLEADO_CONTROLLER + "/registrar";
 
     private PathConstants() {
     }

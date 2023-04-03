@@ -22,4 +22,10 @@ public class Ventanilla {
     @Column(name = "nombre", nullable = false, length = 45)
     private String nombre;
 
+    public Ventanilla() {
+    }
+
+    public Ventanilla(String nombre) {
+        this.nombre = nombre;
+    }
 }

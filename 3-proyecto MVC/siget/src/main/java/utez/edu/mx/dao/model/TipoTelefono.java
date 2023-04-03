@@ -21,4 +21,11 @@ public class TipoTelefono {
     @Column(name = "nombre", nullable = false, length = 45)
     private String nombre;
 
+    public TipoTelefono() {
+    }
+
+    public TipoTelefono(String nombre) {
+        this.nombre = nombre;
+    }
+
 }
