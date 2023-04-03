@@ -38,11 +38,12 @@
 
 
                             <!-- Custom Styled Validation -->
-                            <form class="row g-3 needs-validation mt-4" novalidate>
-
-                                <div class="row mb-4">
+                            <form class="row g-3 needs-validation mt-2" novalidate>
+                                <h5><strong>Información personal </strong></h5>
+                                <hr/>
+                                <div class="row mb-4 mt-2">
                                     <div class="col-md-3">
-                                        <label for="numeroEmpleado" class="form-label">No. empleado</label>
+                                        <label for="numeroEmpleado" class="form-label">No. empleado*</label>
                                         <div class="input-group has-validation">
                                             <input type="text" class="form-control" aria-describedby="inputGroupPrepend"
                                                    autocomplete="off" aria-autocomplete="none"
@@ -56,11 +57,12 @@
                                         </div>
                                     </div>
                                     <div class="col-md-3">
-                                        <label for="nombre" class="form-label">Nombre</label>
+                                        <label for="nombre" class="form-label">Nombre*</label>
                                         <div class="input-group has-validation">
-                                            <input type="text" class="form-control" aria-describedby="inputGroupPrepend" placeholder="Ingrese..."
+                                            <input type="text" class="form-control" aria-describedby="inputGroupPrepend"
+                                                   placeholder="Ingrese..."
                                                    autocomplete="off" aria-autocomplete="none"
-                                                   id="nombre" name="nombre"
+                                                   id="nombre" name="persona.nombre"
                                                    th:maxlength="45"
                                                    th:required="true"/>
                                             <div class="invalid-feedback">
@@ -69,11 +71,12 @@
                                         </div>
                                     </div>
                                     <div class="col-md-3">
-                                        <label for="primerApellido" class="form-label">Primer apellido</label>
+                                        <label for="primerApellido" class="form-label">Primer apellido*</label>
                                         <div class="input-group has-validation">
-                                            <input type="text" class="form-control" aria-describedby="inputGroupPrepend" placeholder="Ingrese..."
+                                            <input type="text" class="form-control" aria-describedby="inputGroupPrepend"
+                                                   placeholder="Ingrese..."
                                                    autocomplete="off" aria-autocomplete="none"
-                                                   id="primerApellido" name="primerApellido"
+                                                   id="primerApellido" name="persona.primerApellido"
                                                    th:maxlength="45"
                                                    th:required="true"/>
                                             <div class="invalid-feedback">
@@ -82,12 +85,13 @@
                                         </div>
                                     </div>
                                     <div class="col-md-3">
-                                        <label for="segundoApellido" class="form-label">Segundo apellido
-                                            (opcional)</label>
+                                        <label for="segundoApellido" class="form-label">Segundo
+                                            apellido(opcional)</label>
                                         <div class="input-group has-validation">
-                                            <input type="text" class="form-control" aria-describedby="inputGroupPrepend" placeholder="Ingrese..."
+                                            <input type="text" class="form-control" aria-describedby="inputGroupPrepend"
+                                                   placeholder="Ingrese..."
                                                    autocomplete="off" aria-autocomplete="none"
-                                                   id="segundoApellido" name="segundoApellido"
+                                                   id="segundoApellido" name="persona.segundoApellido"
                                                    th:maxlength="45"/>
                                             <div class="invalid-feedback">
                                                 Ingrese un valor valido.
@@ -96,19 +100,133 @@
                                     </div>
                                 </div>
 
-
-                                <div class="row">
+                                <h5><strong>Información de acceso </strong></h5>
+                                <hr/>
+                                <div class="row mb-4 mt-2">
                                     <div class="col-md-3">
-                                        <label for="validationCustom04" class="form-label">State</label>
-                                        <select class="form-select" id="validationCustom04" required>
-                                            <option selected disabled value="">Choose...</option>
-                                            <option>...</option>
-                                        </select>
-                                        <div class="invalid-feedback">
-                                            Please select a valid state.
+                                        <label for="rol" class="form-label">Rol</label>
+                                        <div class="input-group has-validation">
+                                            <select class="form-select" id="rol" required>
+                                                <option selected disabled value="">Seleccione...</option>
+                                            </select>
+                                            <div class="invalid-feedback">
+                                                Ingrese un valor valido.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label for="username" class="form-label">Correo electrónico*</label>
+                                        <div class="input-group has-validation">
+                                            <input type="email" class="form-control" aria-describedby="inputGroupPrepend"
+                                                   autocomplete="off" aria-autocomplete="none"
+                                                   placeholder="Ingrese..."
+                                                   id="username" name="persona.usuario.username"
+                                                   th:maxlength="20"
+                                                   th:required="true"/>
+                                            <div class="invalid-feedback">
+                                                Ingrese un valor valido.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label for="password" class="form-label">Contraseña*</label>
+                                        <div class="input-group has-validation">
+                                            <input type="password" class="form-control" aria-describedby="inputGroupPrepend"
+                                                   placeholder="Ingrese..."
+                                                   autocomplete="off" aria-autocomplete="none"
+                                                   id="password" name="persona.usuario.password"
+                                                   th:maxlength="45"
+                                                   th:required="true"/>
+                                            <div class="invalid-feedback">
+                                                Ingrese un valor valido.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label for="passwordTwo" class="form-label">Contraseña (confirmación)*</label>
+                                        <div class="input-group has-validation">
+                                            <input type="password" class="form-control" aria-describedby="inputGroupPrepend"
+                                                   placeholder="Ingrese..."
+                                                   autocomplete="off" aria-autocomplete="none"
+                                                   id="passwordTwo"
+                                                   th:maxlength="45"
+                                                   th:required="true"/>
+                                            <div class="invalid-feedback">
+                                                Ingrese un valor valido.
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
+
+                                <h5><strong>Información de laboral </strong></h5>
+                                <hr/>
+                                <div class="row mb-4 mt-2">
+                                    <div class="col-md-2">
+                                        <span>
+                                            Agregar horario
+                                        </span>
+                                        <button class="btn btn-link font-icon btn-lg" type="button" >
+                                            <i class="bx bxs-plus-circle text-green-light"></i>
+                                        </button>
+                                    </div>
+                                    <div class="col-10">
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <label for="dia" class="form-label">Día</label>
+                                                <div class="input-group has-validation">
+                                                    <select class="form-select" name="dia" id="dia" required>
+                                                        <option selected disabled value="">Seleccione...</option>
+                                                    </select>
+                                                    <div class="invalid-feedback">
+                                                        Ingrese un valor valido.
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label for="ventanilla" class="form-label">Ventanilla</label>
+                                                <div class="input-group has-validation">
+                                                    <select class="form-select" id="ventanilla" required>
+                                                        <option selected disabled value="">Seleccione...</option>
+                                                    </select>
+                                                    <div class="invalid-feedback">
+                                                        Ingrese un valor valido.
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label for="horaInicio" class="form-label">Hora inicio*</label>
+                                                <div class="input-group has-validation">
+                                                    <input type="time" class="form-control" aria-describedby="inputGroupPrepend"
+                                                           placeholder="Ingrese..."
+                                                           autocomplete="off" aria-autocomplete="none"
+                                                           id="horaInicio"
+                                                           th:maxlength="45"
+                                                           th:required="true"/>
+                                                    <div class="invalid-feedback">
+                                                        Ingrese un valor valido.
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label for="horaFin" class="form-label">Hora fin*</label>
+                                                <div class="input-group has-validation">
+                                                    <input type="time" class="form-control" aria-describedby="inputGroupPrepend"
+                                                           placeholder="Ingrese..."
+                                                           autocomplete="off" aria-autocomplete="none"
+                                                           id="horaFin"
+                                                           th:maxlength="45"
+                                                           th:required="true"/>
+                                                    <div class="invalid-feedback">
+                                                        Ingrese un valor valido.
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+
                                 <div class="row">
                                     <div class="col-md-4 offset-md-5">
                                         <button class="btn btn-outline-danger mx-4" type="button">

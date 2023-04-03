@@ -14,7 +14,7 @@ import lombok.Data;
 }, uniqueConstraints = {
         @UniqueConstraint(name = "persona_id_UNIQUE", columnNames = {"persona_id"})
 })
-public class Empleado {
+public class Empleado{
     @Id
 @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_empleado", nullable = false)
