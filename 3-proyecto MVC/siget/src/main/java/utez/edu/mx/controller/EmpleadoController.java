@@ -23,13 +23,13 @@ public class EmpleadoController extends BaseController{
 
     @GetMapping(value = PathConstants.LISTAR_EMPLEADOS)
     public String listarEmpleados(Model model){
-        model.addAttribute(this.EMPLEADOS, empleadoService.listarEmpleados());
+        model.addAttribute(EMPLEADOS, empleadoService.listarEmpleados());
         return VistasConstants.LISTA_EMPLEADOS;
     }
 
     @GetMapping(value = PathConstants.REGISTRAR_EMPLEADO)
     public String registrarEmpleado(Model model){
-        model.addAttribute(this.EMPLEADO, empleadoService.obtenerEmpleadoRegistro());
+        model.addAttribute(EMPLEADO, empleadoService.obtenerEmpleadoRegistro());
         return VistasConstants.FORMULARIO_EMPLEADO;
     }
 
