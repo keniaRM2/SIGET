@@ -19,14 +19,12 @@ public class SigetErrorController extends BaseController implements ErrorControl
 
         if (Utileria.nonNull(status)) {
             int statusCode = Integer.parseInt(status.toString());
-            System.out.println(statusCode);
             if(statusCode == HttpStatus.NOT_FOUND.value()) {
                 return VistasConstants.ERROR_404;
             }else if(statusCode == HttpStatus.INTERNAL_SERVER_ERROR.value()) {
                 return VistasConstants.ERROR_500;
             }
         }
-
         return VistasConstants.ERROR;
     }
 }

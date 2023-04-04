@@ -1,5 +1,6 @@
 package utez.edu.mx.core.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -8,8 +9,11 @@ import org.springframework.security.config.annotation.web.configurers.LogoutConf
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.logout.LogoutHandler;
 import utez.edu.mx.core.constants.GeneralConstants;
 import utez.edu.mx.core.constants.PathConstants;
+import utez.edu.mx.core.constants.VistasConstants;
+import utez.edu.mx.service.BitacoraAccesoService;
 
 @Configuration
 @EnableWebSecurity
@@ -37,6 +41,8 @@ public class SpringSecurityConfig {
 
     };
 
+    @Autowired
+    private LogoutHandler logoutHandler;
 
     @Bean
     public static PasswordEncoder passwordEncoder() {
@@ -56,13 +62,16 @@ public class SpringSecurityConfig {
                                         .anyRequest().authenticated()
                 )
                 .formLogin((form) -> form
-                        .loginPage("/login")
-                        .loginProcessingUrl("/login")
+                        .loginPage(PathConstants.LOGIN)
+                        .loginProcessingUrl(PathConstants.LOGIN)
                         .defaultSuccessUrl(PathConstants.INDEX)
                         .permitAll()
                 )
-                .logout(LogoutConfigurer::permitAll)
-                .exceptionHandling().accessDeniedPage("/access-denied");
+                .logout()
+                .addLogoutHandler(logoutHandler)
+                .permitAll()
+                .and()
+                .exceptionHandling().accessDeniedPage(VistasConstants.ERROR);
         return http.build();
     }
 }
