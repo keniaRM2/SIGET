@@ -1,23 +1,34 @@
 package utez.edu.mx.service.impl;
 
+import jakarta.transaction.Transactional;
+import jakarta.validation.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import utez.edu.mx.core.constants.GeneralConstants;
+import utez.edu.mx.core.exceptions.SigetException;
+import utez.edu.mx.core.util.Utileria;
 import utez.edu.mx.dao.model.Empleado;
-import utez.edu.mx.dao.model.Horario;
 import utez.edu.mx.dao.model.Persona;
 import utez.edu.mx.dao.model.Usuario;
-import utez.edu.mx.dao.repository.DiaRepository;
 import utez.edu.mx.dao.repository.EmpleadoRepository;
+import utez.edu.mx.dao.repository.PersonaRepository;
+import utez.edu.mx.dao.repository.RolRepository;
+import utez.edu.mx.dao.repository.UsuarioRepository;
 import utez.edu.mx.service.EmpleadoService;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EmpleadoServiceImpl implements EmpleadoService {
 
+    @Autowired
+    private RolRepository rolRepository;
+    @Autowired
+    private PersonaRepository personaRepository;
+    @Autowired
+    private UsuarioRepository usuarioRepository;
     @Autowired
     private EmpleadoRepository empleadoRepository;
 
@@ -27,17 +38,143 @@ public class EmpleadoServiceImpl implements EmpleadoService {
     }
 
     @Override
+    public void guardar(Empleado empleado) throws SigetException {
+        if (Utileria.nonNull(empleado.getId())) {
+            actualizar(empleado);
+        } else {
+            registrar(empleado);
+        }
+    }
+
+    @Override
+    @Transactional
+    public void registrar(Empleado empleado) throws SigetException {
+        try {
+
+            Empleado empleadoRepetido = empleadoRepository.findByNumeroEmpleado(empleado.getNumeroEmpleado());
+            if (Utileria.nonNull(empleadoRepetido)) {
+                throw new SigetException("El número de empleado ha sido registrado previamente");
+            }
+
+            Usuario usuario = empleado.getPersona().getUsuario();
+
+            Usuario usuarioRepetido = usuarioRepository.findByUsername(usuario.getUsername());
+            if (Utileria.nonNull(usuarioRepetido)) {
+                throw new SigetException("Correo electrónico registrado previamente.");
+            }
+            Persona persona = empleado.getPersona();
+
+            usuario.setRol(rolRepository.findByAuthority(GeneralConstants.ROL_EMPLEADO));
+            usuario.setEnabled(GeneralConstants.ESTATUS_ACTIVO);
+            usuario.setPassword(GeneralConstants.CODIFICAROR.encode(empleado.getNumeroEmpleado()));
+            usuario.setPersona(persona);
+
+            personaRepository.save(persona);
+            usuarioRepository.save(usuario);
+            empleadoRepository.save(empleado);
+
+        } catch (ConstraintViolationException e) {
+            System.err.println(e.getMessage());
+            throw new SigetException(Utileria.getErrores(e));
+        } catch (NullPointerException e) {
+            System.err.println(e.getMessage());
+            throw new SigetException(Utileria.getErrorNull());
+        }
+    }
+
+    @Override
+    @Transactional
+    public void actualizar(Empleado empleado) throws SigetException {
+        try {
+
+            Optional<Empleado> empleadoOptional = empleadoRepository.findById(empleado.getId());
+            if (empleadoOptional.isEmpty()) {
+                throw new SigetException("Empleado no encontrado.");
+            }
+
+            Empleado empleadoUpdate = empleadoOptional.get();
+            Persona personaUpdate = empleadoUpdate.getPersona();
+            Usuario usuario = personaUpdate.getUsuario();
+
+
+            String numeroEmpleado = empleado.getNumeroEmpleado();
+            Empleado empleadoRepetido = empleadoRepository.findByNumeroEmpleadoAndIdIsNot(numeroEmpleado, empleadoUpdate.getId());
+            if (Utileria.nonNull(empleadoRepetido)) {
+                throw new SigetException("El número de empleado ha sido registrado previamente");
+            }
+            empleadoUpdate.setNumeroEmpleado(numeroEmpleado);
+
+            String username = empleado.getPersona().getUsuario().getUsername();
+            Usuario usuarioRepetido = usuarioRepository.findByUsernameAndIdIsNot(username, usuario.getId());
+            if (Utileria.nonNull(usuarioRepetido)) {
+                throw new SigetException("Correo electrónico registrado previamente.");
+            }
+            usuario.setUsername(username);
+
+
+            personaUpdate.setNombre(empleado.getPersona().getNombre());
+            personaUpdate.setPrimerApellido(empleado.getPersona().getPrimerApellido());
+            personaUpdate.setSegundoApellido(empleado.getPersona().getSegundoApellido());
+
+
+            usuarioRepository.save(usuario);
+            personaRepository.save(personaUpdate);
+            empleadoRepository.save(empleadoUpdate);
+
+        } catch (ConstraintViolationException e) {
+            System.err.println(e.getMessage());
+            throw new SigetException(Utileria.getErrores(e));
+        } catch (NullPointerException e) {
+            System.err.println(e.getMessage());
+            throw new SigetException(Utileria.getErrorNull());
+        }
+    }
+
+    @Override
     public Empleado obtenerEmpleadoRegistro() {
-
-        Usuario usuario = new Usuario();
-        Persona persona = new Persona();
-        persona.setUsuario(usuario);
-
         Empleado empleado = new Empleado();
+        Persona persona = new Persona();
+        persona.setUsuario(new Usuario());
         empleado.setPersona(persona);
-        empleado.setHorarios(new ArrayList<>());
-        empleado.getHorarios().add(new Horario());
-
         return empleado;
     }
+
+    @Override
+    public Empleado obtenerEmpleadoEdicion(Integer id) throws SigetException {
+        Optional<Empleado> empleadoOptional = empleadoRepository.findById(id);
+        if (empleadoOptional.isEmpty()) {
+            throw new SigetException("Empleado no encontrado.");
+        }
+        return empleadoOptional.get();
+    }
+
+    @Override
+    @Transactional
+    public void actualizarEstatus(Integer id) throws SigetException {
+        try {
+            Optional<Empleado> empleadoOptional = empleadoRepository.findById(id);
+            if (empleadoOptional.isEmpty()) {
+                throw new SigetException("Empleado no encontrado.");
+            }
+
+            Empleado empleado = empleadoOptional.get();
+            Usuario usuario = empleado.getPersona().getUsuario();
+            if (usuario.getEnabled() == GeneralConstants.ESTATUS_ACTIVO) {
+                usuario.setEnabled(GeneralConstants.ESTATUS_INACTIVO);
+            }else{
+                usuario.setEnabled(GeneralConstants.ESTATUS_ACTIVO);
+            }
+            usuarioRepository.save(usuario);
+
+        } catch (ConstraintViolationException e) {
+            System.err.println(e.getMessage());
+            throw new SigetException(Utileria.getErrores(e));
+        } catch (NullPointerException e) {
+            System.err.println(e.getMessage());
+            throw new SigetException(Utileria.getErrorNull());
+        }
+
+    }
+
+
 }
