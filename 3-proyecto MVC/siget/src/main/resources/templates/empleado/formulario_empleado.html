@@ -32,38 +32,28 @@
         <section class="section">
             <div class="row">
                 <div class="col-lg-12">
-
                     <div class="card">
+                        <div th:replace="~{fragments/mensajes :: div}"></div>
                         <div class="card-body">
 
 
                             <!-- Custom Styled Validation -->
-                            <form class="row g-3 needs-validation mt-2" novalidate method="POST"
-                                  th:object="${empleado}">
+
+                            <form class="row g-3 needs-validation mt-2" method="POST" th:object="${empleado}"
+                                  th:action="@{'/empleado/guardar'}">
                                 <h5><strong>Información personal </strong></h5>
                                 <hr/>
                                 <div class="row mb-4 mt-2">
-                                    <div class="col-md-3">
-                                        <label for="numeroEmpleado" class="form-label">No. empleado*</label>
-                                        <div class="input-group has-validation">
-                                            <input type="text" class="form-control" aria-describedby="inputGroupPrepend"
-                                                   autocomplete="off" aria-autocomplete="none"
-                                                   placeholder="Ingrese..."
-                                                   id="numeroEmpleado" name="numeroEmpleado"
-                                                   th:maxlength="20"
-                                                   th:required="true"/>
-                                            <div class="invalid-feedback">
-                                                Ingrese un valor valido.
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3">
+                                    <input type="hidden" th:field="*{id}" th:value="*{id}" />
+
+                                    <div class="col-md-4">
                                         <label for="nombre" class="form-label">Nombre*</label>
                                         <div class="input-group has-validation">
                                             <input type="text" class="form-control" aria-describedby="inputGroupPrepend"
-                                                   placeholder="Ingrese..."
+                                                   placeholder="Ingrese..." pattern="[a-zA-Z ]+"
                                                    autocomplete="off" aria-autocomplete="none"
                                                    id="nombre" name="persona.nombre"
+                                                   th:field="*{persona.nombre}" th:value="*{persona.nombre}"
                                                    th:maxlength="45"
                                                    th:required="true"/>
                                             <div class="invalid-feedback">
@@ -71,13 +61,14 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-3">
+                                    <div class="col-md-4">
                                         <label for="primerApellido" class="form-label">Primer apellido*</label>
                                         <div class="input-group has-validation">
                                             <input type="text" class="form-control" aria-describedby="inputGroupPrepend"
-                                                   placeholder="Ingrese..."
+                                                   placeholder="Ingrese..." pattern="[a-zA-Z ]+"
                                                    autocomplete="off" aria-autocomplete="none"
                                                    id="primerApellido" name="persona.primerApellido"
+                                                   th:field="*{persona.primerApellido}" th:value="*{persona.primerApellido}"
                                                    th:maxlength="45"
                                                    th:required="true"/>
                                             <div class="invalid-feedback">
@@ -85,14 +76,15 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-3">
+                                    <div class="col-md-4">
                                         <label for="segundoApellido" class="form-label">Segundo
                                             apellido(opcional)</label>
                                         <div class="input-group has-validation">
                                             <input type="text" class="form-control" aria-describedby="inputGroupPrepend"
-                                                   placeholder="Ingrese..."
+                                                   placeholder="Ingrese..." pattern="[a-zA-Z ]+"
                                                    autocomplete="off" aria-autocomplete="none"
                                                    id="segundoApellido" name="persona.segundoApellido"
+                                                   th:field="*{persona.segundoApellido}" th:value="*{persona.segundoApellido}"
                                                    th:maxlength="45"/>
                                             <div class="invalid-feedback">
                                                 Ingrese un valor valido.
@@ -104,25 +96,14 @@
                                 <h5><strong>Información de acceso </strong></h5>
                                 <hr/>
                                 <div class="row mb-4 mt-2">
-                                    <div class="col-md-3">
-                                        <label for="rol" class="form-label">Rol</label>
+                                    <div class="col-md-3 offset-md-3">
+                                        <label for="numeroEmpleado" class="form-label">No. empleado*</label>
                                         <div class="input-group has-validation">
-                                            <select class="form-select" id="rol" required>
-                                                <option selected disabled value="">Seleccione...</option>
-                                            </select>
-                                            <div class="invalid-feedback">
-                                                Ingrese un valor valido.
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <label for="username" class="form-label">Correo electrónico*</label>
-                                        <div class="input-group has-validation">
-                                            <input type="email" class="form-control"
-                                                   aria-describedby="inputGroupPrepend"
+                                            <input type="text" class="form-control" aria-describedby="inputGroupPrepend"
                                                    autocomplete="off" aria-autocomplete="none"
                                                    placeholder="Ingrese..."
-                                                   id="username" name="persona.usuario.username"
+                                                   id="numeroEmpleado" name="numeroEmpleado"
+                                                   th:field="*{numeroEmpleado}" th:value="*{numeroEmpleado}"
                                                    th:maxlength="20"
                                                    th:required="true"/>
                                             <div class="invalid-feedback">
@@ -130,30 +111,16 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-3">
-                                        <label for="password" class="form-label">Contraseña*</label>
+                                    <div class="col-md-3 ">
+                                        <label for="username" class="form-label">Correo electrónico*</label>
                                         <div class="input-group has-validation">
-                                            <input type="password" class="form-control"
+                                            <input type="email" class="form-control"
                                                    aria-describedby="inputGroupPrepend"
-                                                   placeholder="Ingrese..."
                                                    autocomplete="off" aria-autocomplete="none"
-                                                   id="password" name="persona.usuario.password"
-                                                   th:maxlength="45"
-                                                   th:required="true"/>
-                                            <div class="invalid-feedback">
-                                                Ingrese un valor valido.
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <label for="passwordTwo" class="form-label">Contraseña (confirmación)*</label>
-                                        <div class="input-group has-validation">
-                                            <input type="password" class="form-control"
-                                                   aria-describedby="inputGroupPrepend"
                                                    placeholder="Ingrese..."
-                                                   autocomplete="off" aria-autocomplete="none"
-                                                   id="passwordTwo"
-                                                   th:maxlength="45"
+                                                   id="username" name="persona.usuario.username"
+                                                   th:field="*{persona.usuario.username}" th:value="*{persona.usuario.username}"
+                                                   th:maxlength="255"
                                                    th:required="true"/>
                                             <div class="invalid-feedback">
                                                 Ingrese un valor valido.
@@ -162,89 +129,13 @@
                                     </div>
                                 </div>
 
-                                <h5><strong>Información de laboral </strong></h5>
-                                <hr/>
-                                <div class="row mb-4 mt-2">
-                                    <div class="col-md-2">
-                                        <span>
-                                            Agregar horario
-                                        </span>
-                                        <button class="btn btn-link font-icon btn-lg" type="button">
-                                            <i class="bx bxs-plus-circle text-green-light"></i>
-                                        </button>
-                                    </div>
-                                    <div class="col-10">
-                                        <div class="row" th:each="horario: ${empleado.horarios}">
-                                            <div class="col-md-3">
-                                                <label for="dia" class="form-label">Día</label>
-                                                <div class="input-group has-validation">
 
-                                                    <select class="form-control" name="dia" id="dia" required>
-                                                        <option selected disabled value="">Seleccione...</option>
-                                                        <option th:each="dia: ${dias}" th:value="${dia.id}"
-                                                                th:text="${dia.nombre}"></option>
-                                                    </select>
-                                                    <div class="invalid-feedback">
-                                                        Ingrese un valor valido.
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <label for="ventanilla" class="form-label">Ventanilla</label>
-                                                <div class="input-group has-validation">
-                                                    <select class="form-control" name="ventanilla" id="ventanilla" required>
-                                                        <option selected disabled value="">Seleccione...</option>
-                                                        <option th:each="ventanilla: ${ventanillas}"
-                                                                th:value="${ventanilla.id}"
-                                                                th:text="${ventanilla.nombre}"></option>
-                                                    </select>
-
-                                                    <div class="invalid-feedback">
-                                                        Ingrese un valor valido.
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <label for="horaInicio" class="form-label">Hora inicio*</label>
-                                                <div class="input-group has-validation">
-                                                    <input type="time" class="form-control"
-                                                           aria-describedby="inputGroupPrepend"
-                                                           placeholder="Ingrese..."
-                                                           autocomplete="off" aria-autocomplete="none"
-                                                           id="horaInicio"
-                                                           th:maxlength="45"
-                                                           th:required="true"/>
-                                                    <div class="invalid-feedback">
-                                                        Ingrese un valor valido.
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <label for="horaFin" class="form-label">Hora fin*</label>
-                                                <div class="input-group has-validation">
-                                                    <input type="time" class="form-control"
-                                                           aria-describedby="inputGroupPrepend"
-                                                           placeholder="Ingrese..."
-                                                           autocomplete="off" aria-autocomplete="none"
-                                                           id="horaFin"
-                                                           th:maxlength="45"
-                                                           th:required="true"/>
-                                                    <div class="invalid-feedback">
-                                                        Ingrese un valor valido.
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-
-
-                                <div class="row">
-                                    <div class="col-md-4 offset-md-5">
-                                        <button class="btn btn-outline-danger mx-4" type="button">
+                                <div class="row align-items-center">
+                                    <div class="col-md-4 offset-md-4 center-block" align="center">
+                                        <a class="btn btn-outline-danger mx-4 " th:href="@{'/empleado'}"
+                                           type="button">
                                             <i class="bi bi bi-backspace"></i> Volver
-                                        </button>
+                                        </a>
                                         <button class="btn btn-success" type="submit">
                                             Guardar <i class="bi bi-check-circle"></i>
                                         </button>

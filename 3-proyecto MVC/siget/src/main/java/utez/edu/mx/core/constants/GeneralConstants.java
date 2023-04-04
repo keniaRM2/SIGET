@@ -1,5 +1,7 @@
 package utez.edu.mx.core.constants;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 public class GeneralConstants {
     public static final String ROL_ADMIN = "ROLE_ADMIN";
     public static final String ROL_EMPLEADO = "ROLE_EMPLEADO";
@@ -11,6 +13,7 @@ public class GeneralConstants {
     public static final Integer  ESTATUS_INACTIVO = 0;
     public static final String TIPO_ESTADO_PAGO = "Pago";
     public static final String TIPO_ESTADO_CITA = "Cita";
+    public static final BCryptPasswordEncoder CODIFICAROR =  new BCryptPasswordEncoder();
 
     private GeneralConstants() {
     }
