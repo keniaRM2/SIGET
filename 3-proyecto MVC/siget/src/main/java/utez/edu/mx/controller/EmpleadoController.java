@@ -34,7 +34,7 @@ public class EmpleadoController extends BaseController{
     }
 
 
-    @GetMapping(value = PathConstants.EDITAR_EMPLEADO+"{id}")
+    @GetMapping(value = PathConstants.EDITAR_EMPLEADO+"/{id}")
     public String editarEmpleado(@PathVariable Integer id, Model model, RedirectAttributes redirectAttributes){
         try{
             model.addAttribute(EMPLEADO, empleadoService.obtenerEmpleadoEdicion(id));
@@ -44,7 +44,7 @@ public class EmpleadoController extends BaseController{
             return redireccionar(PathConstants.LISTAR_EMPLEADOS);
         }
     }
-    @GetMapping(value = PathConstants.ACTUALIZAR_ESTATUS_EMPLEADO+"{id}")
+    @GetMapping(value = PathConstants.ACTUALIZAR_ESTATUS_EMPLEADO+"/{id}")
     public String actualizarEstatus(@PathVariable Integer id, Model model, RedirectAttributes redirectAttributes){
         try{
             empleadoService.actualizarEstatus(id);
