@@ -28,11 +28,11 @@ public class SpringSecurityConfig {
             PathConstants.LOGIN_ALL_SUBPATHS
     };
     private static final String[] PATH_ROL_ADMIN = {
-            PathConstants.LISTAR_EMPLEADOS+PathConstants.ALL_SUBPATHS,
+            PathConstants.LISTAR_EMPLEADOS + PathConstants.ALL_SUBPATHS,
             PathConstants.GUARDAR_EMPLEADO,
             PathConstants.REGISTRAR_EMPLEADO,
-            PathConstants.EDITAR_EMPLEADO+PathConstants.ALL_SUBPATHS,
-            PathConstants.ACTUALIZAR_ESTATUS_EMPLEADO+PathConstants.ALL_SUBPATHS
+            PathConstants.EDITAR_EMPLEADO + PathConstants.ALL_SUBPATHS,
+            PathConstants.ACTUALIZAR_ESTATUS_EMPLEADO + PathConstants.ALL_SUBPATHS
     };
     private static final String[] PATH_ROL_EMPLEADO = {
 
@@ -53,13 +53,13 @@ public class SpringSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeHttpRequests((requests) ->
-                                requests
-                                        .requestMatchers(PATH_TODO_PERMITIDO).permitAll()
-                                        .requestMatchers(PATH_SIN_SESION).anonymous()
-                                        .requestMatchers(PATH_ROL_ADMIN).hasAnyAuthority(GeneralConstants.ROL_ADMIN)
-                                        .requestMatchers(PATH_ROL_EMPLEADO).hasAnyAuthority(GeneralConstants.ROL_EMPLEADO)
-                                        .requestMatchers(PATH_ROL_ALUMNO).hasAnyAuthority(GeneralConstants.ROL_ALUMNO)
-                                        .anyRequest().authenticated()
+                        requests
+                                .requestMatchers(PATH_TODO_PERMITIDO).permitAll()
+                                .requestMatchers(PATH_SIN_SESION).anonymous()
+                                .requestMatchers(PATH_ROL_ADMIN).hasAnyAuthority(GeneralConstants.ROL_ADMIN)
+                                .requestMatchers(PATH_ROL_EMPLEADO).hasAnyAuthority(GeneralConstants.ROL_EMPLEADO)
+                                .requestMatchers(PATH_ROL_ALUMNO).hasAnyAuthority(GeneralConstants.ROL_ALUMNO)
+                                .anyRequest().authenticated()
                 )
                 .formLogin((form) -> form
                         .loginPage(PathConstants.LOGIN)
@@ -67,11 +67,13 @@ public class SpringSecurityConfig {
                         .defaultSuccessUrl(PathConstants.INDEX)
                         .permitAll()
                 )
-                .logout()
-                .addLogoutHandler(logoutHandler)
-                .permitAll()
-                .and()
-                .exceptionHandling().accessDeniedPage(VistasConstants.ERROR);
+                .logout((log) -> log
+                        .addLogoutHandler(logoutHandler)
+                        .permitAll()
+                )
+                .exceptionHandling((exh) ->
+                        exh.accessDeniedPage(VistasConstants.ERROR)
+                );
         return http.build();
     }
 }
