@@ -33,7 +33,7 @@ public class Persona {
     @Formula(value ="CONCAT(nombre, ' ', primer_apellido, ' ', IFNULL(segundo_apellido, ''))")
     private String nombreCompleto;
 
-    @OneToOne(mappedBy = "persona")
+    @OneToOne(mappedBy = "persona", cascade = {CascadeType.ALL})
     private Usuario usuario;
     public Persona() {
     }

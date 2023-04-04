@@ -1,6 +1,10 @@
 package utez.edu.mx.core.util;
 
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.ConstraintViolationException;
+
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Utileria {
 
@@ -32,5 +36,11 @@ public class Utileria {
         return !nonEmptyList(list);
     }
 
+    public static String getErrores(ConstraintViolationException e){
+        return e.getConstraintViolations().stream().map(ConstraintViolation::getMessage).collect(Collectors.joining(", "));
+    }
 
+    public static String getErrorNull() {
+        return "Ocurrió un error al acceder a la información.";
+    }
 }
