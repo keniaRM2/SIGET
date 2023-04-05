@@ -3,6 +3,8 @@ package utez.edu.mx.core.util;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -42,5 +44,9 @@ public class Utileria {
 
     public static String getErrorNull() {
         return "Ocurrió un error al acceder a la información.";
+    }
+
+    public static Timestamp getFechaHoraActual() {
+        return new Timestamp(new Date().getTime());
     }
 }

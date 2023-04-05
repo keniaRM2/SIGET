@@ -8,6 +8,9 @@ public class VistasConstants {
 
     public static final String INDEX = "index";
     public static final String LOGIN = "login";
+    public static final String ERROR = "/errores/error";
+    public static final String ERROR_500 = "/errores/error_500";
+    public static final String ERROR_404 = "/errores/error_404";
 
     private VistasConstants() {
     }

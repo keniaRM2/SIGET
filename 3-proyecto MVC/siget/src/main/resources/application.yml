@@ -24,7 +24,7 @@ server:
   port: 80
   servlet:
     context-path: /siget
-
-
-
-
+  error:
+    path: /error
+    whitelabel:
+      enabled: false
