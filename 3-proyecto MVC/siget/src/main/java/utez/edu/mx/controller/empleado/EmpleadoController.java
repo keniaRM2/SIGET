@@ -1,4 +1,4 @@
-package utez.edu.mx.controller;
+package utez.edu.mx.controller.empleado;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import utez.edu.mx.controller.BaseController;
 import utez.edu.mx.core.constants.PathConstants;
 import utez.edu.mx.core.constants.VistasConstants;
 import utez.edu.mx.core.exceptions.SigetException;
@@ -14,7 +15,7 @@ import utez.edu.mx.dao.model.Empleado;
 import utez.edu.mx.service.EmpleadoService;
 
 @Controller
-public class EmpleadoController extends BaseController{
+public class EmpleadoController extends BaseController {
 
 
     @Autowired
@@ -23,13 +24,13 @@ public class EmpleadoController extends BaseController{
 
     @GetMapping(value = PathConstants.LISTAR_EMPLEADOS)
     public String listarEmpleados(Model model){
-        model.addAttribute(this.EMPLEADOS, empleadoService.listarEmpleados());
+        model.addAttribute(EMPLEADOS, empleadoService.listarEmpleados());
         return VistasConstants.LISTA_EMPLEADOS;
     }
 
     @GetMapping(value = PathConstants.REGISTRAR_EMPLEADO)
     public String registrarEmpleado(Model model){
-        model.addAttribute(this.EMPLEADO, empleadoService.obtenerEmpleadoRegistro());
+        model.addAttribute(EMPLEADO, empleadoService.obtenerEmpleadoRegistro());
         return VistasConstants.FORMULARIO_EMPLEADO;
     }
 

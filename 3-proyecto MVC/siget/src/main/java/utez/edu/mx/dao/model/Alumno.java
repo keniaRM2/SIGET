@@ -35,4 +35,5 @@ public class Alumno {
     @JoinColumn(name = "carrera_id", nullable = false)
     private Carrera carrera;
 
+
 }

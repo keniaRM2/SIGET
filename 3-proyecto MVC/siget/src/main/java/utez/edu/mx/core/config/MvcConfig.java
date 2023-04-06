@@ -14,5 +14,7 @@ public class MvcConfig implements WebMvcConfigurer {
         registry.addViewController(PathConstants.INDEX).setViewName(VistasConstants.INDEX);
         registry.addViewController(PathConstants.INDEX_NAME).setViewName(VistasConstants.INDEX);
         registry.addViewController(PathConstants.LOGIN).setViewName(VistasConstants.LOGIN);
+        registry.addViewController(PathConstants.ERROR).setViewName(VistasConstants.INDEX);
+
     }
 }

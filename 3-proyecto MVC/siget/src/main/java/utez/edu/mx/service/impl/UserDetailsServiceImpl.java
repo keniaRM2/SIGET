@@ -33,7 +33,8 @@ public class UserDetailsServiceImpl  implements UserDetailsService{
         }
         String authority = rolRepository.findById(usuario.getRol().getId()).get().getAuthority();
         List<SimpleGrantedAuthority> authorityList = List.of(new SimpleGrantedAuthority(authority));
-        return new  org.springframework.security.core.userdetails.User(usuario.getUsername(),usuario.getPassword(), usuario.getEnabled() == 1, true, true, true, authorityList);
+        return new  org.springframework.security.core.userdetails.User(usuario.getUsername(),
+                usuario.getPassword(), authorityList);
 
     }
 
