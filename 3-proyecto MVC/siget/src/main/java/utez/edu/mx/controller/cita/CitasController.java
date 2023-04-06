@@ -1,9 +1,8 @@
-package utez.edu.mx.controller.citas;
+package utez.edu.mx.controller.cita;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,7 +17,7 @@ import utez.edu.mx.service.impl.CitaServiceImp;
 public class CitasController {
 
     @Autowired
-    private CitaServiceImp service;
+    private CitaServiceImp citasService;
 
     // Se obtiene el usuario que inicio sesión
 
@@ -27,23 +26,25 @@ public class CitasController {
 
 
     @GetMapping(value = PathConstants.LISTAR_CITAS)
-    @Secured("ROLE_ADMIN")
     public String indexAdmin (@ModelAttribute("cita")Cita cita, Model model){
     //        Solo el administrador puede ver todas las citas
         String[] array = service.findAll().toArray(new String[100]);
         model.addAttribute("citas", array);
-        return "citas/index";
+        return "cita/index";
     }
 
-
+   @GetMapping(value = PathConstants.LISTAR_CITAS)
+    public String listarCitas(Model model){
+       model.addAttribute("citas", citasService.listarCitas());
+       return "cita/index";
+    }
     @GetMapping(value = PathConstants.LISTAR_CITAS)
-    @Secured("ROLE_EMPLEADO")
     public String indexEmpleado (@ModelAttribute("cita")Cita cita, Model model, Authentication authentication){
-        //       Solo el empleado puede ver sus citas
+        //       Solo el empleado puede ver sus cita
         Usuario usuario = usuarioRepository.findByUsername(authentication.getName());
         String [] array = service.findByEmployeeId(Math.toIntExact(usuario.getId())).toArray(new String[100]);
         model.addAttribute("citas", array);
-        return "citas/index";
+        return "cita/index";
     }
 
 
@@ -53,7 +54,7 @@ public class CitasController {
     public String indexAdminSemana (@ModelAttribute("cita")Cita cita, Model model){
         //       Citas de la semana vistas por el administrador
         model.addAttribute("citas", service.findAll());
-        return "citas/index";
+        return "cita/index";
     }
 
 

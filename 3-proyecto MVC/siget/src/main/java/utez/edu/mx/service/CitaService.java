@@ -11,4 +11,6 @@ public interface CitaService {
     Cita findById(int id);
     boolean save(Cita cita) throws SigetException;
     void cancelCita(int id) throws SigetException;
+
+    List<Cita> listarCitas();
 }

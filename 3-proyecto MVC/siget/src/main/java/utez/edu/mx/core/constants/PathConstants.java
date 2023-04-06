@@ -29,9 +29,9 @@ public class PathConstants {
     public static final String GUARDAR_EMPLEADO = EMPLEADO_CONTROLLER + "/guardar";
 
 
-    //    Paths para citas
+    //    Paths para cita
 
-    private static final String CITAS_CONTROLLER = "/citas";
+    private static final String CITAS_CONTROLLER = "/cita";
     public static final String LISTAR_CITAS = CITAS_CONTROLLER;
     public static final String LISTAR_CITAS_SEMANA = CITAS_CONTROLLER + "/semana";
     public static final String LISTAR_CITAS_DIA = CITAS_CONTROLLER + "/dia";

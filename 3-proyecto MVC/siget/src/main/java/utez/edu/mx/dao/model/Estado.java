@@ -32,4 +32,12 @@ public class Estado {
     @Column(name = "color", length = 20)
     private String color;
 
+    public Estado() {
+    }
+
+    public Estado(String nombre, TipoEstado tipoEstado, String color) {
+        this.nombre = nombre;
+        this.tipoEstado = tipoEstado;
+        this.color = color;
+    }
 }

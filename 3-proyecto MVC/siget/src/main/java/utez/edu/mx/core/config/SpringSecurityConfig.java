@@ -32,13 +32,16 @@ public class SpringSecurityConfig {
             PathConstants.GUARDAR_EMPLEADO,
             PathConstants.REGISTRAR_EMPLEADO,
             PathConstants.EDITAR_EMPLEADO + PathConstants.ALL_SUBPATHS,
-            PathConstants.ACTUALIZAR_ESTATUS_EMPLEADO + PathConstants.ALL_SUBPATHS
+            PathConstants.ACTUALIZAR_ESTATUS_EMPLEADO + PathConstants.ALL_SUBPATHS,
+            PathConstants.LISTAR_CITAS
     };
     private static final String[] PATH_ROL_EMPLEADO = {
+            PathConstants.LISTAR_CITAS,
+            PathConstants.CANCELAR_CITA
 
     };
     private static final String[] PATH_ROL_ALUMNO = {
-
+            PathConstants.CANCELAR_CITA
     };
 
     @Autowired
