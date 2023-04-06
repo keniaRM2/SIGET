@@ -40,7 +40,7 @@ public class Servicio {
 
     @NotNull
     @Column(name = "estatus", nullable = false)
-    private Integer estatus;
+    private Integer estatus = 1;
 
     public Servicio() {
     }
@@ -52,4 +52,5 @@ public class Servicio {
         this.tipoServicio = tipoServicio;
         this.estatus = estatus;
     }
+
 }

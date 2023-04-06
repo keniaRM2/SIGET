@@ -15,7 +15,7 @@ public class DivisionAcademica {
     @Column(name = "id_division_academica", nullable = false)
     private Integer id;
 
-    @Size(max = 45)
+    @Size(max = 255)
     @NotNull
     @Column(name = "nombre", nullable = false, length = 45)
     private String nombre;
