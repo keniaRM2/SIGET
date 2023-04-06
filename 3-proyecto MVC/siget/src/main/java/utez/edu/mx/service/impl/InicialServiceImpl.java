@@ -128,7 +128,7 @@ public class InicialServiceImpl implements InicialService {
             Integer estatusActivo = GeneralConstants.ESTATUS_ACTIVO;
 
             List<Servicio> servicios = Arrays.asList(
-                    new Servicio("Ficha de admisión", "...", 0.0, tipoServicioCosto, estatusActivo),
+                    new Servicio("Ficha de admisión", "...", 1040.0, tipoServicioCosto, estatusActivo),
                     new Servicio("Curso de selección para aspirantes", "...", 700.0, tipoServicioCosto, estatusActivo),
                     new Servicio("Inscripción TSU", "...", 520.0, tipoServicioCosto, estatusActivo),
                     new Servicio("Inscripción ING-LIC", "...", 390.0, tipoServicioCosto, estatusActivo),
@@ -159,29 +159,11 @@ public class InicialServiceImpl implements InicialService {
                 }
             }
 
-            List<String> tiposEstado = Arrays.asList(GeneralConstants.TIPO_ESTADO_PAGO,
-                    GeneralConstants.TIPO_ESTADO_CITA);
+            List<String> tiposEstado = Arrays.asList(GeneralConstants.TIPO_ESTADO_PAGO, GeneralConstants.TIPO_ESTADO_CITA);
             for (String nombre : tiposEstado) {
                 TipoEstado busqueda = tipoEstadoRepository.findByNombre(nombre);
                 if (Utileria.isNull(busqueda)) {
                     tipoEstadoRepository.save(new TipoEstado(nombre));
-                }
-            }
-            List<Estado> estados = Arrays.asList(
-                    new Estado(GeneralConstants.ESTADO_CITA_ACEPTADA,new TipoEstado(GeneralConstants.TIPO_ESTADO_CITA),"#229954"),
-                    new Estado(GeneralConstants.ESTADO_CITA_CANCELADA,new TipoEstado(GeneralConstants.TIPO_ESTADO_CITA),"#E74C3C"),
-                    new Estado(GeneralConstants.ESTADO_CITA_RECIBIDA,new TipoEstado(GeneralConstants.TIPO_ESTADO_CITA),"#3498DB"),
-                    new Estado(GeneralConstants.ESTADO_CITA_NO_RECIBIDA,new TipoEstado(GeneralConstants.TIPO_ESTADO_CITA),"#E67E22"),
-                    new Estado(GeneralConstants.ESTADO_CITA_PROCESO,new TipoEstado(GeneralConstants.TIPO_ESTADO_CITA),"#F1C40F"),
-                    new Estado(GeneralConstants.ESTADO_PAGO_PAGADO,new TipoEstado(GeneralConstants.TIPO_ESTADO_PAGO),"#229954"),
-                    new Estado(GeneralConstants.ESTADO_PAGO_RECHAZADO,new TipoEstado(GeneralConstants.TIPO_ESTADO_PAGO),"#E74C3C")
-            );
-            for (Estado estado : estados) {
-                TipoEstado tipoEstado = tipoEstadoRepository.findByNombre(estado.getTipoEstado().getNombre());
-                Estado busqueda = estadoRepository.findByNombreAndTipoEstado(estado.getNombre(), tipoEstado);
-                if (Utileria.isNull(busqueda)) {
-                    estado.setTipoEstado(tipoEstado);
-                    estadoRepository.save(estado);
                 }
             }
 

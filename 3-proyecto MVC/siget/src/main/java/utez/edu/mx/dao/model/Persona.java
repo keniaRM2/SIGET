@@ -35,10 +35,6 @@ public class Persona {
 
     @OneToOne(mappedBy = "persona", cascade = {CascadeType.ALL})
     private Usuario usuario;
-
-
-    @OneToOne(mappedBy = "persona", cascade = {CascadeType.ALL})
-    private Empleado empleado;
     public Persona() {
     }
 
