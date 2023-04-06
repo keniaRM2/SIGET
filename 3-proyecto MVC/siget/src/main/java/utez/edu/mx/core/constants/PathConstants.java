@@ -5,6 +5,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class PathConstants {
 
+    // Paths de los controladores
+
     public static final String ALL_SUBPATHS = "/**";
     public static final String LOGIN = "/login";
     public static final String LOGIN_ALL_SUBPATHS = LOGIN+ALL_SUBPATHS;
@@ -16,12 +18,26 @@ public class PathConstants {
 
     public static final String ERROR = "/error";
     public static final String ERROR_ALL_SUBPATHS = ERROR+ALL_SUBPATHS;
+
+    // Paths de las acciones del empleado
+
     private static final String EMPLEADO_CONTROLLER = "/empleado";
     public static final String LISTAR_EMPLEADOS = EMPLEADO_CONTROLLER;
     public static final String REGISTRAR_EMPLEADO = EMPLEADO_CONTROLLER + "/registrar";
     public static final String EDITAR_EMPLEADO = EMPLEADO_CONTROLLER + "/editar";
     public static final String ACTUALIZAR_ESTATUS_EMPLEADO = EMPLEADO_CONTROLLER + "/actualizarEstatus";
     public static final String GUARDAR_EMPLEADO = EMPLEADO_CONTROLLER + "/guardar";
+
+
+    //    Paths para citas
+
+    private static final String CITAS_CONTROLLER = "/citas";
+    public static final String LISTAR_CITAS = CITAS_CONTROLLER;
+    public static final String LISTAR_CITAS_SEMANA = CITAS_CONTROLLER + "/semana";
+    public static final String LISTAR_CITAS_DIA = CITAS_CONTROLLER + "/dia";
+    public static final String REGISTRAR_CITA = CITAS_CONTROLLER + "/registrar";
+    public static final String EDITAR_CITA = CITAS_CONTROLLER + "/editar";
+    public static final String CANCELAR_CITA = CITAS_CONTROLLER + "/eliminar";
 
     private PathConstants() {
     }

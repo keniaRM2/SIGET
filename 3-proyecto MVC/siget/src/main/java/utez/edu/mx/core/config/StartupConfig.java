@@ -15,6 +15,7 @@ public class StartupConfig implements ApplicationListener<ContextRefreshedEvent>
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
         System.out.println("onApplication-> "+ event.getApplicationContext().getApplicationName());
-//        inicialService.cargarInformacionInicial();
+        //inicialService.cargarInformacionInicial();
     }
 }
+// nota no descomentar por el momento, carga de datos iniciales en la base de datos.
