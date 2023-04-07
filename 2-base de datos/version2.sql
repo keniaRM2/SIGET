@@ -452,3 +452,97 @@ ENGINE = InnoDB;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+INSERT INTO persona (id_persona, nombre, primer_apellido, segundo_apellido) 
+VALUES 
+(1, 'Juan', 'Pérez', 'García'),
+(2, 'María', 'González', 'Fernández'),
+(3, 'Pedro', 'Sánchez', 'López'),
+(4, 'Luis', 'Hernández', 'Gómez'),
+(5, 'Ana', 'Martínez', 'Rodríguez'),
+
+
+(6, 'Pablo', 'García', 'Ramírez'),
+(7, 'Lucía', 'Fernández', 'Pérez'),
+(8, 'Carlos', 'López', 'González'),
+(9, 'Elena', 'Gómez', 'Sánchez'),
+(10, 'David', 'Rodríguez', 'Hernández');
+
+
+INSERT INTO servicio (id_servicio, nombre, descripcion, costo, tipo_servicio_id, estatus) VALUES
+  (1, 'Inscripción', 'Pago de inscripción para el ciclo escolar 2023', 2500.00, 1, 'Disponible'),
+  (2, 'Reinscripción', 'Pago de reinscripción para el ciclo escolar 2023', 2000.00, 1, 'Disponible'),
+  (3, 'Examen de admisión', 'Pago de examen de admisión para el ciclo escolar 2023', 500.00, 2, 'Disponible'),
+  (4, 'Certificado', 'Pago de certificado para el ciclo escolar 2023', 1500.00, 3, 'Disponible'),
+  (5, 'Trámite de titulación', 'Pago de trámite de titulación para el ciclo escolar 2023', 5000.00, 4, 'Disponible');
+  
+  INSERT INTO telefono (id_telefono, telefono, persona_id, tipo_telefono_id) VALUES
+  (1, '1234567890', 1, 1),
+  (2, '9876543210', 1, 2),
+  (3, '5554443333', 2, 1),
+  (4, '2221110000', 3, 2),
+  (5, '3332221111', 4, 1);
+(6, '4446789012', 3, 2),
+  (7, '4447890123', 4, 1),
+  (8, '4448901234', 4, 2),
+  (9, '4449012345', 5, 1),
+  (10, '4440123456', 5, 2);
+  
+  
+  
+  INSERT INTO horario (id_horario, hora_inicio, hora_fin, dia_id, ventanilla_id, empleado_id) VALUES
+  (1, '08:00:00', '10:00:00', 1, 1, 1),
+  (2, '10:00:00', '12:00:00', 1, 2, 2),
+  (3, '12:00:00', '14:00:00', 1, 3, 3),
+  (4, '08:00:00', '10:00:00', 2, 4, 4),
+  (5, '10:00:00', '12:00:00', 2, 5, 5);
+  
+  
+  
+  INSERT INTO alumno (id_alumno, matricula, persona_id, carrera_id) VALUES
+  (1, '20230001', 1, 1),
+  (2, '20230002', 2, 1),
+  (3, '20230003', 3, 2),
+  (4, '20230004', 4, 2),
+  (5, '20230005', 5, 3),
+  (6, '20230006', 6, 3),
+  (7, '20230007', 7, 4),
+  (8, '20230008', 8, 4),
+  (9, '20230009', 9, 5),
+  (10, '20230010', 10, 5);
+  
+  
+  
+  INSERT INTO empleado (id_empleado, numero_empleado, persona_id) VALUES
+  (1, 'E20230001', 1),
+  (2, 'E20230002', 2),
+  (3, 'E20230003', 3),
+  (4, 'E20230004', 4),
+  (5, 'E20230005', 5),
+  (6, 'E20230006', 6),
+  (7, 'E20230007', 7),
+  (8, 'E20230008', 8),
+  (9, 'E20230009', 9),
+  (10, 'E20230010', 10);
+  
+  
+  
+  INSERT INTO cita (id_cita, fecha_cita, hora_inicio, hora_fin, fecha_registro, alumno_id, servicio_id, estado_id, ventanilla_id, empleado_id) VALUES
+  (1, '2023-04-07', '10:00:00', '11:00:00', '2023-04-06', 1, 1, 1, 1, 1),
+  (2, '2023-04-08', '11:00:00', '12:00:00', '2023-04-06', 2, 1, 1, 1, 1),
+  (3, '2023-04-09', '12:00:00', '13:00:00', '2023-04-06', 3, 2, 1, 1, 2),
+  (4, '2023-04-10', '13:00:00', '14:00:00', '2023-04-06', 4, 2, 1, 2, 2),
+  (5, '2023-04-11', '14:00:00', '15:00:00', '2023-04-06', 5, 3, 1, 2, 3),
+  (6, '2023-04-12', '15:00:00', '16:00:00', '2023-04-06', 6, 3, 1, 2, 3),
+  (7, '2023-04-13', '16:00:00', '17:00:00', '2023-04-06', 7, 4, 1, 3, 4),
+  (8, '2023-04-14', '17:00:00', '18:00:00', '2023-04-06', 8, 4, 1, 3, 4),
+  (9, '2023-04-15', '18:00:00', '19:00:00', '2023-04-06', 9, 5, 1, 4, 5),
+  (10, '2023-04-16', '19:00:00', '20:00:00', '2023-04-06', 10, 5, 1, 4, 5);
+  
+  
+  
+  
+
+
+
+
