@@ -1,5 +1,8 @@
 package utez.edu.mx.controller;
 
+import java.sql.Date;
+import java.text.SimpleDateFormat;
+
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -7,24 +10,12 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 @Controller
-public class BaseController {
+public class BaseAlumnoController {
 
-
-
-    public static final String EMPLEADO = "empleado";
-    public static final String EMPLEADOS = "empleados";
-    public static final String SERVICIO = "servicio";
-    public static final String TIPOSERVICIO = "tiposervicio";
-    public static final String SERVICIOS= "servicios";
-    public static final String TIPOSERVICIOS= "tiposervicios";
+    public static final String ALUMNO = "alumno";
+    public static final String ALUMNOS = "alumnos";
     private static final String REDIRECT = "redirect:";
-    public static final String EMPLEADOS = "empleados";
-    public static final String CITAS = "citas";
-    public static final String CITA = "cita";
     protected static final String MENSAJE_EXITO_KEY = "mensajeExito";
     private static final String MENSAJE_EXITO_VALUE = "Se ha realizado la acción correctamente.";
     protected static final String MENSAJE_ERROR_KEY = "mensajeError";
@@ -67,5 +58,5 @@ public class BaseController {
     public void agregarFlashAttribute(RedirectAttributes redirectAttributes, String key, Object value){
         redirectAttributes.addFlashAttribute(key, value);
     }
-
+    
 }

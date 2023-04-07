@@ -17,7 +17,7 @@ public class DivisionAcademica {
 
     @Size(max = 255)
     @NotNull
-    @Column(name = "nombre", nullable = false, length = 255)
+    @Column(name = "nombre", nullable = false, length = 45)
     private String nombre;
 
     public DivisionAcademica() {

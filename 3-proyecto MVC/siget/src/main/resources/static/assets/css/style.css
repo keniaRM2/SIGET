@@ -36,6 +36,11 @@ a {
   text-decoration: none;
 }
 
+.card-body {
+  overflow-y: auto;
+}
+
+
 a:hover {
   color: #0BAC87;
   text-decoration: none;
