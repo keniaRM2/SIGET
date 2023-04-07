@@ -8,13 +8,8 @@ import org.springframework.stereotype.Service;
 import utez.edu.mx.core.constants.GeneralConstants;
 import utez.edu.mx.core.exceptions.SigetException;
 import utez.edu.mx.core.util.Utileria;
-import utez.edu.mx.dao.model.Empleado;
-import utez.edu.mx.dao.model.Persona;
-import utez.edu.mx.dao.model.Usuario;
-import utez.edu.mx.dao.repository.EmpleadoRepository;
-import utez.edu.mx.dao.repository.PersonaRepository;
-import utez.edu.mx.dao.repository.RolRepository;
-import utez.edu.mx.dao.repository.UsuarioRepository;
+import utez.edu.mx.dao.model.*;
+import utez.edu.mx.dao.repository.*;
 import utez.edu.mx.service.EmpleadoService;
 
 import java.util.List;
@@ -24,6 +19,8 @@ import java.util.Optional;
 public class EmpleadoServiceImpl implements EmpleadoService {
 
     @Autowired
+    private DiaRepository diaRepository;
+    @Autowired
     private RolRepository rolRepository;
     @Autowired
     private PersonaRepository personaRepository;
@@ -31,6 +28,8 @@ public class EmpleadoServiceImpl implements EmpleadoService {
     private UsuarioRepository usuarioRepository;
     @Autowired
     private EmpleadoRepository empleadoRepository;
+    @Autowired
+    private HorarioRepository horarioRepository;
 
     @Override
     public List<Empleado> listarEmpleados() {
@@ -161,7 +160,7 @@ public class EmpleadoServiceImpl implements EmpleadoService {
             Usuario usuario = empleado.getPersona().getUsuario();
             if (usuario.getEnabled() == GeneralConstants.ESTATUS_ACTIVO) {
                 usuario.setEnabled(GeneralConstants.ESTATUS_INACTIVO);
-            }else{
+            } else {
                 usuario.setEnabled(GeneralConstants.ESTATUS_ACTIVO);
             }
             usuarioRepository.save(usuario);
@@ -174,6 +173,30 @@ public class EmpleadoServiceImpl implements EmpleadoService {
             throw new SigetException(Utileria.getErrorNull());
         }
 
+    }
+
+    @Override
+    public Empleado obtenerEmpleadoConVentanilla(Cita cita) throws SigetException {
+        try {
+            String nombreDia = Utileria.obteneDiaSemana(cita.getFechaCita());
+            Dia dia = diaRepository.findByNombreIgnoreCase(nombreDia);
+            List<Horario> horarios = horarioRepository.findAllByVentanillaAndDiaAndHoraInicioBetween(
+                    cita.getVentanilla(),
+                    dia,
+                    cita.getHoraInicio(),
+                    cita.getHoraFin()
+            );
+            if (Utileria.nonEmptyList(horarios)) {
+                return horarios.get(0).getEmpleado();
+            }
+
+        } catch (NullPointerException e) {
+            System.err.println(e.getMessage());
+            throw new SigetException(Utileria.getErrorNull());
+        }
+
+
+        return null;
     }
 
 

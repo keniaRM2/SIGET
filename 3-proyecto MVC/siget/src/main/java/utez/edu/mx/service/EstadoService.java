@@ -6,4 +6,6 @@ import utez.edu.mx.dao.model.Estado;
 public interface EstadoService {
 
     Estado obtenerEstadoPorNombreyTipo(String nombreEstado, String nombreTipo) throws SigetException;
+
+    Estado obtenerPorId(Integer id)throws SigetException;
 }

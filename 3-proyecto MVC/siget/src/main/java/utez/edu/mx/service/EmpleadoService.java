@@ -1,6 +1,7 @@
 package utez.edu.mx.service;
 
 import utez.edu.mx.core.exceptions.SigetException;
+import utez.edu.mx.dao.model.Cita;
 import utez.edu.mx.dao.model.Empleado;
 
 import java.util.List;
@@ -17,4 +18,6 @@ public interface EmpleadoService {
     Empleado obtenerEmpleadoEdicion(Integer id) throws SigetException;
 
     void actualizarEstatus(Integer id) throws SigetException;
+
+    Empleado obtenerEmpleadoConVentanilla(Cita cita)  throws SigetException;
 }

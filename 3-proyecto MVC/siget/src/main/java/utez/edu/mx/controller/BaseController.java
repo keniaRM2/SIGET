@@ -16,8 +16,10 @@ public class BaseController {
 
 
     public static final String EMPLEADO = "empleado";
-    public static final String EMPLEADOS = "empleados";
     private static final String REDIRECT = "redirect:";
+    public static final String EMPLEADOS = "empleados";
+    public static final String CITAS = "citas";
+    public static final String CITA = "cita";
     protected static final String MENSAJE_EXITO_KEY = "mensajeExito";
     private static final String MENSAJE_EXITO_VALUE = "Se ha realizado la acción correctamente.";
     protected static final String MENSAJE_ERROR_KEY = "mensajeError";

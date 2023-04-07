@@ -34,4 +34,13 @@ public class EstadoServiceImpl implements EstadoService {
        return estado;
 
     }
+
+    @Override
+    public Estado obtenerPorId(Integer id) throws SigetException {
+        Estado estado = estadoRepository.findById(id).orElse(null);
+        if(estado == null){
+            throw new SigetException("Estado no encontrado.");
+        }
+        return estado;
+    }
 }

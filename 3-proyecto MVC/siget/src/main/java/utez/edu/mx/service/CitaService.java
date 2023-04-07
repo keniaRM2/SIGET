@@ -3,14 +3,17 @@ package utez.edu.mx.service;
 import utez.edu.mx.core.exceptions.SigetException;
 import utez.edu.mx.dao.model.Cita;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 public interface CitaService {
-    List<Cita> findAll();
-    List<Cita> findByEmployeeId(int id);
-    Cita findById(int id);
-    boolean save(Cita cita) throws SigetException;
-    void cancelCita(int id) throws SigetException;
 
+   void guardar(Cita cita) throws SigetException;
+    void cambiarEstadoCita(Cita cita) throws SigetException;
     List<Cita> listarCitas();
+
+
+
+
+
 }
