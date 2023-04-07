@@ -453,96 +453,124 @@ SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 
+--Insertar Datos
+
 INSERT INTO persona (id_persona, nombre, primer_apellido, segundo_apellido) 
 VALUES 
-(1, 'Juan', 'Pérez', 'García'),
-(2, 'María', 'González', 'Fernández'),
-(3, 'Pedro', 'Sánchez', 'López'),
-(4, 'Luis', 'Hernández', 'Gómez'),
-(5, 'Ana', 'Martínez', 'Rodríguez'),
+(2, 'Juan', 'Pérez', 'García'),
+(3, 'María', 'González', 'Fernández'),
+(4, 'Pedro', 'Sánchez', 'López'),
+(5, 'Luis', 'Hernández', 'Gómez'),
+(6, 'Ana', 'Martínez', 'Rodríguez'),
+(7, 'Pablo', 'García', 'Ramírez'),
+(8, 'Lucía', 'Fernández', 'Pérez'),
+(9, 'Carlos', 'López', 'González'),
+(10, 'Elena', 'Gómez', 'Sánchez'),
+(11, 'David', 'Rodríguez', 'Hernández'),
+(12, 'Daniel', 'Sanchez', 'Solano'),
+(13, 'Samuel', 'Miños', 'Ortega'),
+(14, 'Gerardo', 'Lopez', 'Aguero'),
+(15, 'Natalia', 'Domiguez', 'Santana');
 
+INSERT INTO usuario (id_usuario, username, password, enabled, rol_id, persona_id) 
+VALUES 
+(10, 'juan@gmail.com','$2y$10$YsiHZoKNvBnsl9BVc8EKyujFjXfjmoMT3tS67ImI5Ha7qVO87siuO',1,12,2),
+(11, 'maria@gmail.com','$2y$10$YsiHZoKNvBnsl9BVc8EKyujFjXfjmoMT3tS67ImI5Ha7qVO87siuO',1,12,3),
+(12, 'pedro@gmail.com','$2y$10$YsiHZoKNvBnsl9BVc8EKyujFjXfjmoMT3tS67ImI5Ha7qVO87siuO',1,12,4),
+(13, 'luis@gmail.com','$2y$10$YsiHZoKNvBnsl9BVc8EKyujFjXfjmoMT3tS67ImI5Ha7qVO87siuO',1,12,5),
+(14, 'ana@gmail.com','$2y$10$YsiHZoKNvBnsl9BVc8EKyujFjXfjmoMT3tS67ImI5Ha7qVO87siuO',1,12,6),
+(15, 'pablo@gmail.com','$2y$10$YsiHZoKNvBnsl9BVc8EKyujFjXfjmoMT3tS67ImI5Ha7qVO87siuO',1,12,7),
+(16, 'lucia@gmail.com','$2y$10$YsiHZoKNvBnsl9BVc8EKyujFjXfjmoMT3tS67ImI5Ha7qVO87siuO',1,12,8),
+(17, 'carlos@gmail.com','$2y$10$YsiHZoKNvBnsl9BVc8EKyujFjXfjmoMT3tS67ImI5Ha7qVO87siuO',1,12,9),
+(18, 'elena@gmail.com','$2y$10$YsiHZoKNvBnsl9BVc8EKyujFjXfjmoMT3tS67ImI5Ha7qVO87siuO',1,12,10),
+(19, 'david@gmail.com','$2y$10$YsiHZoKNvBnsl9BVc8EKyujFjXfjmoMT3tS67ImI5Ha7qVO87siuO',1,12,11),
+(20, 'daniel@gmail.com','$2y$10$YsiHZoKNvBnsl9BVc8EKyujFjXfjmoMT3tS67ImI5Ha7qVO87siuO',1,11,12),
+(21, 'samuel@gmail.com','$2y$10$YsiHZoKNvBnsl9BVc8EKyujFjXfjmoMT3tS67ImI5Ha7qVO87siuO',1,11,13),
+(22, 'gerardo@gmail.com','$2y$10$YsiHZoKNvBnsl9BVc8EKyujFjXfjmoMT3tS67ImI5Ha7qVO87siuO',1,11,14),
+(23, 'natalia@gmail.com','$2y$10$YsiHZoKNvBnsl9BVc8EKyujFjXfjmoMT3tS67ImI5Ha7qVO87siuO',1,11,15);
 
-(6, 'Pablo', 'García', 'Ramírez'),
-(7, 'Lucía', 'Fernández', 'Pérez'),
-(8, 'Carlos', 'López', 'González'),
-(9, 'Elena', 'Gómez', 'Sánchez'),
-(10, 'David', 'Rodríguez', 'Hernández');
+ INSERT INTO empleado (id_empleado, numero_empleado, persona_id) VALUES
+  (1, 'E20230001', 12),
+  (2, 'E20230002', 13),
+  (3, 'E20230003', 14),
+  (4, 'E20230004', 15);
 
 
 INSERT INTO servicio (id_servicio, nombre, descripcion, costo, tipo_servicio_id, estatus) VALUES
-  (1, 'Inscripción', 'Pago de inscripción para el ciclo escolar 2023', 2500.00, 1, 'Disponible'),
-  (2, 'Reinscripción', 'Pago de reinscripción para el ciclo escolar 2023', 2000.00, 1, 'Disponible'),
-  (3, 'Examen de admisión', 'Pago de examen de admisión para el ciclo escolar 2023', 500.00, 2, 'Disponible'),
-  (4, 'Certificado', 'Pago de certificado para el ciclo escolar 2023', 1500.00, 3, 'Disponible'),
-  (5, 'Trámite de titulación', 'Pago de trámite de titulación para el ciclo escolar 2023', 5000.00, 4, 'Disponible');
+  (1, 'Inscripción', 'Pago de inscripción para el ciclo escolar 2023', 2500.00, 1, 1),
+  (2, 'Reinscripción', 'Pago de reinscripción para el ciclo escolar 2023', 2000.00, 1, 1),
+  (3, 'Examen de admisión', 'Pago de examen de admisión para el ciclo escolar 2023', 500.00, 2, 1),
+  (4, 'Certificado', 'Pago de certificado para el ciclo escolar 2023', 1500.00, 3, 1),
+  (5, 'Trámite de titulación', 'Pago de trámite de titulación para el ciclo escolar 2023', 5000.00, 4, 1);
   
-  INSERT INTO telefono (id_telefono, telefono, persona_id, tipo_telefono_id) VALUES
-  (1, '1234567890', 1, 1),
-  (2, '9876543210', 1, 2),
-  (3, '5554443333', 2, 1),
-  (4, '2221110000', 3, 2),
-  (5, '3332221111', 4, 1);
-(6, '4446789012', 3, 2),
-  (7, '4447890123', 4, 1),
-  (8, '4448901234', 4, 2),
-  (9, '4449012345', 5, 1),
-  (10, '4440123456', 5, 2);
-  
-  
-  
-  INSERT INTO horario (id_horario, hora_inicio, hora_fin, dia_id, ventanilla_id, empleado_id) VALUES
-  (1, '08:00:00', '10:00:00', 1, 1, 1),
-  (2, '10:00:00', '12:00:00', 1, 2, 2),
-  (3, '12:00:00', '14:00:00', 1, 3, 3),
-  (4, '08:00:00', '10:00:00', 2, 4, 4),
-  (5, '10:00:00', '12:00:00', 2, 5, 5);
-  
-  
+INSERT INTO telefono (id_telefono, telefono, persona_id, tipo_telefono_id) VALUES
+  (1, '1234567890', 2, 11),
+  (2, '9876543210', 3, 12),
+  (3, '5554443333', 4, 11),
+  (4, '2221110000', 5, 12),
+  (5, '3332221111', 6, 10),
+  (6, '4446789012', 7, 10),
+  (7, '4447890123', 8, 11),
+  (8, '4448901234', 9, 12),
+  (9, '4449012345', 10, 11),
+  (10, '4440123456', 11, 12),
+  (11, '6540128336', 12, 12),
+  (12, '5675634566', 13, 12),
+  (13, '2342366745', 14, 12),
+  (14, '4352343245', 15, 12);
   
   INSERT INTO alumno (id_alumno, matricula, persona_id, carrera_id) VALUES
-  (1, '20230001', 1, 1),
-  (2, '20230002', 2, 1),
-  (3, '20230003', 3, 2),
-  (4, '20230004', 4, 2),
-  (5, '20230005', 5, 3),
-  (6, '20230006', 6, 3),
-  (7, '20230007', 7, 4),
-  (8, '20230008', 8, 4),
-  (9, '20230009', 9, 5),
-  (10, '20230010', 10, 5);
+  (1, '2020TN01', 2, 22),
+  (2, '2020CA02', 3, 23),
+  (3, '2023TN03', 4, 29),
+  (4, '2022FN04', 5, 24),
+  (5, '2021CA05', 6, 32),
+  (6, '2023TN06', 7, 30),
+  (7, '2022FN07', 8, 33),
+  (8, '2021TN08', 9, 30),
+  (9, '2021TN09', 10, 30),
+  (10, '2020TN10', 11, 32);
+  
+  INSERT INTO horario (id_horario, hora_inicio, hora_fin, dia_id, ventanilla_id, empleado_id) VALUES
+  (1, '08:00:00', '10:00:00', 22, 11, 1),
+  (2, '10:00:00', '12:00:00', 23, 10, 2),
+  (3, '12:00:00', '14:00:00', 25, 12, 3),
+  (4, '08:00:00', '10:00:00', 24, 11, 4),
+  (5, '10:00:00', '12:00:00', 23, 10, 1);
+  
+  
+  INSERT INTO documento (id_documento, nombre, servicio_id) VALUES
+  (1,'CURP',1),
+  (2,'Acta de nacimiento',1),
+  (3,'Comprobante de domicilio',1),
+  (4,'CURP',2),
+  (5,'Acta de nacimiento',2),
+  (6,'Comprobante de domicilio',2),
+  (7,'CURP',3),
+  (8,'Acta de nacimiento',3),
+  (9,'Comprobante de domicilio',3),
+  (10,'CURP',4),
+  (11,'Acta de nacimiento',4),
+  (12,'Comprobante de domicilio',4),
+  (13,'Constancia de no adeudo',7),
+  (14,'Certificado de nivel actual TSU o Ingenieria',7),
+  (15,'CURP',7),
+  (16,'Cedula Profesional',19);
   
   
   
-  INSERT INTO empleado (id_empleado, numero_empleado, persona_id) VALUES
-  (1, 'E20230001', 1),
-  (2, 'E20230002', 2),
-  (3, 'E20230003', 3),
-  (4, 'E20230004', 4),
-  (5, 'E20230005', 5),
-  (6, 'E20230006', 6),
-  (7, 'E20230007', 7),
-  (8, 'E20230008', 8),
-  (9, 'E20230009', 9),
-  (10, 'E20230010', 10);
-  
-  
+  -- Primero se necesita tener un estado registrado
   
   INSERT INTO cita (id_cita, fecha_cita, hora_inicio, hora_fin, fecha_registro, alumno_id, servicio_id, estado_id, ventanilla_id, empleado_id) VALUES
-  (1, '2023-04-07', '10:00:00', '11:00:00', '2023-04-06', 1, 1, 1, 1, 1),
-  (2, '2023-04-08', '11:00:00', '12:00:00', '2023-04-06', 2, 1, 1, 1, 1),
-  (3, '2023-04-09', '12:00:00', '13:00:00', '2023-04-06', 3, 2, 1, 1, 2),
-  (4, '2023-04-10', '13:00:00', '14:00:00', '2023-04-06', 4, 2, 1, 2, 2),
-  (5, '2023-04-11', '14:00:00', '15:00:00', '2023-04-06', 5, 3, 1, 2, 3),
-  (6, '2023-04-12', '15:00:00', '16:00:00', '2023-04-06', 6, 3, 1, 2, 3),
-  (7, '2023-04-13', '16:00:00', '17:00:00', '2023-04-06', 7, 4, 1, 3, 4),
-  (8, '2023-04-14', '17:00:00', '18:00:00', '2023-04-06', 8, 4, 1, 3, 4),
-  (9, '2023-04-15', '18:00:00', '19:00:00', '2023-04-06', 9, 5, 1, 4, 5),
-  (10, '2023-04-16', '19:00:00', '20:00:00', '2023-04-06', 10, 5, 1, 4, 5);
+  (1, '2023-04-07', '10:00:00', '10:15:00', '2023-04-06', 1, 1, 1, 10, 1),
+  (2, '2023-04-08', '10:15:00', '10:30s:00', '2023-04-06', 2, 1, 1, 10, 1),
+  (3, '2023-04-09', '12:00:00', '12:15:00', '2023-04-06', 3, 2, 1, 11, 2),
+  (4, '2023-04-10', '12:00:00', '12:15:00', '2023-04-06', 4, 2, 1, 12, 2),
+  (5, '2023-04-11', '11:30:00', '11:45:00', '2023-04-06', 5, 3, 1, 12, 3),
+  (6, '2023-04-12', '11:00:00', '11:15:00', '2023-04-06', 6, 3, 1, 12, 3),
+  (7, '2023-04-13', '16:00:00', '17:00:00', '2023-04-06', 7, 4, 1, 11, 4),
+  (8, '2023-04-14', '17:00:00', '18:00:00', '2023-04-06', 8, 4, 1, 10, 4),
+  (9, '2023-04-15', '18:00:00', '19:00:00', '2023-04-06', 9, 5, 1, 12, 5),
+  (10, '2023-04-16', '19:00:00', '20:00:00', '2023-04-06', 10, 5, 1, 13, 5);
   
-  
-  
-  
-
-
-
-
+ 
