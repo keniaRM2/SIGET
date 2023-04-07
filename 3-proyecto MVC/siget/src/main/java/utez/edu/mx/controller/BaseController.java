@@ -13,18 +13,31 @@ import java.util.Date;
 @Controller
 public class BaseController {
 
+    public static final String ALUMNOS = "alumnos";
 
+    public static final String ALUMNO = "alumno";
+
+    public static final String CITAS = "citas";
+    public static final String CITA = "cita";
 
     public static final String EMPLEADO = "empleado";
     public static final String EMPLEADOS = "empleados";
+
+
     public static final String SERVICIO = "servicio";
     public static final String TIPOSERVICIO = "tiposervicio";
     public static final String SERVICIOS= "servicios";
     public static final String TIPOSERVICIOS= "tiposervicios";
+
+
     private static final String REDIRECT = "redirect:";
-    public static final String EMPLEADOS = "empleados";
-    public static final String CITAS = "citas";
-    public static final String CITA = "cita";
+
+
+
+
+
+
+
     protected static final String MENSAJE_EXITO_KEY = "mensajeExito";
     private static final String MENSAJE_EXITO_VALUE = "Se ha realizado la acción correctamente.";
     protected static final String MENSAJE_ERROR_KEY = "mensajeError";

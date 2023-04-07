@@ -14,6 +14,11 @@ public class GeneralConstants {
     public static final String TIPO_ESTADO_PAGO = "Pago";
     public static final String TIPO_ESTADO_CITA = "Cita";
     public static final BCryptPasswordEncoder CODIFICAROR =  new BCryptPasswordEncoder();
+    public static final String ESTADO_CITA_CANCELADA = "Cancelada";
+    public static final String ESTADO_CITA_ACEPTADA ="Aceptada" ;
+    public static final String ESTADO_CITA_PROCESO = "En Proceso";
+    public static final String ESTADO_CITA_RECIBIDA = "Recibida";
+    public static final String ESTADO_CITA_NO_RECIBIDA = "No Recibida";
 
     private GeneralConstants() {
     }

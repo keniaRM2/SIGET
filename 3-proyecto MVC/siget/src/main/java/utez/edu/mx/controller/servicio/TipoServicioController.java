@@ -1,4 +1,4 @@
-package utez.edu.mx.controller.Servicio;
+package utez.edu.mx.controller.servicio;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

@@ -18,8 +18,8 @@ public class PathConstants {
     
     
     // EMPLEADOS
-    public static final String LISTAR_EMPLEADOS = EMPLEADO_CONTROLLER;
     private static final String EMPLEADO_CONTROLLER = "/empleado";
+    public static final String LISTAR_EMPLEADOS = EMPLEADO_CONTROLLER;
     public static final String REGISTRAR_EMPLEADO = EMPLEADO_CONTROLLER + "/registrar";
     public static final String EDITAR_EMPLEADO = EMPLEADO_CONTROLLER + "/editar";
     public static final String ACTUALIZAR_ESTATUS_EMPLEADO = EMPLEADO_CONTROLLER + "/actualizarEstatus";

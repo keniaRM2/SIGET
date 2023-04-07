@@ -13,6 +13,8 @@ public class VistasConstants {
     public static final String ERROR = "/errores/error";
     public static final String ERROR_500 = "/errores/error_500";
     public static final String ERROR_404 = "/errores/error_404";
+    public static final String LISTA_ALUMNOS = "/alumno/tabla_alumno";
+    public static final String FORMULARIO_ALUMNO ="/alumno/formulario_alumno";
 
     private VistasConstants() {
     }

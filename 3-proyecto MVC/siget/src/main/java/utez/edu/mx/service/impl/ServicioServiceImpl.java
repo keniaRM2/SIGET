@@ -66,10 +66,10 @@ public void actualizar(Servicio servicio) throws SigetException {
         Optional<Servicio> servicioOptional = servicioRepository.findById(servicio.getId());
 
         if (servicioOptional.isEmpty()) {
-            throw new SigetException("Servicio no encontrado.");
+            throw new SigetException("servicio no encontrado.");
         }
 /*
-            Servicio servicioRepetido = servicioRepository.findByNombre(servicio.getNombre());
+            servicio servicioRepetido = servicioRepository.findByNombre(servicio.getNombre());
             if (Utileria.nonNull(servicioRepetido)) {
                 throw new SigetException("El servicio se ha registrado previamente");
             }
@@ -101,7 +101,7 @@ public void actualizar(Servicio servicio) throws SigetException {
 
         Optional<Servicio> servicioOptional = servicioRepository.findById(id);
         if (servicioOptional.isEmpty()) {
-            throw new SigetException("Servicio no encontrado.");
+            throw new SigetException("servicio no encontrado.");
         }
         return servicioOptional.get();
     }
@@ -113,7 +113,7 @@ public void actualizar(Servicio servicio) throws SigetException {
         try {
             Optional<Servicio> servicioOptional = servicioRepository.findById(id);
             if (servicioOptional.isEmpty()) {
-                throw new SigetException("Servicio no encontrado.");
+                throw new SigetException("servicio no encontrado.");
             }
 
             Servicio servicio = servicioOptional.get();
