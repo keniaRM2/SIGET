@@ -13,7 +13,7 @@
     <!-- HEADER, fin -->
 
     <!--   ASIDE, INICIO-->
-    <nav th:replace="~{fragments/aside :: aside}"></nav>
+    <nav th:replace="~{fragments/aside:: aside}"></nav>
     <!--   ASIDE, FIN-->
 
 
@@ -43,20 +43,10 @@
                                             <strong>Total:<span th:text="${#lists.size(alumnos)}"/></strong>
                                         </h5>
                                     </div>
-                                    <!--                                    <div class="col-11">-->
-                                    <!--                                        <div class="input-group mb-3">-->
 
-                                    <!--                                            <input type="text" class="form-control" placeholder="Búsqueda..."-->
-                                    <!--                                                   aria-label="Búsqueda" aria-describedby="basic-addon1">-->
-                                    <!--                                            <span class="input-group-text" id="basic-addon1">-->
-                                    <!--                                                <i class="bi bi-search text-green-light"></i>-->
-                                    <!--                                            </span>-->
-
-                                    <!--                                        </div>-->
-
-                                    <!--                                    </div>-->
                                     <div class="col-1 offset-9 align-middle">
-                                        <a class="btn btn-link pull-right font-icon" type="button" th:href="@{'/alumno/registrar'}" >
+                                        <a class="btn btn-link pull-right font-icon" type="button"
+                                           th:href="@{'/alumno/registrar'}">
                                             <i class="bx bxs-plus-circle text-green-light"></i>
                                         </a>
                                     </div>
@@ -64,11 +54,11 @@
 
                             </div>
                             <!-- Table with stripped rows -->
-                            <table class="table table-striped bdr table-sm table-hover">
+                            <table class="table table-striped bdr table-sm table-hover tabla-siget">
                                 <thead class="bg-green-dark">
                                 <tr>
                                     <th class="text-center align-middle" scope="col">#</th>
-                                    <th class="text-center align-middle" scope="col">Matricula Estudiante</th>
+                                    <th class="text-center align-middle" scope="col">Matricula</th>
                                     <th class="text-center align-middle" scope="col">Alumno</th>
                                     <th class="text-center align-middle" scope="col">Usuario</th>
                                     <th class="text-center align-middle" scope="col">Estatus</th>
@@ -76,11 +66,7 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr th:if="${#lists.isEmpty(alumnos)}">
-                                    <td class="text-center fst-italic" colspan="6">
-                                        Sin registros disponibles.
-                                    </td>
-                                </tr>
+
                                 <tr th:each="alumno, iter: ${alumnos}">
                                     <td class="text-center align-middle" th:text="${iter.index+1}"/>
                                     <td class="text-center align-middle" th:text="${alumno.matricula}"/>
@@ -96,7 +82,8 @@
                                         </span>
                                     </td>
                                     <td class="text-center">
-                                        <a class="btn btn-link" type="button" th:href="@{/alumno/editar/{id} (id=${alumno.id})}">
+                                        <a class="btn btn-link" type="button"
+                                           th:href="@{/alumno/editar/{id} (id=${alumno.id})}">
                                             <i class="bi bi-pencil text-warning"></i>
                                         </a>
                                         <a class="btn btn-link boton-estatus" type="button"
@@ -104,6 +91,7 @@
                                             <i class="bi bi-trash text-danger"></i>
                                         </a>
                                     </td>
+
                                 </tr>
 
                                 </tbody>
@@ -126,8 +114,9 @@
 
 <script type="text/javascript">
     var botones = document.getElementsByClassName('boton-estatus');
-    function confirmarEliminacion(e){
-        if(!confirm("¿Desea cambiar el estatus del registro?")){
+
+    function confirmarEliminacion(e) {
+        if (!confirm("¿Desea cambiar el estatus del registro?")) {
             e.preventDefault();
         }
     }

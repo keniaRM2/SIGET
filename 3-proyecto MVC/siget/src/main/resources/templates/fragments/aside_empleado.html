@@ -1,0 +1,35 @@
+<!-- ======= Sidebar ======= -->
+<aside id="sidebar" class="sidebar nav-bg-blue l-navbar">
+
+
+    <img th:src="@{/assets/img/logo_utez.png}" alt="" width="165px"/>
+
+    <ul class="sidebar-nav" id="sidebar-nav">
+
+        <li class="nav-heading">Menú</li>
+        <li class="nav-item">
+            <a class="nav-link collapsed" th:href="@{'/'}">
+                <i class="bi bi-grid"></i>
+                <span>Inicio</span>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link collapsed" th:href="@{'/servicio'}">
+                <i class="bx bxs-file"></i>
+                <span>Bandeja de Citas</span>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link collapsed" th:href="@{'/cita'}">
+                <i class="bx bxs-calendar"></i>
+                <span>Horario de atención</span>
+            </a>
+        </li>
+
+
+    </ul>
+
+</aside>
+<!-- End Sidebar-->

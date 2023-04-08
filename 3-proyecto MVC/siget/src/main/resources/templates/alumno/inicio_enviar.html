@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns:th="http://www.thymeleaf.org" >
+
+<head th:replace="~{fragments/bootstrap :: head}"></head>
+<script src="https://kit.fontawesome.com/a076d05399.js"></script>
+
+<body>
+
+
+<div id="siget">
+
+  <!-- HEADER, inciio -->
+  <nav th:replace="~{fragments/header :: header}"></nav>
+  <!-- HEADER, fin -->
+
+  <!--   ASIDE, INICIO-->
+  <nav th:replace="~{fragments/aside_alumno :: aside}"></nav>
+  <!--   ASIDE, FIN-->
+
+  <main id="main" class="main">
+
+    <div class="pagetitle">
+      <h1><strong>Peticion Cita</strong></h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item">Registrar cita</a></li>
+        </ol>
+      </nav>
+    </div>
+
+    <div th:replace="/formulario/seccion_enviar.html"></div>
+    <div th:replace="/formulario/form_enviar.html"></div>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-12 col-md-8 col-lg-6 mx-auto">
+    <div class="field btns">
+      <button class="prev-1 prev btn btn-info"
+              onclick="window.location.href='inicio_pago'">Atrás</button>
+      <button class="next-1 next btn btn-success"
+              onclick="window.location.href=' '">Enviar</button>
+    </div>
+
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+</body>
+
+
+</html>

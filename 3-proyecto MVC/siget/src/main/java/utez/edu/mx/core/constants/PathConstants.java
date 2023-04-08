@@ -59,6 +59,11 @@ public class PathConstants {
     public static final String EDITAR_ALUMNO = ALUMNO_CONTROLLER + "/editar";
     public static final String ACTUALIZAR_ESTATUS_ALUMNO = ALUMNO_CONTROLLER + "/actualizarEstatus";
     public static final String GUARDAR_ALUMNO = ALUMNO_CONTROLLER + "/guardar";
+    public static final String INICIO_ALUMNO = ALUMNO_CONTROLLER + "/inicio_alumno";
+    public static final String HISTORIAL_ALUMNO = ALUMNO_CONTROLLER + "/historial_alumno";
+    public static final String INICIO_FECHA = ALUMNO_CONTROLLER + "/inicio_fecha";
+    public static final String INICIO_PAGO = ALUMNO_CONTROLLER + "/inicio_pago";
+    public static final String INICIO_ENVIAR = ALUMNO_CONTROLLER + "/inicio_enviar";
 
 
     // PERSONALIZAR

@@ -69,4 +69,27 @@ public class AlumnoController extends BaseController {
             return VistasConstants.LOGIN;
         }
     }
+    @GetMapping(value = PathConstants.INICIO_ALUMNO)
+    public String inicioAlumno(Model model){
+        return VistasConstants.INICIO_ALUMNO;
+    }
+    @GetMapping(value = PathConstants.HISTORIAL_ALUMNO)
+    public String historialAlumno(Model model){
+        return VistasConstants.HISTORIAL_ALUMNO;
+    }
+
+    @GetMapping(value = PathConstants.INICIO_FECHA)
+    public String inicioFecha(Model model){
+        return VistasConstants.INICIO_FECHA;
+    }
+
+    @GetMapping(value = PathConstants.INICIO_PAGO)
+    public String inicioPago(Model model){
+        return VistasConstants.INICIO_PAGO;
+    }
+
+    @GetMapping(value = PathConstants.INICIO_ENVIAR)
+    public String inicioEnviar(Model model) {
+        return VistasConstants.INICIO_ENVIAR;
+    }
 }
