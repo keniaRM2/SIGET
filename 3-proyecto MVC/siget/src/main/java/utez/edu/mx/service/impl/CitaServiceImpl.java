@@ -4,6 +4,7 @@ import jakarta.validation.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import utez.edu.mx.core.bean.CitaBean;
 import utez.edu.mx.core.constants.GeneralConstants;
 import utez.edu.mx.core.exceptions.SigetException;
 import utez.edu.mx.core.util.Utileria;
@@ -15,7 +16,7 @@ import utez.edu.mx.service.EstadoService;
 import java.util.*;
 
 @Service
-public class CitaServiceImp implements CitaService {
+public class CitaServiceImpl implements CitaService {
 
     @Autowired
     private CitaRepository citaRepository;
@@ -120,22 +121,32 @@ public class CitaServiceImp implements CitaService {
     }
 
     @Override
-    public List<Cita> listarCitas() {
+    public List<CitaBean> listarCitas() {
+        List<CitaBean> citasBean = new ArrayList<>();
 
         try {
+            List<Cita> citas = null;
             Usuario usuario = usuarioServiceImpl.obtenerUsuarioSesion();
             Rol rol = usuarioServiceImpl.obtenerRolSesion();
+
             if (rol.getAuthority().equals(GeneralConstants.ROL_ADMIN)) {
-                return citaRepository.findAll();
+                citas = citaRepository.findAll();
             } else if (rol.getAuthority().equals(GeneralConstants.ROL_EMPLEADO)) {
                 Empleado empleado = usuario.getPersona().getEmpleado();
-                return citaRepository.findAllByEmpleado(empleado);
+                citas = citaRepository.findAllByEmpleado(empleado);
             }
-            return new ArrayList<>();
+
+            if(Utileria.nonEmptyList(citas)){
+                for (Cita cita : citas) {
+                    citasBean.add(Utileria.mapper.map(cita, CitaBean.class));
+                }
+            }
+
         } catch (Exception e) {
             System.err.println(e.getMessage());
         }
-        return new ArrayList<>();
+        return citasBean;
+
 
     }
 }

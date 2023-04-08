@@ -1298,6 +1298,13 @@ thead {
   color: #fff !important;
   /*background-image: url(../img/cuadro.png);*/
 }
+
+.modal-bg-blue {
+  opacity: 0.9;
+  background: #179C81;
+  color: #fff !important;
+  /*background-image: url(../img/cuadro.png);*/
+}
 .top-bg-blue {
   opacity: 0.9;
   background: #094670;

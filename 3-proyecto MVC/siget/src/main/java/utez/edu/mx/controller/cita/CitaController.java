@@ -8,25 +8,16 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import utez.edu.mx.controller.BaseController;
 import utez.edu.mx.core.constants.PathConstants;
-import utez.edu.mx.core.constants.VistasConstants;
 import utez.edu.mx.core.exceptions.SigetException;
 import utez.edu.mx.dao.model.Cita;
-import utez.edu.mx.dao.model.Empleado;
-import utez.edu.mx.service.impl.CitaServiceImp;
+import utez.edu.mx.service.impl.CitaServiceImpl;
 
 @Controller
 public class CitaController extends BaseController {
 
     @Autowired
-    private CitaServiceImp citasServiceImpl;
+    private CitaServiceImpl citasServiceImpl;
 
-
-   @GetMapping(value = PathConstants.LISTAR_CITAS)
-    public String listarCitas(Model model){
-       model.addAttribute(CITAS, citasServiceImpl.listarCitas());
-       //cambiar return json
-       return "cita/index";
-    }
 
     @GetMapping(value = PathConstants.REGISTRAR_CITA)
     public String registrarCita(Model model){
@@ -39,7 +30,7 @@ public class CitaController extends BaseController {
         try{
             citasServiceImpl.cambiarEstadoCita(cita);
             mensajeExito(redirectAttributes);
-            return redireccionar("   ---------- falta vista----------");
+            return redireccionar("   ---------- falta vista---------");
         }catch (SigetException e){
             mensajeError(model, e.getMessage());
             model.addAttribute(CITA,cita);

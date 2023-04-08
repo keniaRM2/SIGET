@@ -16,6 +16,7 @@ public class VistasConstants {
     public static final String LISTA_ALUMNOS = "/alumno/tabla_alumno";
     public static final String FORMULARIO_ALUMNO ="/alumno/formulario_alumno";
 
+    public static final String CALENDARIO_CITA = "/cita/calendario";
     private VistasConstants() {
     }
 }
