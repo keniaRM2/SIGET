@@ -620,10 +620,10 @@ h6 {
 --------------------------------------------------------------*/
 .sidebar {
   position: fixed;
-  top: 45px;
+  top: 50px;
   left: 0;
   bottom: 0;
-  width: 190px;
+  width: 215px;
   z-index: 996;
   transition: all 0.3s;
   padding: 20px;
@@ -1305,8 +1305,6 @@ thead {
   /*background-image: url(../img/cuadro.png);*/
   max-height: 50px;
 }
-
-
 
 
 .bdr {

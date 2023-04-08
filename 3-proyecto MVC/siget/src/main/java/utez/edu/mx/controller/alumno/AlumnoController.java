@@ -18,8 +18,6 @@ import utez.edu.mx.service.AlumnoService;
 @Controller
 public class AlumnoController extends BaseController {
 
-
-   
     @Autowired
     private AlumnoService alumnoService;
 
@@ -64,7 +62,7 @@ public class AlumnoController extends BaseController {
         try{
             alumnoService.guardar(alumno);
             mensajeExito(redirectAttributes);
-            return redireccionar(PathConstants.LOGIN); //redireccionar a servicios
+            return redireccionar(PathConstants.LOGIN);
         }catch (SigetException e){
             mensajeError(model, e.getMessage());
             model.addAttribute(ALUMNO, alumno);
