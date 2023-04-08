@@ -2,6 +2,7 @@ package utez.edu.mx.core.util;
 
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
+import org.modelmapper.ModelMapper;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
@@ -78,4 +79,6 @@ public class Utileria {
     public static String obteneDiaSemana(Date fecha){
         return new SimpleDateFormat("EEEEE", new Locale("es", "MX")).format(fecha).toLowerCase();
     }
+
+    public static final ModelMapper mapper =  new ModelMapper();
 }
