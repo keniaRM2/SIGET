@@ -43,18 +43,7 @@
                                             <strong>Total:<span th:text="${#lists.size(empleados)}"/></strong>
                                         </h5>
                                     </div>
-                                    <!--                                    <div class="col-11">-->
-                                    <!--                                        <div class="input-group mb-3">-->
 
-                                    <!--                                            <input type="text" class="form-control" placeholder="Búsqueda..."-->
-                                    <!--                                                   aria-label="Búsqueda" aria-describedby="basic-addon1">-->
-                                    <!--                                            <span class="input-group-text" id="basic-addon1">-->
-                                    <!--                                                <i class="bi bi-search text-green-light"></i>-->
-                                    <!--                                            </span>-->
-
-                                    <!--                                        </div>-->
-
-                                    <!--                                    </div>-->
                                     <div class="col-1 offset-9 align-middle">
                                         <a class="btn btn-link pull-right font-icon" type="button" th:href="@{'/empleado/registrar'}" >
                                             <i class="bx bxs-plus-circle text-green-light"></i>
@@ -64,7 +53,7 @@
 
                             </div>
                             <!-- Table with stripped rows -->
-                            <table class="table table-striped bdr table-sm table-hover">
+                            <table class="table table-striped bdr table-sm table-hover tabla-siget">
                                 <thead class="bg-green-dark">
                                 <tr>
                                     <th class="text-center align-middle" scope="col">#</th>
@@ -76,11 +65,6 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr th:if="${#lists.isEmpty(empleados)}">
-                                    <td class="text-center fst-italic" colspan="6">
-                                        Sin registros disponibles.
-                                    </td>
-                                </tr>
                                 <tr th:each="empleado, iter: ${empleados}">
                                     <td class="text-center align-middle" th:text="${iter.index+1}"/>
                                     <td class="text-center align-middle" th:text="${empleado.numeroEmpleado}"/>

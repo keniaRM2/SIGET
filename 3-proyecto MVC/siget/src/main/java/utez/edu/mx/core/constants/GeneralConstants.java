@@ -11,6 +11,10 @@ public class GeneralConstants {
 
     public static final Integer  ESTATUS_ACTIVO = 1;
     public static final Integer  ESTATUS_INACTIVO = 0;
+
+    public static final String  ESTATUS_GRATUITO = "Gratuito";
+    public static final String  ESTATUS_CON_COSTO = "Costo";
+
     public static final String TIPO_ESTADO_PAGO = "Pago";
     public static final String TIPO_ESTADO_CITA = "Cita";
     public static final BCryptPasswordEncoder CODIFICAROR =  new BCryptPasswordEncoder();

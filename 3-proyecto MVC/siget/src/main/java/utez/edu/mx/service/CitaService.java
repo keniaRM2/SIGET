@@ -1,5 +1,6 @@
 package utez.edu.mx.service;
 
+import utez.edu.mx.core.bean.CitaBean;
 import utez.edu.mx.core.exceptions.SigetException;
 import utez.edu.mx.dao.model.Cita;
 
@@ -10,7 +11,7 @@ public interface CitaService {
 
    void guardar(Cita cita) throws SigetException;
     void cambiarEstadoCita(Cita cita) throws SigetException;
-    List<Cita> listarCitas();
+    List<CitaBean> listarCitas();
 
 
 

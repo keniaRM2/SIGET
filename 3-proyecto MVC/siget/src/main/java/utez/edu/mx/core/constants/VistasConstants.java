@@ -8,6 +8,10 @@ public class VistasConstants {
     public static final String LISTA_TIPOSERVICIOS = "/servicio/tabla_tiposervicio";
     public static final String FORMULARIO_SERVICIO = "/servicio/formulario_servicio";
 
+    public static final String INICIO_EMPLEADOS = "/empleado/empleados_inicio";
+    public static final String BANDEJA_CITAS = "/empleado/bandeja_citas";
+    public static final String HORARIO_CITAS = "/empleado/horario_citas";
+
     public static final String INDEX = "index";
     public static final String LOGIN = "login";
     public static final String ERROR = "/errores/error";
@@ -21,6 +25,12 @@ public class VistasConstants {
     public static final String INICIO_PAGO ="/alumno/inicio_pago";
     public static final String INICIO_ENVIAR ="/alumno/inicio_enviar";
 
+
+    // CONFIGURACION
+
+    public static final String CONFIGURACION = "configuracion/configuracion";
+
+    public static final String CALENDARIO_CITA = "/cita/calendario";
     private VistasConstants() {
     }
 }

@@ -20,11 +20,11 @@
     <main id="main" class="main">
 
         <div class="pagetitle">
-            <h1><strong>Registrar servicios</strong></h1>
+            <h1><strong>Registrar trámite</strong></h1>
             <nav>
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item">Gestión de servicios</a></li>
-                    <li class="breadcrumb-item active">Servicios</li>
+                    <li class="breadcrumb-item">Gestión de trámites</a></li>
+                    <li class="breadcrumb-item active">Registro</li>
                 </ol>
             </nav>
         </div><!-- End Page Title -->
@@ -43,18 +43,16 @@
                                 <h5><strong>Información</strong></h5>
                                 <hr/>
                                 <div class="row mb-4 mt-2">
-                                    <input type="hidden" th:field="*{id}" th:value="*{id}" />
+                                    <input type="hidden" th:field="*{id}" th:value="*{id}"/>
 
                                     <div class="col-md-4">
                                         <label for="nombre" class="form-label">Nombre*</label>
                                         <div class="input-group has-validation">
-                                            <input type="text" class="form-control" aria-describedby="inputGroupPrepend"
-                                                   placeholder="Ingrese..." pattern="[a-zA-Z ]+"
-                                                   autocomplete="off" aria-autocomplete="none"
-                                                   id="nombre" name="servicio.nombre"
-                                                   th:field="*{nombre}" th:value="*{nombre}"
-                                                   th:maxlength="45"
-                                                   th:required="true"/>
+                                            <input type="text" class="form-control"
+                                                   aria-describedby="inputGroupPrepend" placeholder="Ingrese..."
+                                                   autocomplete="off" aria-autocomplete="none" id="nombre"
+                                                   name="servicio.nombre" th:field="*{nombre}" th:value="*{nombre}"
+                                                   th:maxlength="45" th:required="true"/>
                                             <div class="invalid-feedback">
                                                 Ingrese un valor valido.
                                             </div>
@@ -63,13 +61,11 @@
                                     <div class="col-md-4">
                                         <label for="descripcion" class="form-label">Descripción*</label>
                                         <div class="input-group has-validation">
-                                            <input type="text" class="form-control" aria-describedby="inputGroupPrepend"
-                                                   placeholder="Ingrese..." pattern="[a-zA-Z ]+"
-                                                   autocomplete="off" aria-autocomplete="none"
-                                                   id="descripcion" name="servicio.descripcion"
-                                                   th:field="*{descripcion}" th:value="*{descripcion}"
-                                                   th:maxlength="45"
-                                                   th:required="true"/>
+                                            <input type="text" class="form-control"
+                                                   aria-describedby="inputGroupPrepend" placeholder="Ingrese..."
+                                                   autocomplete="off" aria-autocomplete="none" id="descripcion"
+                                                   name="servicio.descripcion" th:field="*{descripcion}"
+                                                   th:value="*{descripcion}" th:maxlength="45" th:required="true"/>
                                             <div class="invalid-feedback">a
                                                 Ingrese un valor valido.
                                             </div>
@@ -78,11 +74,10 @@
                                     <div class="col-md-4">
                                         <label for="costo" class="form-label">Costo</label>
                                         <div class="input-group has-validation">
-                                            <input type="number" class="form-control" aria-describedby="inputGroupPrepend"
-                                                   placeholder="Ingrese..." pattern="[a-zA-Z ]+"
-                                                   autocomplete="off" aria-autocomplete="none"
-                                                   id="costo" name="servicio.costo"
-                                                   th:field="*{costo}" th:value="*{costo}"
+                                            <input type="number" class="form-control"
+                                                   aria-describedby="inputGroupPrepend" placeholder="Ingrese..."
+                                                   autocomplete="off" aria-autocomplete="none" id="costo"
+                                                   name="servicio.costo" th:field="*{costo}" th:value="*{costo}"
                                                    th:maxlength="45"/>
                                             <div class="invalid-feedback">
                                                 Ingrese un valor valido.
@@ -92,37 +87,60 @@
                                 </div>
 
 
-                                <div class="col-md-6 offset-md-3">
-                                    <label for="tipoServicio" class="form-label">Tipo de servicio*</label>
-                                    <div class="input-group has-validation">
-                                         <select th:field="*{tipoServicio.id}" id="tipoServicio">
-                                            <option th:each="tipoServicioTmp : ${tipoServicio}"
-                                                th:value="${tipoServicioTmp.id}"
-                                                th:text="${tipoServicioTmp.nombre}"
-                                            />
-                                        </select>
-
-                                        <div class="invalid-feedback">
-                                            Ingrese un valor valido.
-                                        </div>
-                                    </div>
-                                </div>
-
                                 <div class="col-md-3 ">
                                     <div class="input-group has-validation">
-                                        <input type="hidden"  class="form-control"
-                                               aria-describedby="inputGroupPrepend"
-                                               autocomplete="off" aria-autocomplete="none"
-                                               placeholder="Ingrese..."
-                                               id="estatus" name="estatus"
-                                               th:field="*{estatus}" th:value="*{getEstatus()}"
-                                               th:maxlength="255"
-                                               th:required="true"/>
+                                        <input type="hidden" class="form-control"
+                                               aria-describedby="inputGroupPrepend" autocomplete="off"
+                                               aria-autocomplete="none" placeholder="Ingrese..." id="estatus"
+                                               name="estatus" th:field="*{estatus}" th:value="*{getEstatus()}"
+                                               th:maxlength="255" th:required="true"/>
                                         <div class="invalid-feedback">
                                             Ingrese un valor valido.
                                         </div>
                                     </div>
                                 </div>
+                                <div class="row">
+                                    <div class="col-12 align-middle d-flex justify-content-center">
+                                        <button class="btn btn-link font-icon btn-lg" name="addItem" type="button"
+                                                id="agregarBoton">
+                                            <i class="bx bxs-plus-circle text-green-light"></i>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <fieldset id="items">
+
+                                    <div class="row align-middle d-flex justify-content-center mb-4">
+
+                                        <div class="col-4 " th:each="documento, itemStat : ${servicio.documentos}"
+                                             th:id="${itemStat.index+'inputDocumento'}">
+
+                                            <label th:for="${itemStat.index+'inputDocumento'}"
+                                                   th:text="'Documento #'+${(itemStat.index+1)}+'*:'"
+                                                   class="form-label m-2">
+                                            </label>
+
+                                            <div class="input-group has-validation">
+                                                <input type="text" class="form-control"
+                                                       aria-describedby="inputGroupPrepend" placeholder="Ingrese..."
+                                                       autocomplete="off" aria-autocomplete="none"
+                                                       th:field="${servicio.documentos[__${itemStat.index}__].nombre}"
+                                                       th:value="${servicio.documentos[__${itemStat.index}__].nombre}"
+                                                       th:maxlength="45" th:required="true"/>
+                                                <div class="invalid-feedback">
+                                                    Ingrese un valor valido.
+                                                </div>
+                                                <button class="btn btn-link boton-estatus" type="button" name="removeItem"
+                                                        th:attr="onclick=|removerDocumento('${itemStat.index}')|">
+                                                    <i class="bi bi-trash text-danger"></i>
+                                                </button>
+
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                </fieldset>
 
                                 <div class="row align-items-center">
                                     <div class="col-md-4 offset-md-4 center-block" align="center">
@@ -152,6 +170,8 @@
 </div>
 
 <div th:replace="~{fragments/scrypt :: div}"></div>
+<script th:src="@{/assets/js/servicio.js}"></script>
 
 </body>
+
 </html>

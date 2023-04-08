@@ -27,6 +27,19 @@ public class EmpleadoController extends BaseController {
         model.addAttribute(EMPLEADOS, empleadoService.listarEmpleados());
         return VistasConstants.LISTA_EMPLEADOS;
     }
+    
+    @GetMapping(value = PathConstants.INICIO_EMPLEADO)
+    public String inicioEmpleado(Model model){
+        return VistasConstants.INICIO_EMPLEADOS;
+    }
+    @GetMapping(value = PathConstants.BANDEJA_CITAS)
+    public String bandejaCitas (Model model){
+        return VistasConstants.BANDEJA_CITAS;
+    }
+    @GetMapping(value = PathConstants.HORARIO_CITAS)
+    public String horaioEmpleado(Model model){
+        return VistasConstants.HORARIO_CITAS;
+    }
 
     @GetMapping(value = PathConstants.REGISTRAR_EMPLEADO)
     public String registrarEmpleado(Model model){

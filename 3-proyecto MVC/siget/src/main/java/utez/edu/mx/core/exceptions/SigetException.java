@@ -1,6 +1,6 @@
 package utez.edu.mx.core.exceptions;
 
-public class SigetException extends Exception {
+public class SigetException extends RuntimeException {
 
     private static final long serialVersionUID = 1125442070391271558L;
     private final String message;

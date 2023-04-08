@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns:th="http://www.thymeleaf.org"
+      xmlns:margin-bottom="http://www.w3.org/1999/xhtml">
+
+<head th:replace="~{fragments/bootstrap :: head}"></head>
+
+<body>
+
+
+<div id="siget">
+
+    <!-- HEADER, inciio -->
+    <nav th:replace="~{fragments/header :: header}"></nav>
+    <!-- HEADER, fin -->
+
+    <!--   ASIDE, INICIO-->
+    <nav th:replace="~{fragments/aside :: aside}"></nav>
+    <!--   ASIDE, FIN-->
+
+
+
+    <main id="main" class="main">
+
+        <div class="pagetitle">
+            <h1><strong>Bandeja de citas</strong></h1>
+
+        </div><!-- End Page Title -->
+
+        <section class="section">
+            <div class="row">
+                <div class="col-lg-12">
+
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="box-header with-border">
+                                <div class="row mt-4">
+
+                                    <ol class="breadcrumb">
+                                        <label class="breadcrumb-item active fs-4">Datos personales</label>
+                                    </ol>
+                                    <hr>
+
+                                    <div class="col-4">
+                                        <label style="margin-bottom: 5px "  for="name">Primer apellido</label>
+                                        <input type="text" class="form-control" id="name">
+                                    </div>
+
+                                    <div class="col-4">
+                                        <label style="margin-bottom: 5px "  for="first">Primer apellido</label>
+                                        <input type="text" class="form-control" id="first">
+                                    </div>
+                                    <div class="col-4">
+                                        <label style="margin-bottom: 5px "  for="second">Segundo apellido</label>
+                                        <input type="text" class="form-control" id="second">
+                                    </div>
+                                    <br>
+
+                                    <div class="col-4">
+                                        <label style="margin-bottom: 5px "  for="name">Matricula</label>
+                                        <input type="text" class="form-control">
+                                    </div>
+
+                                    <div class="col-4">
+                                        <label style="margin-bottom: 5px "  for="first">Division Academica</label>
+                                        <input type="text" class="form-control">
+                                    </div>
+                                    <div class="col-4">
+                                        <label style="margin-bottom: 5px "  for="second">Carrera</label>
+                                        <input type="text" class="form-control">
+                                    </div>
+
+                                    </div>
+
+                                <div class="row mt-4">
+
+                                    <ol class="breadcrumb">
+                                        <label class="breadcrumb-item active fs-4">Contacto</label>
+                                    </ol>
+                                    <hr>
+
+                                    <div class="col-5">
+                                        <label style="margin-bottom: 5px "  for="name">Correo</label>
+                                        <input type="text" class="form-control">
+                                    </div>
+
+                                    <div class="col-5">
+                                        <label style="margin-bottom: 5px "  for="first">Telefono</label>
+                                        <input type="text" class="form-control">
+                                    </div>
+                                    <br>
+
+                                </div>
+
+                                <div class="row mt-4">
+
+                                    <ol class="breadcrumb">
+                                        <label class="breadcrumb-item active fs-4">Datos cita</label>
+                                    </ol>
+                                    <hr>
+
+                                    <div class="col-5">
+                                        <label style="margin-bottom: 5px "  for="name">Nombre del tramite</label>
+                                        <input type="text" class="form-control">
+                                    </div>
+
+                                    <div class="col-5">
+                                        <label style="margin-bottom: 5px "  for="first">Estatus</label>
+                                        <select class="form-select">
+                                            <option value="Recibida">Recibida</option>
+                                            <option value="Cancelada">Cancelada</option>
+                                        </select>
+                                    </div>
+                                    <br>
+
+                                </div>
+
+                                <div class="row mt-4">
+
+                                    <label class="breadcrumb-item active fs-3">Documentos de anexo</label>
+
+                                    <div class="col-10">
+                                        <input placeholder="COPIA_INE.pdf" type="text" class="form-control">
+                                    </div>
+
+                                    <div class="col-2 fs-3 text">
+                                        <i class="bx bxs-download"></i>
+                                    </div>
+
+                                    <div class="col-10">
+                                        <input placeholder="COPIA_CURP.pdf" type="text" class="form-control">
+                                    </div>
+
+                                    <div class="col-2 fs-3 text">
+                                        <i class="bx bxs-download"></i>
+                                    </div>
+
+                                    </div>
+                                    <br>
+
+                                </div>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                            <!-- End Table with stripped rows -->
+                        </div>
+        </section>
+
+    </main>
+
+
+
+</div>
+
+<div th:replace="~{fragments/scrypt :: div}"></div>
+
+</body>
+</html>
