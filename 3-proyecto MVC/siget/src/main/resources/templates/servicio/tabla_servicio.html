@@ -60,11 +60,6 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr th:if="${#lists.isEmpty(servicios)}">
-                                    <td class="text-center fst-italic" colspan="6">
-                                        Sin registros disponibles.
-                                    </td>
-                                </tr>
                                 <tr th:each="servicio, iter: ${servicios}">
                                     <td class="text-center align-middle" th:text="${iter.index+1}"/>
                                     <td class="text-center align-middle" th:text="${servicio.nombre} + ': '+${servicio.descripcion}"/>
