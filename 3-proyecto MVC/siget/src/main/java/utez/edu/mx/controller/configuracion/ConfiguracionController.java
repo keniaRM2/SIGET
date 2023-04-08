@@ -11,15 +11,14 @@ import utez.edu.mx.core.constants.VistasConstants;
 import utez.edu.mx.dao.model.Configuracion;
 
 @Controller
+@Secured("ROLE_ADMIN")
 public class ConfiguracionController {
     @GetMapping(value = PathConstants.CONFIGURACION)
-    @Secured({"ROLE_ADMIN"})
     public String personalizar(@ModelAttribute("configuracion") Configuracion configuracion, Model model) {
         return VistasConstants.CONFIGURACION;
     }
 
     @PostMapping(value = PathConstants.GUARDAR_CONFIGURACION)
-    @Secured({"ROLE_ADMIN"})
     public String guardarPersonalizacion(@ModelAttribute("configuracion") Configuracion configuracion, Model model) {
         System.out.println(configuracion.toString());
         return VistasConstants.CONFIGURACION;
