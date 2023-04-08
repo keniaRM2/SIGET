@@ -17,7 +17,9 @@
             <li class="nav-item dropdown pe-3">
                 <a class="nav-link nav-profile d-flex align-items-center pe-0" th:href="@{/logout}">
                     <span sec:authentication="principal.username"/>
-                    <img th:src="@{/assets/img/usuario.png}" alt="Profile" class="rounded-circle m-4"/>
+                    <span>   </span>
+                    <span> | </span>
+                    <span>   </span>
                     <i class="m-2 bi bi-box-arrow-right"></i>
                     <span>Salir</span>
                 </a>

@@ -1,11 +1,3 @@
-/**
-* Template Name: NiceAdmin
-* Updated: Mar 09 2023 with Bootstrap v5.2.3
-* Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
-* Author: BootstrapMade.com
-* License: https://bootstrapmade.com/license/
-*/
-
 /*--------------------------------------------------------------
 # General
 --------------------------------------------------------------*/
@@ -13,11 +5,6 @@
   scroll-behavior: smooth;
 }
 
-/* body {
-  font-family: "Open Sans", sans-serif;
-  background: #E7EAEB;
-  color: #444444;
-} */
 
 body{
   font-family: "Lato", "Arial", sans-serif;
@@ -27,7 +14,7 @@ body{
   -webkit-font-smoothing: antialiased !important;
   -moz-osx-font-smoothing: grayscale !important;
   -ms-overflow-style: scrollbar;
-  background-color: #e7eaeb;
+  background-color: #CCD1D1;
   color: #616f77;
 }
 
@@ -1293,23 +1280,20 @@ thead {
 }
 
 .nav-bg-blue {
-  opacity: 0.9;
   background: #094670;
   color: #fff !important;
-  /*background-image: url(../img/cuadro.png);*/
+
 }
 
 .modal-bg-blue {
   opacity: 0.9;
   background: #179C81;
   color: #fff !important;
-  /*background-image: url(../img/cuadro.png);*/
+
 }
 .top-bg-blue {
-  opacity: 0.9;
   background: #094670;
   color: #fff !important;
-  /*background-image: url(../img/cuadro.png);*/
   max-height: 50px;
 }
 
