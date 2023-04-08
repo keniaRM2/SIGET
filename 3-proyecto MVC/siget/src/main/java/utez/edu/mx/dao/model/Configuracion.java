@@ -14,7 +14,7 @@ import lombok.Data;
 })
 public class Configuracion {
     @Id
-@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_configuracion", nullable = false)
     private Integer id;
 
