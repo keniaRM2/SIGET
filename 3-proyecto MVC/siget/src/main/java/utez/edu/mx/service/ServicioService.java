@@ -1,5 +1,6 @@
 package utez.edu.mx.service;
 
+import utez.edu.mx.core.bean.ServicioBean;
 import utez.edu.mx.core.exceptions.SigetException;
 import utez.edu.mx.dao.model.Servicio;
 
@@ -13,8 +14,12 @@ public interface ServicioService {
     void registrar(Servicio servicio) throws SigetException;
     void actualizar(Servicio servicio) throws SigetException;
 
-    Servicio obtenerServicioRegistro();
+    Servicio obtenerServicioRegistro(Servicio servicio);
     Servicio obtenerServicioEdicion(Integer id) throws SigetException;
 
     void actualizarEstatus(Integer id) throws SigetException;
+
+    Servicio removerDocumento(Servicio servicio, int indice);
+
+    ServicioBean obtenerServicioConDocumentos(Integer idServicio);
 }

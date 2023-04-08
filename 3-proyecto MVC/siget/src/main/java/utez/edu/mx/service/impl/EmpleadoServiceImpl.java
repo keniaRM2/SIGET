@@ -72,10 +72,9 @@ public class EmpleadoServiceImpl implements EmpleadoService {
             usuarioRepository.save(usuario);
             empleadoRepository.save(empleado);
 
-        } catch (ConstraintViolationException e) {
-            System.err.println(e.getMessage());
-            throw new SigetException(Utileria.getErrores(e));
-        } catch (NullPointerException e) {
+        } catch (SigetException e) {
+            throw new SigetException(e.getMessage());
+        } catch (Exception e) {
             System.err.println(e.getMessage());
             throw new SigetException(Utileria.getErrorNull());
         }
@@ -120,10 +119,9 @@ public class EmpleadoServiceImpl implements EmpleadoService {
             personaRepository.save(personaUpdate);
             empleadoRepository.save(empleadoUpdate);
 
-        } catch (ConstraintViolationException e) {
-            System.err.println(e.getMessage());
-            throw new SigetException(Utileria.getErrores(e));
-        } catch (NullPointerException e) {
+        } catch (SigetException e) {
+            throw new SigetException(e.getMessage());
+        } catch (Exception e) {
             System.err.println(e.getMessage());
             throw new SigetException(Utileria.getErrorNull());
         }
@@ -165,10 +163,9 @@ public class EmpleadoServiceImpl implements EmpleadoService {
             }
             usuarioRepository.save(usuario);
 
-        } catch (ConstraintViolationException e) {
-            System.err.println(e.getMessage());
-            throw new SigetException(Utileria.getErrores(e));
-        } catch (NullPointerException e) {
+        } catch (SigetException e) {
+            throw new SigetException(e.getMessage());
+        } catch (Exception e) {
             System.err.println(e.getMessage());
             throw new SigetException(Utileria.getErrorNull());
         }
@@ -190,11 +187,12 @@ public class EmpleadoServiceImpl implements EmpleadoService {
                 return horarios.get(0).getEmpleado();
             }
 
-        } catch (NullPointerException e) {
+        } catch (SigetException e) {
+            throw new SigetException(e.getMessage());
+        } catch (Exception e) {
             System.err.println(e.getMessage());
             throw new SigetException(Utileria.getErrorNull());
         }
-
 
         return null;
     }
