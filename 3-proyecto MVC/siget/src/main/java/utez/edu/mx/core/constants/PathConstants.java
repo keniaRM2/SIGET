@@ -24,6 +24,9 @@ public class PathConstants {
     public static final String EDITAR_EMPLEADO = EMPLEADO_CONTROLLER + "/editar";
     public static final String ACTUALIZAR_ESTATUS_EMPLEADO = EMPLEADO_CONTROLLER + "/actualizarEstatus";
     public static final String GUARDAR_EMPLEADO = EMPLEADO_CONTROLLER + "/guardar";
+    public static final String INICIO_EMPLEADO = EMPLEADO_CONTROLLER + "/inicio";
+    public static final String BANDEJA_CITAS = EMPLEADO_CONTROLLER + "/bandeja_citas";
+    public static final String HORARIO_CITAS = EMPLEADO_CONTROLLER + "/horario_citas";
    
     // SERVICIO
     private static final String TIPOSERVICIO_CONTROLLER = "/tiposerv";
