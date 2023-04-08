@@ -92,23 +92,7 @@
                                 </div>
 
 
-                                <div class="col-md-6 offset-md-3">
-                                    <label for="tipoServicio" class="form-label">Tipo de servicio*</label>
-                                    <div class="input-group has-validation">
-                                         <select th:field="*{tipoServicio.id}" id="tipoServicio">
-                                            <option th:each="tipoServicioTmp : ${tipoServicio}"
-                                                th:value="${tipoServicioTmp.id}"
-                                                th:text="${tipoServicioTmp.nombre}"
-                                            />
-                                        </select>
-
-                                        <div class="invalid-feedback">
-                                            Ingrese un valor valido.
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-3 ">
+                                   <div class="col-md-3 ">
                                     <div class="input-group has-validation">
                                         <input type="hidden"  class="form-control"
                                                aria-describedby="inputGroupPrepend"

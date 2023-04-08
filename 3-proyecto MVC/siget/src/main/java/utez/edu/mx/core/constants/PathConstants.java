@@ -24,6 +24,9 @@ public class PathConstants {
     public static final String EDITAR_EMPLEADO = EMPLEADO_CONTROLLER + "/editar";
     public static final String ACTUALIZAR_ESTATUS_EMPLEADO = EMPLEADO_CONTROLLER + "/actualizarEstatus";
     public static final String GUARDAR_EMPLEADO = EMPLEADO_CONTROLLER + "/guardar";
+    public static final String INICIO_EMPLEADO = EMPLEADO_CONTROLLER + "/inicio";
+    public static final String BANDEJA_CITAS = EMPLEADO_CONTROLLER + "/bandeja_citas";
+    public static final String HORARIO_CITAS = EMPLEADO_CONTROLLER + "/horario_citas";
    
     // SERVICIO
     private static final String TIPOSERVICIO_CONTROLLER = "/tiposerv";
@@ -38,7 +41,8 @@ public class PathConstants {
 
     // CITA
     private static final String CITAS_CONTROLLER = "/cita";
-    public static final String LISTAR_CITAS = CITAS_CONTROLLER;
+    public static final String CALENDARIO_CITA = CITAS_CONTROLLER;
+    public static final String LISTAR_CITAS = CITAS_CONTROLLER+"/listarCitas";
     public static final String GUARDAR_CITA = CITAS_CONTROLLER + "/cita";
     public static final String REGISTRAR_CITA = CITAS_CONTROLLER + "/registrar";
     public static final String EDITAR_CITA = CITAS_CONTROLLER + "/editar";

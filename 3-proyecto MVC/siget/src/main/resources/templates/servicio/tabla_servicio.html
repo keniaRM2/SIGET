@@ -65,7 +65,7 @@
                                     <th class="text-center align-middle" scope="col">Nombre Servicio</th>
                                     <th class="text-center align-middle" scope="col">Descripcion</th>
                                     <th class="text-center align-middle" scope="col">Costo</th>
-                                    <th class="text-center align-middle" scope="col">Tipo Servicio</th>
+<!--                                    <th class="text-center align-middle" scope="col">Tipo Servicio</th>-->
                                     <th class="text-center align-middle" scope="col">Estatus</th>
                                     <th class="text-center" scope="col">Acciones</th>
                                 </tr>
@@ -80,8 +80,10 @@
                                     <td class="text-center align-middle" th:text="${iter.index+1}"/>
                                     <td class="text-center align-middle" th:text="${servicio.nombre}"/>
                                     <td class="text-center align-middle" th:text="${servicio.descripcion}"/>
-                                    <td class="text-center align-middle" th:text="${servicio.costo}"/>
-                                    <td class="text-center align-middle" th:text="${servicio.tipoServicio.nombre}"/>
+                                    <td class="text-center align-middle" >
+                                        $ <span th:text="${#numbers.formatDecimal(servicio.costo, 0, 'COMMA', 2, 'POINT')}"></span>
+                                    </td>
+<!--                                    <td class="text-center align-middle" th:text="${servicio.tipoServicio.nombre}"/>-->
                                     <td class="text-center align-middle">
 
                                         <span th:if="${servicio.estatus == 1}">

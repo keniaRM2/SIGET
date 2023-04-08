@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import utez.edu.mx.core.constants.GeneralConstants;
 import utez.edu.mx.core.exceptions.SigetException;
 import utez.edu.mx.core.util.Utileria;
 import utez.edu.mx.dao.model.*;
@@ -15,6 +16,7 @@ import utez.edu.mx.service.ServicioService;
 import java.util.List;
 import java.util.Optional;
 
+
 @Service
 public class ServicioServiceImpl implements ServicioService {
 
@@ -22,6 +24,7 @@ public class ServicioServiceImpl implements ServicioService {
     private TipoServicioRepository tipoServicioRepository;
     @Autowired
     private ServicioRepository servicioRepository;
+
     @Override
     public List<Servicio> listarServicios() {
         return servicioRepository.findAll(Sort.by("id").ascending());
@@ -29,11 +32,11 @@ public class ServicioServiceImpl implements ServicioService {
 
     @Override
     public void guardar(Servicio servicio) throws SigetException {
-        if (Utileria.nonNull(servicio.getId())) {
+        if (servicio.getId() != null) {
             actualizar(servicio);
-        } else {
-            registrar(servicio);
+            return;
         }
+        registrar(servicio);
     }
 
 
@@ -43,10 +46,18 @@ public class ServicioServiceImpl implements ServicioService {
         try {
             Servicio servicioRepetido = servicioRepository.findByNombre(servicio.getNombre());
             if (Utileria.nonNull(servicioRepetido)) {
-                throw new SigetException("El servicio se ha registrado previamente");
+                throw new SigetException("El servicio se ha registrado previamente.");
             }
-            TipoServicio tipoServicio = servicio.getTipoServicio();
-            servicio.setTipoServicio(tipoServicio);
+            if (servicio.getCosto() < 0) {
+                throw new SigetException("Costo no válido.");
+            }
+
+            servicio.setTipoServicio(
+                    servicio.getCosto() == 0 ?
+                            tipoServicioRepository.findByNombre(GeneralConstants.TIPO_SERVICIO_GRATUITO) :
+                            tipoServicioRepository.findByNombre(GeneralConstants.TIPO_SERVICIO_COSTO)
+            );
+
             servicioRepository.save(servicio);
 
         } catch (ConstraintViolationException e) {
@@ -57,36 +68,42 @@ public class ServicioServiceImpl implements ServicioService {
             throw new SigetException(Utileria.getErrorNull());
         }
     }
-//ACTUALIZA
-@Override
-@Transactional
-public void actualizar(Servicio servicio) throws SigetException {
-    try {
 
-        Optional<Servicio> servicioOptional = servicioRepository.findById(servicio.getId());
+    //ACTUALIZA
+    @Override
+    @Transactional
+    public void actualizar(Servicio servicio) throws SigetException {
+        try {
 
-        if (servicioOptional.isEmpty()) {
-            throw new SigetException("servicio no encontrado.");
-        }
-/*
-            servicio servicioRepetido = servicioRepository.findByNombre(servicio.getNombre());
+            Optional<Servicio> servicioOptional = servicioRepository.findById(servicio.getId());
+
+            if (servicioOptional.isEmpty()) {
+                throw new SigetException("servicio no encontrado.");
+            }
+            Servicio servicioRepetido = servicioRepository.findByNombreAndIdIsNot(servicio.getNombre(),servicio.getId());
             if (Utileria.nonNull(servicioRepetido)) {
                 throw new SigetException("El servicio se ha registrado previamente");
             }
+            if (servicio.getCosto() < 0) {
+                throw new SigetException("Costo no válido.");
+            }
 
-*/
-        TipoServicio tipoServicio = servicio.getTipoServicio();
-        servicio.setTipoServicio(tipoServicio);
-        servicioRepository.save(servicio);
+            servicio.setTipoServicio(
+                    servicio.getCosto() == 0 ?
+                            tipoServicioRepository.findByNombre(GeneralConstants.TIPO_SERVICIO_GRATUITO) :
+                            tipoServicioRepository.findByNombre(GeneralConstants.TIPO_SERVICIO_COSTO)
+            );
 
-    } catch (ConstraintViolationException e) {
-        System.err.println(e.getMessage());
-        throw new SigetException(Utileria.getErrores(e));
-    } catch (NullPointerException e) {
-        System.err.println(e.getMessage());
-        throw new SigetException(Utileria.getErrorNull());
+            servicioRepository.save(servicio);
+
+        } catch (SigetException e) {
+            System.err.println(e.getMessage());
+            throw new SigetException(e.getMessage());
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+            throw new SigetException(Utileria.getErrorNull());
+        }
     }
-}
 
     @Override
     public Servicio obtenerServicioRegistro() {
@@ -119,7 +136,7 @@ public void actualizar(Servicio servicio) throws SigetException {
             Servicio servicio = servicioOptional.get();
             if (servicio.getEstatus() == 1) {
                 servicio.setEstatus(0);
-            }else{
+            } else {
                 servicio.setEstatus(1);
             }
             servicioRepository.save(servicio);

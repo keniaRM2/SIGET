@@ -603,10 +603,10 @@ h6 {
 --------------------------------------------------------------*/
 .sidebar {
   position: fixed;
-  top: 45px;
+  top: 50px;
   left: 0;
   bottom: 0;
-  width: 190px;
+  width: 215px;
   z-index: 996;
   transition: all 0.3s;
   padding: 20px;
@@ -1281,6 +1281,13 @@ thead {
   color: #fff !important;
   /*background-image: url(../img/cuadro.png);*/
 }
+
+.modal-bg-blue {
+  opacity: 0.9;
+  background: #179C81;
+  color: #fff !important;
+  /*background-image: url(../img/cuadro.png);*/
+}
 .top-bg-blue {
   opacity: 0.9;
   background: #094670;
@@ -1288,8 +1295,6 @@ thead {
   /*background-image: url(../img/cuadro.png);*/
   max-height: 50px;
 }
-
-
 
 
 .bdr {
