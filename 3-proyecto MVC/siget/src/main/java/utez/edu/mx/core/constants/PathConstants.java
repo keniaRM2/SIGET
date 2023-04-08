@@ -37,7 +37,7 @@ public class PathConstants {
     public static final String EDITAR_SERVICIO = SERVICIO_CONTROLLER + "/editar";
     public static final String REGISTRAR_SERVICIO = SERVICIO_CONTROLLER + "/registrar";
     public static final String REMOVER_REMOVER_DOCUMENTO = SERVICIO_CONTROLLER + "/removerDocumento";
-    public static final String LISTAR_TIPOSERVICIO = TIPOSERVICIO_CONTROLLER;
+
     public static final String ACTUALIZAR_ESTATUS_SERVICIO = SERVICIO_CONTROLLER + "/actualizarEstatus";
     public static final String GUARDAR_SERVICIO = SERVICIO_CONTROLLER + "/guardar";
 
