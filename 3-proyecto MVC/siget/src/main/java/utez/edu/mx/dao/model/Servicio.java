@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 
 import lombok.Data;
@@ -42,7 +43,14 @@ public class Servicio {
     @Column(name = "estatus", nullable = false)
     private Integer estatus = 1;
 
+    @OneToMany(mappedBy = "servicio")
+    private List<Documento> documentos;
+
     public Servicio() {
+    }
+
+    public Servicio(Integer id) {
+        this.id = id;
     }
 
     public Servicio(String nombre, String descripcion, Double costo, TipoServicio tipoServicio, Integer estatus) {

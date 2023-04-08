@@ -76,10 +76,9 @@ public class AlumnoServiceImpl implements AlumnoService {
             usuarioRepository.save(usuario);
             alumnoRepository.save(alumno);
 
-        } catch (ConstraintViolationException e) {
-            System.err.println(e.getMessage());
-            throw new SigetException(Utileria.getErrores(e));
-        } catch (NullPointerException e) {
+        } catch (SigetException e) {
+            throw new SigetException(e.getMessage());
+        } catch (Exception e) {
             System.err.println(e.getMessage());
             throw new SigetException(Utileria.getErrorNull());
         }
@@ -124,10 +123,9 @@ public class AlumnoServiceImpl implements AlumnoService {
             personaRepository.save(personaUpdate);
             alumnoRepository.save(alumnoUpdate);
 
-        } catch (ConstraintViolationException e) {
-            System.err.println(e.getMessage());
-            throw new SigetException(Utileria.getErrores(e));
-        } catch (NullPointerException e) {
+        } catch (SigetException e) {
+            throw new SigetException(e.getMessage());
+        } catch (Exception e) {
             System.err.println(e.getMessage());
             throw new SigetException(Utileria.getErrorNull());
         }
@@ -169,10 +167,9 @@ public class AlumnoServiceImpl implements AlumnoService {
             }
             usuarioRepository.save(usuario);
 
-        } catch (ConstraintViolationException e) {
-            System.err.println(e.getMessage());
-            throw new SigetException(Utileria.getErrores(e));
-        } catch (NullPointerException e) {
+        } catch (SigetException e) {
+            throw new SigetException(e.getMessage());
+        } catch (Exception e) {
             System.err.println(e.getMessage());
             throw new SigetException(Utileria.getErrorNull());
         }

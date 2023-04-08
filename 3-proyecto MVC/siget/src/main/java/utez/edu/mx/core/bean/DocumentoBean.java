@@ -8,6 +8,5 @@ public class DocumentoBean {
 
     private Integer id;
     private String nombre;
-    private ServicioBean servicio;
 
 }

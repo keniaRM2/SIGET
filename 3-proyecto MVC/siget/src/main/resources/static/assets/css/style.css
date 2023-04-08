@@ -1241,13 +1241,14 @@ thead {
   color: #094670 !important
 }
 .box-header.with-border {
-  border-bottom: 2px solid #f4f4f4;
+  /*border-bottom: 1px transparent;*/
+  /*border-bottom: 2px solid #f4f4f4;*/
 }
 
 .box-header {
   color: #444;
   display: block;
-  padding: 10px;
+  padding: 1px;
   position: relative;
 }
 .pull-right {
@@ -1340,6 +1341,21 @@ input{
   border-radius: 5px;
 }
 
+table.dataTable tbody th,table.dataTable tbody td {
+  padding: 1px 1px !important;
+}
+
+table.dataTable.no-footer {
+  border-bottom: 1px transparent !important;
+}
+
+
+div.dataTables_wrapper div.dataTables_filter input {
+  margin-left: .5em;
+  display: inline-block;
+  width: 500px;
+  margin-bottom: 10px;
+}
 
 .nav-tabs-bordered .nav-link {
   margin-bottom: -2px;

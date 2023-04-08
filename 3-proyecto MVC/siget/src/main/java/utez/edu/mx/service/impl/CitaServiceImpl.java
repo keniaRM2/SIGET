@@ -65,10 +65,9 @@ public class CitaServiceImpl implements CitaService {
             Empleado empleado = empleadoServiceImpl.obtenerEmpleadoConVentanilla(cita);
             cita.setEmpleado(empleado);
             citaRepository.save(cita);
-        } catch (ConstraintViolationException e) {
-            System.err.println(e.getMessage());
-            throw new SigetException(Utileria.getErrores(e));
-        } catch (NullPointerException e) {
+        } catch (SigetException e) {
+            throw new SigetException(e.getMessage());
+        } catch (Exception e) {
             System.err.println(e.getMessage());
             throw new SigetException(Utileria.getErrorNull());
         }
