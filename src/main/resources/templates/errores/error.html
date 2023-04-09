@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/bootstrap :: head}"></head>
+
+<body>
+
+<div id="siget">
+
+
+    <main  class="main fondo-login">
+
+        <div class="container">
+
+            <section class="section error-404 min-vh-100 d-flex flex-column align-items-center justify-content-center">
+                <h2 class="text-white">Ocurri&oacute; un error no identificado, intente de nuevo o contacte al administrador.</h2>
+                <a class="btn" th:href="@{'/'}">Volver</a>
+                <img src="assets/img/error.png" class="img-fluid py-5" width="25%" alt="Page Not Found">
+            </section>
+
+        </div>
+    </main>
+
+
+</div>
+
+<div th:replace="~{fragments/scrypt :: div}"></div>
+
+</body>
+</html>
