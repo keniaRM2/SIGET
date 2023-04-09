@@ -7,27 +7,10 @@ let diaClick = function (date, jsEvent, view) {
     alert('Has hecho click en: ' + date.format());
 }
 
-let eventoClick = function (evento, jsEvent, view) {
-    let modal = new bootstrap.Modal($('#modalCita'), {});
-    let cita = evento.cita;
-
-    $('#titulo').text(cita.servicio.nombre);
-    $('#fecha').text(moment(cita.fechaCita).format('MM/DD/YYYY'));
-    $('#horario').text(moment(cita.horaInicio).format('HH:mm') + " a "+moment(cita.horaFin).format('HH:mm'));
-    $('#estado').text(cita.estado.nombre);
-    $('#alumno').text(cita.alumno.persona.nombreCompleto);
-    $('#empleado').text(cita?.empleado?.persona?.nombreCompleto);
-    $('#costo').text(cita.servicio.costo);
-    $('#ventanilla').text(cita.ventanilla.nombre);
-    $('#solicitud').text(moment(cita.fechaRegistro).format('MM/DD/YYYY'));
-    
-    modal.show();
-
-}
 
 let configuracion = {
     height: "100%",
-    header: { left: 'prev,next', center: 'title', right: 'month,agendaWeek,basicWeek,agendaDay' },
+    header: { left: 'prev,next', center: 'title', right: 'month,basicWeek,basicDay' },
     // header: { left: 'prev,next', center: 'title', right: 'month,agendaWeek,agendaDay' },
     defaultDate: new Date(),
     buttonIcons: true, // show the prev/next text
@@ -36,9 +19,7 @@ let configuracion = {
     eventLimit: true, // allow "more" link when too many events
     events: [],
     displayEventTime: true,
-    defaultView: 'basicWeek',
-    // dayClick: diaClick,
-    eventClick: eventoClick,
+    defaultView: 'basicDay',
 };
 
 let listarCitas = function () {
@@ -76,9 +57,10 @@ let agregarCitasCalendario = function name(citas) {
             description: cita.servicio.nombre,
             start: fechaCitaInicio,
             end: fechaCitaFin,
-            color: '#3A87AD',
+            color: cita.estado.color || '#3A87AD',
             textColor: '#ffffff',
-            cita: cita
+            cita: cita,
+            url:  window.location.origin+ "/siget/cita/informacionCita/"+cita.id
         };
     });
 

@@ -21,7 +21,7 @@
     <main id="main" class="main">
 
         <div class="pagetitle">
-            <h1><strong>Citas</strong></h1>
+            <h1><strong>Bandeja de citas</strong></h1>
             <nav>
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item">Listado de citas</a></li>
@@ -36,6 +36,7 @@
 
                     <div class="card">
                         <div class="card-body">
+                            <div th:replace="~{fragments/mensajes :: div}"></div>
 
                             <div class="row mt-4" >
                                 <div class="col-10 offset-1">
@@ -102,7 +103,6 @@
                             <span id="ventanilla"></span>
                         </div>
                     </div>
-
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn  btn-primary" data-bs-dismiss="modal">Cerrar</button>
@@ -118,7 +118,7 @@
 </div>
 
 <div th:replace="~{fragments/scrypt :: div}"></div>
-<script th:src="@{/assets/js/calendario.js}"></script>
+<script th:src="@{/assets/js/calendario_empleado.js}"></script>
 
 </body>
 </html>

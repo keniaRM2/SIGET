@@ -45,10 +45,13 @@ public class SpringSecurityConfig {
 
     };
     private static final String[] PATH_ROL_EMPLEADO = {
-
+            PathConstants.CALENDARIO_CITA_EMPLEADO,
+            PathConstants.INFORMACION_CITA + PathConstants.ALL_SUBPATHS,
+            PathConstants.EDITAR_ESTADO_CITA
     };
-    private static final String[] PATH_ROL_ALUMNO = {
 
+    private static final String[] PATH_ROL_ALUMNO = {
+            PathConstants.EDITAR_ESTADO_CITA
     };
 
 

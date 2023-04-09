@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns:th="http://www.thymeleaf.org"
+      xmlns:margin-bottom="http://www.w3.org/1999/xhtml">
+
+<head th:replace="~{fragments/bootstrap :: head}"></head>
+
+<body>
+
+
+<div id="siget">
+
+    <!-- HEADER, inciio -->
+    <nav th:replace="~{fragments/header :: header}"></nav>
+    <!-- HEADER, fin -->
+
+    <!--   ASIDE, INICIO-->
+    <nav th:replace="~{fragments/aside :: aside}"></nav>
+    <!--   ASIDE, FIN-->
+
+
+    <main id="main" class="main">
+
+        <div class="pagetitle">
+            <h1><strong>Bandeja de citas</strong></h1>
+
+        </div><!-- End Page Title -->
+
+        <section class="section">
+            <div class="row">
+                <div class="col-lg-12">
+
+                    <div class="card">
+                        <div class="card-body">
+                            <div th:replace="~{fragments/mensajes :: div}"></div>
+
+                            <h5 class="mt-4"><strong>Información de cita </strong></h5>
+                            <hr/>
+                            <div class="row  mb-2 mt-2">
+                                <div class="col-4">
+                                    <strong>Alumno:</strong>
+                                    <span th:text="${cita.alumno.persona.nombreCompleto}"></span>
+                                </div>
+                                <div class="col-4">
+                                    <strong>Servicio:</strong>
+                                    <span th:text="${cita.servicio.nombre}"></span>
+                                </div>
+                                <div class="col-4">
+                                    <strong>Fecha de solicitud:</strong>
+                                    <span th:text="${#dates.format(cita.fechaRegistro, 'dd/MM/yyyy HH:mm')}"></span>
+                                </div>
+
+                            </div>
+                            <div class="row mb-4 mt-2">
+                                <div class="col-4">
+                                    <strong>Fecha de cita:</strong>
+                                    <span th:text="${#dates.format(cita.fechaCita, 'dd/MM/yyyy')}"></span>
+                                </div>
+                                <div class="col-4">
+                                    <strong>Horario:</strong>
+                                    <span th:text="${#dates.format(cita.horaInicio, 'HH:mm')}"></span>
+                                    a
+                                    <span th:text="${#dates.format(cita.horaFin, 'HH:mm')}"></span>
+                                </div>
+                                <div class="col-4">
+                                    <strong>Estado:</strong>
+                                    <span th:text="${cita.estado.nombre}"></span>
+                                </div>
+                            </div>
+                            <h5 class="mt-4"><strong>Información de trámite </strong></h5>
+                            <hr/>
+                            <div class="row mb-2 mt-2">
+                                <div class="col-4">
+                                    <strong>Trámite:</strong>
+                                    <span th:text="${cita.servicio.nombre}"></span>
+                                </div>
+                                <div class="col-4">
+                                    <strong>Costo:</strong>
+                                    $ <span
+                                        th:text="${#numbers.formatDecimal(cita.servicio.costo, 0, 'COMMA', 2, 'POINT')}"></span>
+                                </div>
+                                <div class="col-4">
+                                    <strong>Ventanilla:</strong>
+                                    <span th:text="${cita.ventanilla.nombre}"></span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <!-- Custom Styled Validation -->
+
+                                <form class="row g-3 needs-validation mt-2" method="POST" th:object="${cita}"
+                                      th:action="@{'/cita/editarEstadoCita'}">
+
+                                    <div class="row mb-4 mt-2 align-middle d-flex justify-content-center"  th:if="${cita.estado.nombre != 'Cancelada' and cita.estado.nombre != 'Recibida' and cita.estado.nombre != 'No Recibida'}">
+
+
+                                    <input type="hidden" th:field="*{id}" th:value="*{id}"/>
+
+                                        <div class="col-md-4">
+                                            <label for="estado" class="form-label">Estatus*</label>
+                                            <div class="input-group has-validation">
+                                                <select class="form-select" id="estado" name="estado.id"
+                                                        th:value="*{estado.id}"
+                                                        required>
+                                                    <option selected="" disabled="" value="">Seleccione...</option>
+                                                    <option th:each="itemEstado, iter: ${estados}"
+                                                            th:value="${itemEstado.id}" th:text="${itemEstado.nombre}">
+                                                    </option>
+                                                </select>
+                                                <div class="invalid-feedback">
+                                                    Ingrese un valor valido.
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+
+
+                                    <div class="row align-middle d-flex justify-content-center mt-4">
+                                        <div class="col-md-4 ">
+
+                                            <a class="btn btn-outline-danger mx-4 " th:href="@{'/cita/calendario'}"
+                                               type="button">
+                                                <i class="bi bi bi-backspace"></i> Volver
+                                            </a>
+                                            <button class="btn btn-success" type="submit" th:if="${cita.estado.nombre != 'Cancelada' and cita.estado.nombre != 'Recibida' and cita.estado.nombre != 'No Recibida'}">
+                                                Guardar <i class="bi bi-check-circle"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+
+                            </div>
+                            <h5 class="mt-4"><strong>Documentos anexos </strong></h5>
+                            <hr/>
+                            <div class="row mb-2 mt-2 align-middle d-flex justify-content-center mb-4">
+
+                                <div class="col-3 " th:if="${#lists.isEmpty(tblUserList)}">
+                                    <span>Sin documentos agregados</span>
+                                </div>
+                                <div class="col-4 " th:each="documento, itemStat : ${cita.documentos}">
+
+                                    <label th:text="'Documento #'+${(itemStat.index+1)}+'*:'" class="form-label m-2">
+                                    </label>
+
+                                    <div class="input-group has-validation">
+                                        <span th:text="${documento.documento.nombre}"></span>
+                                        <button class="btn btn-link boton-estatus" type="button"
+                                                th:attr="onclick=|removerDocumento('${documento.id}')|">
+                                            <i class="bi bi-trash text-danger"></i>
+                                        </button>
+
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- End Table with stripped rows -->
+            </div>
+        </section>
+
+    </main>
+
+
+</div>
+
+<div th:replace="~{fragments/scrypt :: div}"></div>
+
+</body>
+</html>

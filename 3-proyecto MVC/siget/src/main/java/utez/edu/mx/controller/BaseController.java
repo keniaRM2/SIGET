@@ -24,6 +24,7 @@ public class BaseController {
 
     public static final String EMPLEADO = "empleado";
     public static final String EMPLEADOS = "empleados";
+    public static final String ESTADOS = "estados";
 
 
     public static final String SERVICIO = "servicio";

@@ -17,9 +17,7 @@
             <li class="nav-item dropdown pe-3">
                 <a class="nav-link nav-profile d-flex align-items-center pe-0" th:href="@{/logout}">
                     <span sec:authentication="principal.username"/>
-                    <span>   </span>
-                    <span> | </span>
-                    <span>   </span>
+                    <span id="nombreUsuario" class="ms-3">  </span>
                     <i class="m-2 bi bi-box-arrow-right"></i>
                     <span>Salir</span>
                 </a>

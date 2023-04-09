@@ -5,21 +5,29 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import utez.edu.mx.core.bean.CitaBean;
+import utez.edu.mx.core.bean.DocumentoAnexoBean;
+import utez.edu.mx.core.bean.DocumentoBean;
+import utez.edu.mx.core.bean.EstadoBean;
 import utez.edu.mx.core.constants.GeneralConstants;
 import utez.edu.mx.core.exceptions.SigetException;
 import utez.edu.mx.core.util.Utileria;
 import utez.edu.mx.dao.model.*;
 import utez.edu.mx.dao.repository.CitaRepository;
+import utez.edu.mx.dao.repository.DocumentoAnexoRepository;
 import utez.edu.mx.service.CitaService;
 import utez.edu.mx.service.EstadoService;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class CitaServiceImpl implements CitaService {
 
     @Autowired
     private CitaRepository citaRepository;
+
+    @Autowired
+    private DocumentoAnexoRepository documentoAnexoRepository;
     @Autowired
     private UsuarioServiceImpl usuarioServiceImpl;
 
@@ -29,6 +37,11 @@ public class CitaServiceImpl implements CitaService {
     @Autowired
     private EmpleadoServiceImpl empleadoServiceImpl;
 
+
+    @Override
+    public Cita obtenerCita(Integer id) throws SigetException {
+        return citaRepository.findById(id).orElseThrow(() -> new SigetException("Cita no encontrada"));
+    }
 
     @Override
     @Transactional
@@ -75,7 +88,7 @@ public class CitaServiceImpl implements CitaService {
 
     @Override
     @Transactional
-    public void cambiarEstadoCita(Cita citaEstado) throws SigetException {
+    public void cambiarEstadoCita(CitaBean citaEstado) throws SigetException {
         Cita cita = citaRepository.findById(citaEstado.getId()).orElseThrow(() -> new SigetException("La cita no encontrada"));
 
         Rol rol = usuarioServiceImpl.obtenerRolSesion();
@@ -89,10 +102,12 @@ public class CitaServiceImpl implements CitaService {
             if (!estadoActual.getNombre().equals(GeneralConstants.ESTADO_CITA_PROCESO)) {
                 throw new SigetException("Cita " + estadoActual.getNombre() + ", no es posible cancelar.");
             }
-            String tipo = GeneralConstants.ESTADO_CITA_CANCELADA;
-            String nombre = GeneralConstants.TIPO_ESTADO_CITA;
+            String tipo = GeneralConstants.TIPO_ESTADO_CITA;
+            String nombre = GeneralConstants.ESTADO_CITA_CANCELADA;
             Estado estado = estadoService.obtenerEstadoPorNombreyTipo(nombre, tipo);
             cita.setEstado(estado);
+
+
         } else if (authority.equals(GeneralConstants.ROL_EMPLEADO)) {
             Estado nuevoEstado = estadoService.obtenerPorId(citaEstado.getEstado().getId());
             String nombreNuevoEstado = nuevoEstado.getNombre();
@@ -102,12 +117,14 @@ public class CitaServiceImpl implements CitaService {
             String cancelada = GeneralConstants.ESTADO_CITA_CANCELADA;
             String rebibida = GeneralConstants.ESTADO_CITA_RECIBIDA;
             String noRecibida = GeneralConstants.ESTADO_CITA_NO_RECIBIDA;
-            if (Utileria.fechaAntes(cita.getFechaCita())) {
+            if (Utileria.fechaAntes(cita.getFechaCita()) && !(nombreNuevoEstado.equals(noRecibida))) {
+
                 throw new SigetException("La cita ha caducado.");
+
             }
             if ((nombreNuevoEstado.equals(aceptada) || nombreNuevoEstado.equals(cancelada)) && !estadoCita.equals(proceso)) {
                 throw new SigetException("Cita " + estadoCita + ", no es posible cambiar el estado.");
-            } else if ((nombreNuevoEstado.equals(rebibida) || nombreNuevoEstado.equals(noRecibida)) && !estadoCita.equals(aceptada)) {
+            } else if ((nombreNuevoEstado.equals(rebibida)) && !estadoCita.equals(aceptada)) {
                 throw new SigetException("Cita " + estadoCita + ", no es posible cambiar el estado.");
             }
             // CHECAR EL ENVIO DE EMAIL PENDIENTE
@@ -120,6 +137,7 @@ public class CitaServiceImpl implements CitaService {
     }
 
     @Override
+    @Transactional
     public List<CitaBean> listarCitas() {
         List<CitaBean> citasBean = new ArrayList<>();
 
@@ -135,9 +153,26 @@ public class CitaServiceImpl implements CitaService {
                 citas = citaRepository.findAllByEmpleado(empleado);
             }
 
-            if(Utileria.nonEmptyList(citas)){
+            String tipo = GeneralConstants.TIPO_ESTADO_CITA;
+            String nombreNoRecibida = GeneralConstants.ESTADO_CITA_NO_RECIBIDA;
+            String nombreCancelado = GeneralConstants.ESTADO_CITA_NO_RECIBIDA;
+            Estado estadoNoRecibida = estadoService.obtenerEstadoPorNombreyTipo(nombreNoRecibida, tipo);
+            Estado estadoCancelado = estadoService.obtenerEstadoPorNombreyTipo(nombreCancelado, tipo);
+
+            if (Utileria.nonEmptyList(citas)) {
                 for (Cita cita : citas) {
+
+                    if(cita.getEstado().getNombre().equals(GeneralConstants.ESTADO_CITA_ACEPTADA)
+                            && Utileria.fechaAntes(cita.getFechaCita())){
+                        cita.setEstado(estadoNoRecibida);
+                    }else if(cita.getEstado().getNombre().equals(GeneralConstants.ESTADO_CITA_PROCESO)
+                            && Utileria.fechaAntes(cita.getFechaCita())){
+                        cita.setEstado(estadoCancelado);
+
+                    }
+                    citaRepository.save(cita);
                     citasBean.add(Utileria.mapper.map(cita, CitaBean.class));
+
                 }
             }
 
@@ -148,4 +183,60 @@ public class CitaServiceImpl implements CitaService {
 
 
     }
+
+    @Override
+    public CitaBean obtenerInforfmacionCita(Integer id) throws SigetException {
+        try {
+
+            Cita cita = obtenerCita(id);
+
+            CitaBean citaBean = Utileria.mapper.map(cita, CitaBean.class);
+
+            citaBean.setDocumentos(new ArrayList<>());
+
+            List<DocumentoAnexo> documentoAnexos = documentoAnexoRepository.findAllByCita(cita);
+            if (Utileria.nonEmptyList(documentoAnexos)) {
+                for (DocumentoAnexo documentoAnexo : documentoAnexos) {
+                    DocumentoBean documentoBean = Utileria.mapper.map(documentoAnexo.getDocumento(), DocumentoBean.class);
+                    citaBean.getDocumentos().add(new DocumentoAnexoBean(documentoAnexo.getId(), documentoBean));
+                }
+            }
+
+            return citaBean;
+        } catch (SigetException e) {
+            throw new SigetException(e.getMessage());
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+            throw new SigetException(Utileria.getErrorNull());
+        }
+    }
+
+    @Override
+    public List<Estado> obtenerEstadosCita(Integer id) throws SigetException {
+        try {
+            List<Estado> estados = new ArrayList<>();
+
+            Cita cita = obtenerCita(id);
+            String tipo = GeneralConstants.TIPO_ESTADO_CITA;
+            String estadoActual = cita.getEstado().getNombre();
+            String aceptada = GeneralConstants.ESTADO_CITA_ACEPTADA;
+            String proceso = GeneralConstants.ESTADO_CITA_PROCESO;
+            String cancelada = GeneralConstants.ESTADO_CITA_CANCELADA;
+            String rebibida = GeneralConstants.ESTADO_CITA_RECIBIDA;
+            String noRecibida = GeneralConstants.ESTADO_CITA_NO_RECIBIDA;
+            if (estadoActual.equals(proceso)) {
+                estados.add(estadoService.obtenerEstadoPorNombreyTipo(aceptada, tipo));
+                estados.add(estadoService.obtenerEstadoPorNombreyTipo(cancelada, tipo));
+            }else if (estadoActual.equals(aceptada)) {
+                estados.add(estadoService.obtenerEstadoPorNombreyTipo(rebibida, tipo));
+                estados.add(estadoService.obtenerEstadoPorNombreyTipo(noRecibida, tipo));
+
+            }
+            return estados;
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+            return new ArrayList<>();
+        }
+    }
+
 }

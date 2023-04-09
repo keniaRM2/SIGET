@@ -25,7 +25,9 @@ public class VistasConstants {
 
     public static final String CONFIGURACION = "configuracion/configuracion";
 
-    public static final String CALENDARIO_CITA = "/cita/calendario";
+    public static final String CALENDARIO_CITA_ADMIN = "/cita/calendario_admin";
+    public static final String CALENDARIO_CITA_EMPLEADO = "/cita/calendario_empleado";
+    public static final String INFORMACION_CITA = "/cita/informacion_cita";
     private VistasConstants() {
     }
 }

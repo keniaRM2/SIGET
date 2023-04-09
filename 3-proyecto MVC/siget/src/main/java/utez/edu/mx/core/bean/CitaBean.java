@@ -1,7 +1,10 @@
 package utez.edu.mx.core.bean;
 
 import java.sql.Timestamp;
+import java.util.List;
+
 import lombok.Data;
+import utez.edu.mx.dao.model.DocumentoAnexo;
 
 @Data
 public class CitaBean {
@@ -16,5 +19,6 @@ public class CitaBean {
     private EstadoBean estado;
     private VentanillaBean ventanilla;
     private EmpleadoBean empleado;
+    private List<DocumentoAnexoBean> documentos;
 
 }

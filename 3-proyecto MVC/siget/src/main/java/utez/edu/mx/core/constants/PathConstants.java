@@ -44,12 +44,13 @@ public class PathConstants {
 
     // CITA
     private static final String CITAS_CONTROLLER = "/cita";
-    public static final String CALENDARIO_CITA = CITAS_CONTROLLER;
+    public static final String CALENDARIO_CITA_ADMIN = CITAS_CONTROLLER;
+    public static final String CALENDARIO_CITA_EMPLEADO = CITAS_CONTROLLER+"/calendario";
     public static final String LISTAR_CITAS = CITAS_CONTROLLER + "/listarCitas";
     public static final String GUARDAR_CITA = CITAS_CONTROLLER + "/cita";
     public static final String REGISTRAR_CITA = CITAS_CONTROLLER + "/registrar";
-    public static final String EDITAR_CITA = CITAS_CONTROLLER + "/editar";
-    public static final String CANCELAR_CITA = CITAS_CONTROLLER + "/eliminar";
+    public static final String EDITAR_ESTADO_CITA = CITAS_CONTROLLER + "/editarEstadoCita";
+    public static final String INFORMACION_CITA = CITAS_CONTROLLER + "/informacionCita";
 
 
     // ALUMNO

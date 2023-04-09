@@ -122,6 +122,28 @@ public class InicialServiceImpl implements InicialService {
                 }
             }
 
+            List<Estado> estados = Arrays.asList(
+                    new Estado(GeneralConstants.ESTADO_CITA_PROCESO, new TipoEstado(GeneralConstants.TIPO_ESTADO_CITA), "#99A3A4"),
+                    new Estado(GeneralConstants.ESTADO_CITA_ACEPTADA, new TipoEstado(GeneralConstants.TIPO_ESTADO_CITA), "#2ECC71"),
+                    new Estado(GeneralConstants.ESTADO_CITA_CANCELADA, new TipoEstado(GeneralConstants.TIPO_ESTADO_CITA), "#E74C3C"),
+                    new Estado(GeneralConstants.ESTADO_CITA_RECIBIDA, new TipoEstado(GeneralConstants.TIPO_ESTADO_CITA), "#3498DB"),
+                    new Estado(GeneralConstants.ESTADO_CITA_NO_RECIBIDA, new TipoEstado(GeneralConstants.TIPO_ESTADO_CITA), "#E67E22"),
+                    new Estado(GeneralConstants.ESTADO_PAGO_ACEPTADO, new TipoEstado(GeneralConstants.TIPO_ESTADO_PAGO), "#2ECC71"),
+                    new Estado(GeneralConstants.ESTADO_PAGO_RECHAZADO, new TipoEstado(GeneralConstants.TIPO_ESTADO_PAGO), "#E74C3C")
+            );
+
+
+            for(Estado estado : estados){
+                TipoEstado tipoEstado = tipoEstadoRepository.findByNombre(estado.getTipoEstado().getNombre());
+                Estado busqueda = estadoRepository.findByNombreAndTipoEstado(estado.getNombre(), tipoEstado);
+                if(busqueda != null){
+                    estado.setId(busqueda.getId());
+                }
+                estado.setTipoEstado(tipoEstado);
+                estadoRepository.save(estado);
+            }
+
+
 
             TipoServicio tipoServicioCosto = new TipoServicio(GeneralConstants.TIPO_SERVICIO_COSTO);
             TipoServicio tipoServicioGratuito = new TipoServicio(GeneralConstants.TIPO_SERVICIO_GRATUITO);
