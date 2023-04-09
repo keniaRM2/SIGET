@@ -37,6 +37,9 @@ public class CitaServiceImpl implements CitaService {
     @Autowired
     private EmpleadoServiceImpl empleadoServiceImpl;
 
+    @Autowired
+    private EmailServiceImpl emailService;
+
 
     @Override
     public Cita obtenerCita(Integer id) throws SigetException {
@@ -127,7 +130,18 @@ public class CitaServiceImpl implements CitaService {
             } else if ((nombreNuevoEstado.equals(rebibida)) && !estadoCita.equals(aceptada)) {
                 throw new SigetException("Cita " + estadoCita + ", no es posible cambiar el estado.");
             }
-            // CHECAR EL ENVIO DE EMAIL PENDIENTE
+
+            // Si la cita fue aceptada o cancelada enviara un correo al alumno informando de la cituación
+            String recipient = cita.getAlumno().getPersona().getUsuario().getUsername();
+            if ( nombreNuevoEstado.equals(aceptada) ) {
+
+                String msgBody = "Buen día "+cita.getAlumno().getPersona().getNombre()+" "+cita.getAlumno().getPersona().getPrimerApellido()+" "+cita.getAlumno().getPersona().getSegundoApellido()+", su cita ha sido aceptada para el día , "+ cita.getFechaCita() +" puede consultar su estado directamente en ventanilla de manera presencial";
+                emailService.sendSimpleMail(new EmailDetails( recipient, msgBody, "Cita aceptada"));
+            } else if ( nombreNuevoEstado.equals(cancelada) ) {
+                String msgBody = "Buen día "+cita.getAlumno().getPersona().getNombre()+" "+cita.getAlumno().getPersona().getPrimerApellido()+" "+cita.getAlumno().getPersona().getSegundoApellido()+", su cita ha sido cancelada, para más detalles puede consultar su estado directamente en ventanilla de manera presencial";
+                emailService.sendSimpleMail(new EmailDetails( recipient, msgBody , "Cita cancelada"));
+            }
+
             cita.setEstado(nuevoEstado);
         } else {
             throw new SigetException("Permisos denegados");

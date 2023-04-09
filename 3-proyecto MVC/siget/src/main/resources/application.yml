@@ -19,6 +19,17 @@ spring:
       idle-timeout: 10000
       max-lifetime: 1000
       auto-commit: true
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: alexagander717@gmail.com
+    password: wdqabawkftymgdaw
+    protocol: smtp
+    tls: true
+    properties.mail.smtp:
+      auth: true
+      starttls.enable: true
+      ssl.trust: smtp.gmail.com
 
 server:
   port: 80
