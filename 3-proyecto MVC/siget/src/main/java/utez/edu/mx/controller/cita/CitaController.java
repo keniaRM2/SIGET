@@ -14,7 +14,6 @@ import utez.edu.mx.core.constants.VistasConstants;
 import utez.edu.mx.core.exceptions.SigetException;
 import utez.edu.mx.dao.model.Cita;
 import utez.edu.mx.service.CitaService;
-import utez.edu.mx.service.UsuarioService;
 
 @Controller
 public class CitaController extends BaseController {

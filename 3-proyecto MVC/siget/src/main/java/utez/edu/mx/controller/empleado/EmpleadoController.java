@@ -27,7 +27,7 @@ public class EmpleadoController extends BaseController {
         model.addAttribute(EMPLEADOS, empleadoService.listarEmpleados());
         return VistasConstants.LISTA_EMPLEADOS;
     }
-    
+
     @GetMapping(value = PathConstants.INICIO_EMPLEADO)
     public String inicioEmpleado(Model model){
         return VistasConstants.INICIO_EMPLEADOS;
