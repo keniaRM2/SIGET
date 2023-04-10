@@ -85,6 +85,15 @@ public class PathConstants {
     public static final String CONFIGURACION = CONFIGURACION_CONTROLLER;
     public static final String GUARDAR_CONFIGURACION = CONFIGURACION_CONTROLLER + "/guardar";
 
+
+    // RECUPERAR CONTRASEÑA
+    private static final String RECUPERAR_CONTRASENA_CONTROLLER = "/recuperar-contrasena";
+    public static final String RECUPERAR_CONTRASENA = RECUPERAR_CONTRASENA_CONTROLLER;
+    public static final String CODIGO_RECUPERAR_CONTRASENA = RECUPERAR_CONTRASENA_CONTROLLER + "/codigo";
+    public static final String ENVIAR_CODIGO_RECUPERAR_CONTRASENA = RECUPERAR_CONTRASENA_CONTROLLER + "/enviar-codigo";
+    public static final String VALIDAR_CODIGO_RECUPERAR_CONTRASENA = RECUPERAR_CONTRASENA_CONTROLLER + "/validar-codigo";
+    public static final String NUEVA_CONTRASENA = RECUPERAR_CONTRASENA_CONTROLLER + "/nueva-contrasena";
+    public static final String ENVIAR_CAMBIOS = "/cambiar-contrasena";
     private PathConstants() {
     }
 }

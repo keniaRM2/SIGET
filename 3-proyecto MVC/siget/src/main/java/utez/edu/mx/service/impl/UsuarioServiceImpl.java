@@ -78,5 +78,19 @@ public class UsuarioServiceImpl  implements UsuarioService {
         return rolAlumno.get();
     }
 
+    @Override
+    public Boolean existeUsuario(String username) {
+        return usuarioRepository.findByUsername(username) != null;
+    }
+
+    @Override
+    public Usuario obtenerUsuarioPorUsername(String username) {
+        return usuarioRepository.findByUsername(username);
+    }
+
+    @Override
+    public void actualizarUsuario(Usuario usuario) {
+        usuarioRepository.save(usuario);
+    }
 
 }

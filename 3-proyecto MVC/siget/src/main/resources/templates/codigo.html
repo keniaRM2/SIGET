@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/bootstrap :: head}"></head>
+<style>
+     .height-100 {
+      height: 100vh;
+    }
+    .inputs input {
+      width: 40px;
+      height: 40px;
+    }
+    input[type="number"]::-webkit-inner-spin-button,
+    input[type="number"]::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      margin: 0;
+    }
+    .form-control:focus {
+      box-shadow: none;
+      border: 2px solid #0bac87;
+    }
+    .validate {
+      border-radius: 20px;
+      height: 40px;
+      background-color: #0bac87;
+      border: 1px solid #0bac87;
+      width: 140px;
+    }
+</style>
+<body>
+<main class="fondo-login">
+  <div class="container">
+
+    <section
+            class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center">
+
+            <div class="card mb-3">
+
+              <div class="card-body">
+                <div class="pt-4 pb-2">
+                  <h4 class="card-title text-center pb-0 fs-4">SIGET</h4>
+                  <p class="text-center small">Ingresa el código de 6 digitos que recibio en su bandeja de correo</p>
+                </div>
+
+                <div th:if="${param.error}">
+                  <div class="alert alert-danger">Código no valido</div>
+                </div>
+
+                <form  th:action="@{'/recuperar-contrasena/validar-codigo'}" method="post" role="form">
+
+                    <div id="otp" class="inputs d-flex flex-row justify-content-center mt-2">
+                      <input
+                              class="m-2 text-center form-control rounded"
+                              type="text"
+                              id="first"
+                              maxlength="1"
+                              name="codigo1"
+                      />
+                      <input
+                              class="m-2 text-center form-control rounded"
+                              type="text"
+                              id="second"
+                              maxlength="1"
+                              name="codigo2"
+                      />
+                      <input
+                              class="m-2 text-center form-control rounded"
+                              type="text"
+                              id="third"
+                              maxlength="1"
+                              name="codigo3"
+                      />
+                      <input
+                              class="m-2 text-center form-control rounded"
+                              type="text"
+                              id="fourth"
+                              maxlength="1"
+                              name="codigo4"
+                      />
+                      <input
+                              class="m-2 text-center form-control rounded"
+                              type="text"
+                              id="fifth"
+                              maxlength="1"
+                              name="codigo5"
+                      />
+                      <input
+                              class="m-2 text-center form-control rounded"
+                              type="text"
+                              id="sixth"
+                              maxlength="1"
+                              name="codigo6"
+                      />
+                    </div>
+                    <br>
+                      <div class="col-12">
+                        <button class="btn btn-primary w-100" type="submit">Verificar</button>
+                      </div>
+                </form>
+                  </div>
+                </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</main>
+</body>
+</html>

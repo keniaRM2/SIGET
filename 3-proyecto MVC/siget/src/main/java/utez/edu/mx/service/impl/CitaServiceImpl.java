@@ -138,13 +138,20 @@ public class CitaServiceImpl implements CitaService {
 
             // Si la cita fue aceptada o cancelada enviara un correo al alumno informando de la cituación
             String recipient = cita.getAlumno().getPersona().getUsuario().getUsername();
-            if (nombreNuevoEstado.equals(aceptada)) {
+            if ( nombreNuevoEstado.equals(aceptada) ) {
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTime(cita.getFechaCita());
+                // obtener día, mes y año sin horas
+                int dia = calendar.get(Calendar.DAY_OF_MONTH);
+                int mes = calendar.get(Calendar.MONTH);
+                int anio = calendar.get(Calendar.YEAR);
 
-                String msgBody = "Buen día " + cita.getAlumno().getPersona().getNombre() + " " + cita.getAlumno().getPersona().getPrimerApellido() + " " + cita.getAlumno().getPersona().getSegundoApellido() + ", su cita ha sido aceptada para el día , " + cita.getFechaCita() + " puede consultar su estado directamente en ventanilla de manera presencial";
-                emailService.sendSimpleMail(new EmailDetails(recipient, msgBody, "Cita aceptada"));
-            } else if (nombreNuevoEstado.equals(cancelada)) {
-                String msgBody = "Buen día " + cita.getAlumno().getPersona().getNombre() + " " + cita.getAlumno().getPersona().getPrimerApellido() + " " + cita.getAlumno().getPersona().getSegundoApellido() + ", su cita ha sido cancelada, para más detalles puede consultar su estado directamente en ventanilla de manera presencial";
-                emailService.sendSimpleMail(new EmailDetails(recipient, msgBody, "Cita cancelada"));
+                String fecha = dia + "/" + mes + "/" + anio;
+                String msgBody = "Buen día "+cita.getAlumno().getPersona().getNombre()+" "+cita.getAlumno().getPersona().getPrimerApellido()+" "+cita.getAlumno().getPersona().getSegundoApellido()+", su cita ha sido aceptada para el día , "+fecha+" a la hora : "+ cita.getHoraInicio() +" puede consultar su estado directamente en la pagina SIGET, deberá llegar con 15 minutos de anticipación.";
+                emailService.sendSimpleMail(new EmailDetails( recipient, msgBody, "Cita aceptada"));
+            } else if ( nombreNuevoEstado.equals(cancelada) ) {
+                String msgBody = "Buen día "+cita.getAlumno().getPersona().getNombre()+" "+cita.getAlumno().getPersona().getPrimerApellido()+" "+cita.getAlumno().getPersona().getSegundoApellido()+", su cita ha sido cancelada, para más detalles puede consultar su estado directamente en ventanilla de manera presencial o en la plataforma SIGET.";
+                emailService.sendSimpleMail(new EmailDetails( recipient, msgBody , "Cita cancelada"));
             }
 
             cita.setEstado(nuevoEstado);

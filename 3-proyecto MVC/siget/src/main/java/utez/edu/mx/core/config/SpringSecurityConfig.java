@@ -20,6 +20,13 @@ public class SpringSecurityConfig {
     private static final String[] PATH_TODO_PERMITIDO = {
             PathConstants.ASSETS_ALL_SUBPATHS,
             "/error/**",
+            "/api/" + PathConstants.LISTAR_CITAS,
+            PathConstants.RECUPERAR_CONTRASENA,
+            PathConstants.CODIGO_RECUPERAR_CONTRASENA,
+            PathConstants.NUEVA_CONTRASENA,
+            PathConstants.ENVIAR_CAMBIOS,
+            PathConstants.VALIDAR_CODIGO_RECUPERAR_CONTRASENA,
+            PathConstants.ENVIAR_CODIGO_RECUPERAR_CONTRASENA
     };
 
     private static final String[] PATH_SIN_SESION = {

@@ -63,9 +63,19 @@
                                     <div th:if="${param.error}">
                                         <div class="alert alert-danger">Usuario o contraseña no valido.</div>
                                     </div>
+
                                     <div th:if="${param.logout}">
                                         <div class="alert alert-success">Su sesión ha sido finalizada.</div>
                                     </div>
+
+                                    <div th:if="${param.sent}">
+                                        <div class="alert alert-success">Contraseña cambiada.</div>
+                                    </div>
+
+                                    <div th:if="${param.denied}">
+                                        <div class="alert alert-danger">No puedes acceder a la url ingresada.</div>
+                                    </div>
+
                                     <form class="row g-3 needs-validation" novalidate method="post" role="form"
                                         th:action="@{/login}">
 
@@ -88,8 +98,10 @@
                                         <div class="col-12">
                                             <button class="btn btn-primary w-100" type="submit">Ingresar</button>
                                         </div>
-                                       <div class="col-12">
-                                            <p class="mb-0">¿No tienes cuenta? <a th:href="@{'/alumno/registrar'}">¡Regístrate!</a></p>
+                                        <br>
+                                        <div class="col-12 text-center">
+                                            <p class="small mb-0"> <a
+                                                    th:href="@{'/recuperar-contrasena'}">¿Has olvidado tu contraseña?</a></p>
                                         </div>
                                     </form>
 

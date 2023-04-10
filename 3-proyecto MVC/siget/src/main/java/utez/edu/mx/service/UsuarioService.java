@@ -13,5 +13,10 @@ public interface UsuarioService {
 
     public Alumno obtenerAlumnoSesion () throws SigetException;
 
+    Boolean existeUsuario(String username);
+
+    Usuario obtenerUsuarioPorUsername(String username);
+
+    void actualizarUsuario(Usuario usuario);
 
 }
