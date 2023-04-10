@@ -12,6 +12,8 @@ import utez.edu.mx.core.constants.PathConstants;
 import utez.edu.mx.core.exceptions.SigetException;
 import utez.edu.mx.service.HorarioService;
 
+import java.util.List;
+
 @RestController
 public class HorarioRestController extends BaseController {
 
@@ -19,7 +21,7 @@ public class HorarioRestController extends BaseController {
     private HorarioService horarioService;
 
     @PostMapping(value = PathConstants.VALIDAR_DISPONIBILIDAD)
-    public ResponseRestBean<HorarioBean> validarDisponilidad(@RequestBody CitaBean citaBean){
+    public ResponseRestBean<List<HorarioBean>> validarDisponilidad(@RequestBody CitaBean citaBean){
        try{
            return new ResponseRestBean<>(Boolean.TRUE, horarioService.validarDisponilidad(citaBean));
        }catch (SigetException e){

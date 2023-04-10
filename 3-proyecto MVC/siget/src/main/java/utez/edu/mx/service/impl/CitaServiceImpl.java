@@ -4,10 +4,7 @@ import jakarta.validation.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import utez.edu.mx.core.bean.CitaBean;
-import utez.edu.mx.core.bean.DocumentoAnexoBean;
-import utez.edu.mx.core.bean.DocumentoBean;
-import utez.edu.mx.core.bean.EstadoBean;
+import utez.edu.mx.core.bean.*;
 import utez.edu.mx.core.constants.GeneralConstants;
 import utez.edu.mx.core.exceptions.SigetException;
 import utez.edu.mx.core.util.Utileria;
@@ -16,6 +13,7 @@ import utez.edu.mx.dao.repository.CitaRepository;
 import utez.edu.mx.dao.repository.DocumentoAnexoRepository;
 import utez.edu.mx.service.CitaService;
 import utez.edu.mx.service.EstadoService;
+import utez.edu.mx.service.PayPalService;
 import utez.edu.mx.service.ServicioService;
 
 import java.sql.Timestamp;
@@ -44,6 +42,9 @@ public class CitaServiceImpl implements CitaService {
 
     @Autowired
     private ServicioService servicioService;
+
+    @Autowired
+    private PayPalService payPalService;
 
     @Override
     public Cita obtenerCita(Integer id) throws SigetException {
@@ -294,6 +295,20 @@ public class CitaServiceImpl implements CitaService {
         } catch (Exception e) {
             System.err.println(e.getMessage());
             return Collections.emptyList();
+        }
+    }
+
+    @Override
+    public String autorizarPago(Integer idServicio) throws SigetException {
+        try{
+            Servicio servicio = servicioService.obtenerServicio(idServicio);
+            PagoPayPalBean pagoPayPalBean = new PagoPayPalBean(servicio.getNombre(), servicio.getCosto().floatValue());
+            return  payPalService.autorizarPago(pagoPayPalBean);
+        } catch (SigetException e) {
+            throw new SigetException(e.getMessage());
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+            throw new SigetException(Utileria.getErrorNull());
         }
     }
 

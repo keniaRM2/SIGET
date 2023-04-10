@@ -2,6 +2,7 @@ package utez.edu.mx.service;
 
 import utez.edu.mx.core.bean.CitaBean;
 import utez.edu.mx.core.bean.EstadoBean;
+import utez.edu.mx.core.bean.ServicioBean;
 import utez.edu.mx.core.exceptions.SigetException;
 import utez.edu.mx.dao.model.Cita;
 import utez.edu.mx.dao.model.Estado;
@@ -26,4 +27,6 @@ public interface CitaService {
     Cita obtenerCitaRegistro();
 
     List<CitaBean> listarCitasReservacion(CitaBean citaBean);
+
+    String autorizarPago(Integer idServicio) throws SigetException;
 }

@@ -26,6 +26,17 @@ public class GeneralConstants {
     public static final String ESTADO_PAGO_RECHAZADO = "Rechazado";
     public static final String ESTADO_PAGO_ACEPTADO = "Aceptado";
 
+
+    //PayPal
+    public static final String CLIENT_ID = "AcrqeULL1pqvvI30tH1nVpPT9OYAP87sdibq-lqMeBR3LycIHjzUCUb0Hdcn3m0GPsLz2uDr4SLA_6fx";
+    public static final String CLIENT_SECRET = "EB7D_dEMsVhv5tEmDEPTGRro3YIiEc0bO1_u3pmNNUy16VgAHT6-3q1YsViNLlf0-Q072MbaumhU9Eu7";
+    public static final String MODE = "sandbox";
+    public static final String AUTHORIZE = "authorize";
+    public static final String PAYPAL = "paypal";
+    public static final String MXN = "MXN";
+    public static final String CANTIDAD_PAGO = "1";
+    public static final String URL_APROBADO = "approval_url";
+
     private GeneralConstants() {
     }
 

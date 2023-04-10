@@ -84,4 +84,8 @@ public class Utileria {
     }
 
     public static final ModelMapper mapper =  new ModelMapper();
+
+    public static String formatoPagoPayPal(Float total) {
+        return String.format("%.2f", total);
+    }
 }
