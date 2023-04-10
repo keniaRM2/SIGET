@@ -34,7 +34,6 @@ public class Utileria {
         return !nonEmpty(value);
     }
 
-
     public static boolean nonEmptyList(List<?> list) {
         return nonNull(list) && !list.isEmpty();
     }

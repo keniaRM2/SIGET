@@ -31,6 +31,14 @@ public class PathConstants {
     public static final String BANDEJA_CITAS = EMPLEADO_CONTROLLER + "/bandeja_citas";
     public static final String HORARIO_CITAS = EMPLEADO_CONTROLLER + "/horario_citas";
 
+    //EMPLEADO HORARIO
+    private static final String HORARIO_EMPLEADO_CONTROLLER = "/horario";
+    public static final String LISTAR_HORARIOS_EMPLEADO = HORARIO_EMPLEADO_CONTROLLER;
+    public static final String LISTAR_HORARIO_DIAS = HORARIO_EMPLEADO_CONTROLLER+"/listarDias";
+    public static final String INICIO_HORARIO_EMPLEADO = HORARIO_EMPLEADO_CONTROLLER + "/inicio";
+
+
+
     // SERVICIO
     private static final String TIPOSERVICIO_CONTROLLER = "/tiposerv";
     private static final String SERVICIO_CONTROLLER = "/servicio";

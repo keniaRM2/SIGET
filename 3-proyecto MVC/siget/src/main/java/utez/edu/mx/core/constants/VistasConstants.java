@@ -4,6 +4,8 @@ public class VistasConstants {
 
     public static final String LISTA_EMPLEADOS = "/empleado/tabla_empleado";
     public static final String FORMULARIO_EMPLEADO = "/empleado/formulario_empleado";
+
+    public static final String LISTA_HORARIOS_EMPLEADO = "/horario/horario_atencion";
     public static final String LISTA_SERVICIOS = "/servicio/tabla_servicio";
     public static final String LISTA_TIPOSERVICIOS = "/servicio/tabla_tiposervicio";
     public static final String FORMULARIO_SERVICIO = "/servicio/formulario_servicio";

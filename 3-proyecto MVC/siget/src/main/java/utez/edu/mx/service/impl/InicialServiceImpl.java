@@ -150,26 +150,26 @@ public class InicialServiceImpl implements InicialService {
             Integer estatusActivo = GeneralConstants.ESTATUS_ACTIVO;
 
             List<Servicio> servicios = Arrays.asList(
-                    new Servicio("Ficha de admisión", "...", 1040.0, tipoServicioCosto, estatusActivo),
-                    new Servicio("Curso de selección para aspirantes", "...", 700.0, tipoServicioCosto, estatusActivo),
-                    new Servicio("Inscripción TSU", "...", 520.0, tipoServicioCosto, estatusActivo),
-                    new Servicio("Inscripción ING-LIC", "...", 390.0, tipoServicioCosto, estatusActivo),
-                    new Servicio("Cuota cuatrimestral TSU", "...", 1900.0, tipoServicioCosto, estatusActivo),
-                    new Servicio("Cuota cuatrimestral ING-LIC", "...", 2200.0, tipoServicioCosto, estatusActivo),
-                    new Servicio("Certificación de estudios", "...", 1700.0, tipoServicioCosto, estatusActivo),
-                    new Servicio("Exámen extraordinario", "...", 130.0, tipoServicioCosto, estatusActivo),
-                    new Servicio("Constancia de servicio social", "...", 190.0, tipoServicioCosto, estatusActivo),
-                    new Servicio("Certificado (parcial)", "...", 190.0, tipoServicioCosto, estatusActivo),
-                    new Servicio("Boleta de calificación sellada", "...", 50.0, tipoServicioCosto, estatusActivo),
-                    new Servicio("Constancia de estudios", "...", 90.0, tipoServicioCosto, estatusActivo),
-                    new Servicio("Historial académico", "...", 90.0, tipoServicioCosto, estatusActivo),
-                    new Servicio("Cotejo y entrega de documentos oficiales", "...", 190.0, tipoServicioCosto, estatusActivo),
-                    new Servicio("Reposición de credencial", "...", 120.0, tipoServicioCosto, estatusActivo),
-                    new Servicio("Trámite de equivalaencia externa", "...", 520.0, tipoServicioCosto, estatusActivo),
-                    new Servicio("Toma de materias por asesoría", "...", 780.0, tipoServicioCosto, estatusActivo),
-                    new Servicio("Curso de regularización", "...", 390.0, tipoServicioCosto, estatusActivo),
-                    new Servicio("Carta de pesante", "...", 190.0, tipoServicioCosto, estatusActivo),
-                    new Servicio("Revisión de reporte de estadía extemporáneo", "...", 1040.0, tipoServicioCosto, estatusActivo)
+                    new Servicio("Ficha de admisión", "Una vez que se ha obtenido la ficha de admisión, se debe llenar con la información personal y académica requerida.", 1040.0, tipoServicioCosto, estatusActivo),
+                    new Servicio("Curso de selección para aspirantes", "El objetivo principal del curso de selección es evaluar a los aspirantes en función de sus conocimientos y competencias para determinar si son aptos para el puesto al que están postulando.", 0.0, tipoServicioCosto, estatusActivo),
+                    new Servicio("Inscripción TSU", "Presentación de una solicitud de admisión, la revisión de los requisitos de ingreso", 520.0, tipoServicioCosto, estatusActivo),
+                    new Servicio("Inscripción ING-LIC", "Presentación de una solicitud de admisión, la revisión de los requisitos de ingreso a ING-LIC", 390.0, tipoServicioCosto, estatusActivo),
+                    new Servicio("Cuota cuatrimestral TSU", " Tasa que los estudiantes de este nivel educativo deben pagar para cubrir los gastos de su formación académica", 1900.0, tipoServicioCosto, estatusActivo),
+                    new Servicio("Cuota cuatrimestral ING-LIC", " Tasa que los estudiantes de este nivel educativo deben pagar para cubrir los gastos de su formación académica", 2200.0, tipoServicioCosto, estatusActivo),
+                    new Servicio("Certificación de estudios", "Validar y comprobar la autenticidad de los estudios realizados por una persona en una institución educativa.", 1700.0, tipoServicioCosto, estatusActivo),
+                    new Servicio("Exámen extraordinario", "Prueba que permite a los estudiantes que no hayan aprobado una asignatura durante el período escolar regular,", 130.0, tipoServicioCosto, estatusActivo),
+                    new Servicio("Constancia de servicio social", "Documento que acredita que un estudiante ha cumplido con el servicio social obligatorio requerido por su institución educativa", 190.0, tipoServicioCosto, estatusActivo),
+                    new Servicio("Certificado (parcial)", " Documento que acredite la aprobación de ciertas materias o asignaturas de un programa académico.", 190.0, tipoServicioCosto, estatusActivo),
+                    new Servicio("Boleta de calificación sellada", "Se refiere a la obtención de una copia oficial de la boleta de calificaciones de un estudiante, que ha sido verificada y sellada por una institución", 0.0, tipoServicioCosto, estatusActivo),
+                    new Servicio("Constancia de estudios", "Documento oficial que certifica la situación académica de un estudiante en una institución educativa.", 90.0, tipoServicioCosto, estatusActivo),
+                    new Servicio("Historial académico", "Registro detallado de las calificaciones y los cursos completados por un estudiante durante su trayectoria académica.", 90.0, tipoServicioCosto, estatusActivo),
+                    new Servicio("Cotejo y entrega de documentos oficiales", "Proceso en el que  verifica la autenticidad de los documentos presentados por una persona", 0.0, tipoServicioCosto, estatusActivo),
+                    new Servicio("Reposición de credencial", " Trámite que se realiza cuando se ha perdido, extraviado o dañado la credencial original", 120.0, tipoServicioCosto, estatusActivo),
+                    new Servicio("Trámite de equivalaencia externa", "Permite a una persona que ha estudiado en el extranjero obtener el reconocimiento oficial de sus estudios en el país de destino. ", 520.0, tipoServicioCosto, estatusActivo),
+                    new Servicio("Toma de materias por asesoría", "Asesoría que se lleva a cabo en algunas instituciones educativas y universidades, con el fin de brindar a los estudiantes la oportunidad de recibir una atención más personalizada", 0.0, tipoServicioCosto, estatusActivo),
+                    new Servicio("Curso de regularización", " Proceso de estudio diseñado para ayudar a los estudiantes a ponerse al día en las materias que no han podido aprobar", 390.0, tipoServicioCosto, estatusActivo),
+                    new Servicio("Carta de pesante", " Documento que se emite a los estudiantes que han completado satisfactoriamente su educación superior", 190.0, tipoServicioCosto, estatusActivo),
+                    new Servicio("Revisión de reporte de estadía extemporáneo", "Proceso en el que un estudiante presenta su reporte de estadía después de la fecha límite establecida", 0.0, tipoServicioCosto, estatusActivo)
             );
 
             for (Servicio servicio : servicios) {

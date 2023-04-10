@@ -28,6 +28,10 @@ public class BaseController {
     public static final String ESTADOS = "estados";
 
 
+
+    public static final String HORARIOS = "horarios";
+
+
     public static final String SERVICIO = "servicio";
     public static final String TIPOSERVICIO = "tiposervicio";
     public static final String SERVICIOS= "servicios";
