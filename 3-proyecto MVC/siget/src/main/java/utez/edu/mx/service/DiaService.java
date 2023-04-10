@@ -8,4 +8,5 @@ public interface DiaService {
 
     List<Dia> listarDias();
 
+    Dia obtenerPorNombre(String nombreDia);
 }

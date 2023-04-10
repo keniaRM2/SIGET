@@ -16,7 +16,9 @@ import utez.edu.mx.dao.repository.CitaRepository;
 import utez.edu.mx.dao.repository.DocumentoAnexoRepository;
 import utez.edu.mx.service.CitaService;
 import utez.edu.mx.service.EstadoService;
+import utez.edu.mx.service.ServicioService;
 
+import java.sql.Timestamp;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -40,6 +42,8 @@ public class CitaServiceImpl implements CitaService {
     @Autowired
     private EmailServiceImpl emailService;
 
+    @Autowired
+    private ServicioService servicioService;
 
     @Override
     public Cita obtenerCita(Integer id) throws SigetException {
@@ -133,13 +137,13 @@ public class CitaServiceImpl implements CitaService {
 
             // Si la cita fue aceptada o cancelada enviara un correo al alumno informando de la cituación
             String recipient = cita.getAlumno().getPersona().getUsuario().getUsername();
-            if ( nombreNuevoEstado.equals(aceptada) ) {
+            if (nombreNuevoEstado.equals(aceptada)) {
 
-                String msgBody = "Buen día "+cita.getAlumno().getPersona().getNombre()+" "+cita.getAlumno().getPersona().getPrimerApellido()+" "+cita.getAlumno().getPersona().getSegundoApellido()+", su cita ha sido aceptada para el día , "+ cita.getFechaCita() +" puede consultar su estado directamente en ventanilla de manera presencial";
-                emailService.sendSimpleMail(new EmailDetails( recipient, msgBody, "Cita aceptada"));
-            } else if ( nombreNuevoEstado.equals(cancelada) ) {
-                String msgBody = "Buen día "+cita.getAlumno().getPersona().getNombre()+" "+cita.getAlumno().getPersona().getPrimerApellido()+" "+cita.getAlumno().getPersona().getSegundoApellido()+", su cita ha sido cancelada, para más detalles puede consultar su estado directamente en ventanilla de manera presencial";
-                emailService.sendSimpleMail(new EmailDetails( recipient, msgBody , "Cita cancelada"));
+                String msgBody = "Buen día " + cita.getAlumno().getPersona().getNombre() + " " + cita.getAlumno().getPersona().getPrimerApellido() + " " + cita.getAlumno().getPersona().getSegundoApellido() + ", su cita ha sido aceptada para el día , " + cita.getFechaCita() + " puede consultar su estado directamente en ventanilla de manera presencial";
+                emailService.sendSimpleMail(new EmailDetails(recipient, msgBody, "Cita aceptada"));
+            } else if (nombreNuevoEstado.equals(cancelada)) {
+                String msgBody = "Buen día " + cita.getAlumno().getPersona().getNombre() + " " + cita.getAlumno().getPersona().getPrimerApellido() + " " + cita.getAlumno().getPersona().getSegundoApellido() + ", su cita ha sido cancelada, para más detalles puede consultar su estado directamente en ventanilla de manera presencial";
+                emailService.sendSimpleMail(new EmailDetails(recipient, msgBody, "Cita cancelada"));
             }
 
             cita.setEstado(nuevoEstado);
@@ -176,11 +180,11 @@ public class CitaServiceImpl implements CitaService {
             if (Utileria.nonEmptyList(citas)) {
                 for (Cita cita : citas) {
 
-                    if(cita.getEstado().getNombre().equals(GeneralConstants.ESTADO_CITA_ACEPTADA)
-                            && Utileria.fechaAntes(cita.getFechaCita())){
+                    if (cita.getEstado().getNombre().equals(GeneralConstants.ESTADO_CITA_ACEPTADA)
+                            && Utileria.fechaAntes(cita.getFechaCita())) {
                         cita.setEstado(estadoNoRecibida);
-                    }else if(cita.getEstado().getNombre().equals(GeneralConstants.ESTADO_CITA_PROCESO)
-                            && Utileria.fechaAntes(cita.getFechaCita())){
+                    } else if (cita.getEstado().getNombre().equals(GeneralConstants.ESTADO_CITA_PROCESO)
+                            && Utileria.fechaAntes(cita.getFechaCita())) {
                         cita.setEstado(estadoCancelado);
 
                     }
@@ -241,7 +245,7 @@ public class CitaServiceImpl implements CitaService {
             if (estadoActual.equals(proceso)) {
                 estados.add(estadoService.obtenerEstadoPorNombreyTipo(aceptada, tipo));
                 estados.add(estadoService.obtenerEstadoPorNombreyTipo(cancelada, tipo));
-            }else if (estadoActual.equals(aceptada)) {
+            } else if (estadoActual.equals(aceptada)) {
                 estados.add(estadoService.obtenerEstadoPorNombreyTipo(rebibida, tipo));
                 estados.add(estadoService.obtenerEstadoPorNombreyTipo(noRecibida, tipo));
 
@@ -250,6 +254,46 @@ public class CitaServiceImpl implements CitaService {
         } catch (Exception e) {
             System.err.println(e.getMessage());
             return new ArrayList<>();
+        }
+    }
+
+    @Override
+    public Cita obtenerCitaRegistro() {
+        Cita cita = new Cita();
+        cita.setServicio(new Servicio());
+        return cita;
+    }
+
+    @Override
+    public List<CitaBean> listarCitasReservacion(CitaBean citaBean) {
+        try {
+
+            String aceptada = GeneralConstants.ESTADO_CITA_ACEPTADA;
+            String proceso = GeneralConstants.ESTADO_CITA_PROCESO;
+
+            List<CitaBean> citaBeans = new ArrayList<>();
+
+            Timestamp fechaCita = citaBean.getFechaCita();
+            Servicio servicio = servicioService.obtenerServicio(citaBean.getServicio().getId());
+
+            List<Estado> estados = estadoService.obtenerEstadosCita().stream().filter(estado ->
+                    estado.getNombre().equals(aceptada) || estado.getNombre().equals(proceso)
+            ).collect(Collectors.toList());
+
+
+            List<Cita> citas = citaRepository.findAllByServicioAndEstadoIn(servicio, estados);
+
+
+            for (Cita cita : citas) {
+                if (cita.getFechaCita().equals(fechaCita)) {
+                    citaBeans.add(new CitaBean(cita.getHoraInicio(), cita.getHoraFin()));
+                }
+            }
+
+            return citaBeans;
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+            return Collections.emptyList();
         }
     }
 

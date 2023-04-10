@@ -18,6 +18,7 @@ public class BaseController {
     public static final String AJAX_HEADER_VALUE = "XMLHttpRequest";
     public static final String ALUMNOS = "alumnos";
     public static final String ALUMNO = "alumno";
+    public static final String CARRERAS = "carreras";
 
     public static final String CITAS = "citas";
     public static final String CITA = "cita";

@@ -3,6 +3,7 @@ package utez.edu.mx.core.util;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import org.modelmapper.ModelMapper;
+import utez.edu.mx.core.exceptions.SigetException;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
@@ -76,7 +77,10 @@ public class Utileria {
         return fecha.before(fechaHoraActual);
     }
 
-    public static String obteneDiaSemana(Date fecha){
+    public static String obteneDiaSemana(Date fecha) throws SigetException{
+        if(isNull(fecha)){
+            throw new SigetException("Fecha no especificada.");
+        }
         return new SimpleDateFormat("EEEEE", new Locale("es", "MX")).format(fecha).toLowerCase();
     }
 

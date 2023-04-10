@@ -21,4 +21,11 @@ public class CitaBean {
     private EmpleadoBean empleado;
     private List<DocumentoAnexoBean> documentos;
 
+    public CitaBean() {
+    }
+
+    public CitaBean(Timestamp horaInicio, Timestamp horaFin) {
+        this.horaInicio = horaInicio;
+        this.horaFin = horaFin;
+    }
 }

@@ -14,7 +14,7 @@ import utez.edu.mx.core.constants.VistasConstants;
 import utez.edu.mx.core.exceptions.SigetException;
 import utez.edu.mx.dao.model.Cita;
 import utez.edu.mx.service.CitaService;
-import utez.edu.mx.service.UsuarioService;
+import utez.edu.mx.service.ServicioService;
 
 @Controller
 public class CitaController extends BaseController {
@@ -22,12 +22,14 @@ public class CitaController extends BaseController {
     @Autowired
     private CitaService citaService;
 
-
+    @Autowired
+    private ServicioService servicioService;
 
     @GetMapping(value = PathConstants.REGISTRAR_CITA)
     public String registrarCita(Model model){
-        model.addAttribute(CITA, new Cita());
-        return "cita/index";
+        model.addAttribute(CITA, citaService.obtenerCitaRegistro());
+        model.addAttribute(SERVICIOS, servicioService.listarServiciosActivos());
+        return VistasConstants.FORMULARIO_CITA;
     }
 
     @PostMapping(value = PathConstants.EDITAR_ESTADO_CITA)
@@ -54,6 +56,7 @@ public class CitaController extends BaseController {
             return "cita/index";
         }
     }
+
     @GetMapping(value = PathConstants.INFORMACION_CITA+"/{id}")
     public String obtenerInforfmacionCita(@PathVariable Integer id, Model model, RedirectAttributes redirectAttributes){
         try{

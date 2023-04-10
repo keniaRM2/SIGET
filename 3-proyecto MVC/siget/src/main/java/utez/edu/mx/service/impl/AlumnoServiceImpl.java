@@ -10,6 +10,7 @@ import utez.edu.mx.core.constants.GeneralConstants;
 import utez.edu.mx.core.exceptions.SigetException;
 import utez.edu.mx.core.util.Utileria;
 import utez.edu.mx.dao.model.Alumno;
+import utez.edu.mx.dao.model.Carrera;
 import utez.edu.mx.dao.model.Persona;
 import utez.edu.mx.dao.model.Usuario;
 import utez.edu.mx.dao.repository.AlumnoRepository;
@@ -69,10 +70,12 @@ public class AlumnoServiceImpl implements AlumnoService {
 
             usuario.setRol(rolRepository.findByAuthority(GeneralConstants.ROL_ALUMNO));
             usuario.setEnabled(GeneralConstants.ESTATUS_ACTIVO);
-            usuario.setPassword(GeneralConstants.CODIFICAROR.encode(alumno.getPersona().getUsuario().getPassword()));
+            usuario.setPassword(GeneralConstants.CODIFICAROR.encode(alumno.getMatricula()));
             usuario.setPersona(persona);
 
             personaRepository.save(persona);
+            alumno.setPersona(persona);
+            usuario.setPersona(persona);
             usuarioRepository.save(usuario);
             alumnoRepository.save(alumno);
 
@@ -137,6 +140,7 @@ public class AlumnoServiceImpl implements AlumnoService {
         Persona persona = new Persona();
         persona.setUsuario(new Usuario());
         alumno.setPersona(persona);
+        alumno.setCarrera( new Carrera());
         return alumno;
     }
 

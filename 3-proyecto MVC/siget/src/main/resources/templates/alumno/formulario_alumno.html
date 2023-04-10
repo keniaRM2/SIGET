@@ -22,8 +22,9 @@
                                         <h4 class="card-title text-center pb-0 fs-4">Registrar Alumno</h4>
                                         <p class="text-center small">Ingresa los datos solicitados.</p>
                                     </div>
+                                    <div th:replace="~{fragments/mensajes :: div}"></div>
 
-                                    <form class="row g-3 needs-validation mt-2" method="POST" th:object="${alumno}"
+                                    <form class="row g-3 needs-validation " method="POST" th:object="${alumno}"
                                         th:action="@{'/alumno/guardar'}">
 
                                         <h5><strong>Información personal </strong></h5>
@@ -78,12 +79,29 @@
                                             </div>
                                         </div>
 
-                                        <h5><strong>Información Académica </strong></h5>
+                                        <h5><strong>Información académica </strong></h5>
                                         <hr />
                                         
                                         <div class="row mb-12 mt-2">
-                                             <!-- offset-md-3 -->
-                                            <div class="col-md-3 "> 
+                                            <div class="col-md-4">
+                                                <label for="carrera" class="form-label">Carrera*</label>
+                                                <div class="input-group has-validation">
+                                                    <select class="form-select" id="carrera" name="carrera.id"
+                                                            th:value="*{carrera.id}"
+                                                            required>
+                                                        <option selected="" disabled="" value="">Seleccione...</option>
+                                                        <option th:each="item, iter: ${carreras}"
+                                                                th:value="${item.id}" th:text="${item.nombre}">
+                                                        </option>
+                                                    </select>
+                                                    <div class="invalid-feedback">
+                                                        Ingrese un valor valido.
+                                                    </div>
+                                                </div>
+
+
+                                            </div>
+                                            <div class="col-md-4">
                                                 <label for="matricula" class="form-label">No. matricula*</label>
                                                 <div class="input-group has-validation">
                                                     <input type="text" class="form-control"
@@ -96,7 +114,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-md-3 ">
+                                            <div class="col-md-4 ">
                                                 <label for="username" class="form-label">Correo electrónico*</label>
                                                 <div class="input-group has-validation">
                                                     <input type="email" class="form-control"
@@ -113,23 +131,9 @@
                                             </div>
                                         </div>
 
-                                        <div class="row mb-4 mt-2">
+                                        <div class="row mb-4 mt-4">
                                             <!-- offset-md-3 -->
-                                            <div class="col-md-3 mt-2 ">
-                                                <label for="password" class="form-label">Contraseña*</label>
-                                                <div class="input-group has-validation">
-                                                    <input type="password" class="form-control"
-                                                        aria-describedby="inputGroupPrepend" autocomplete="off"
-                                                        aria-autocomplete="none" placeholder="Ingrese..." id="password"
-                                                        name="persona.usuario.password"
-                                                        th:field="*{persona.usuario.password}"
-                                                        th:value="*{persona.usuario.password}" th:maxlength="255"
-                                                        th:required="true" />
-                                                    <div class="invalid-feedback">
-                                                        Ingrese un valor valido.
-                                                    </div>
-                                                </div>
-                                            </div>
+
                                             <div class="row align-items-center">
                                                 <div class="col-md-4 offset-md-4 center-block" align="center">
                                                     <a class="btn btn-outline-danger mx-4 " th:href="@{'/alumno'}"

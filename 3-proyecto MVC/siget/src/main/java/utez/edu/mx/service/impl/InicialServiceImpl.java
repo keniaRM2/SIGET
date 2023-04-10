@@ -64,7 +64,7 @@ public class InicialServiceImpl implements InicialService {
                 }
             }
 
-            List<String> dias = Arrays.asList("Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo");
+            List<String> dias = Arrays.asList("Lunes", "Martes", "Miércoles", "Jueves", "Viernes");
             for (String nombre : dias) {
                 Dia dia = diaRepository.findByNombre(nombre);
                 if (Utileria.isNull(dia)) {

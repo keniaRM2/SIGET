@@ -2,6 +2,7 @@ package utez.edu.mx.dao.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import utez.edu.mx.dao.model.Dia;
+import utez.edu.mx.dao.model.Empleado;
 import utez.edu.mx.dao.model.Horario;
 import utez.edu.mx.dao.model.Ventanilla;
 
@@ -16,4 +17,5 @@ public interface HorarioRepository extends JpaRepository<Horario, Integer> {
             Timestamp horaInicio,
             Timestamp horaFin);
 
+    List<Horario> findAllByDiaAndEmpleadoInOrderByHoraInicio(Dia dia, List<Empleado> empleados);
 }

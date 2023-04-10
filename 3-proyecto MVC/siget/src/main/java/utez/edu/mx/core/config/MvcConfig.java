@@ -17,5 +17,7 @@ public class MvcConfig implements WebMvcConfigurer {
         registry.addViewController(PathConstants.ERROR).setViewName(VistasConstants.INDEX);
         registry.addViewController(PathConstants.CALENDARIO_CITA_ADMIN).setViewName(VistasConstants.CALENDARIO_CITA_ADMIN);
         registry.addViewController(PathConstants.CALENDARIO_CITA_EMPLEADO).setViewName(VistasConstants.CALENDARIO_CITA_EMPLEADO);
+
+        registry.addViewController("/ejemplo").setViewName("/alumno/inicio_alumno");
     }
 }

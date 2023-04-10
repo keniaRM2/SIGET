@@ -13,7 +13,10 @@ import utez.edu.mx.core.constants.PathConstants;
 import utez.edu.mx.core.constants.VistasConstants;
 import utez.edu.mx.core.exceptions.SigetException;
 import utez.edu.mx.dao.model.Alumno;
+import utez.edu.mx.dao.model.DivisionAcademica;
 import utez.edu.mx.service.AlumnoService;
+import utez.edu.mx.service.CarreraService;
+import utez.edu.mx.service.DivisionAcademicaService;
 
 @Controller
 public class AlumnoController extends BaseController {
@@ -21,6 +24,11 @@ public class AlumnoController extends BaseController {
     @Autowired
     private AlumnoService alumnoService;
 
+    @Autowired
+    private DivisionAcademicaService divisionAcademicaService;
+
+    @Autowired
+    private CarreraService carreraService;
 
     @GetMapping(value = PathConstants.LISTAR_ALUMNOS)
     public String listarAlumnos(Model model){
@@ -31,6 +39,7 @@ public class AlumnoController extends BaseController {
     @GetMapping(value = PathConstants.REGISTRAR_ALUMNO)
     public String registrarAlumno(Model model){
         model.addAttribute(ALUMNO, alumnoService.obtenerAlumnoRegistro());
+        model.addAttribute(CARRERAS, carreraService.listarCarreras());
         return VistasConstants.FORMULARIO_ALUMNO;
     }
 
@@ -66,7 +75,8 @@ public class AlumnoController extends BaseController {
         }catch (SigetException e){
             mensajeError(model, e.getMessage());
             model.addAttribute(ALUMNO, alumno);
-            return VistasConstants.LOGIN;
+            model.addAttribute(CARRERAS, carreraService.listarCarreras());
+            return VistasConstants.FORMULARIO_ALUMNO;
         }
     }
     @GetMapping(value = PathConstants.INICIO_ALUMNO)
