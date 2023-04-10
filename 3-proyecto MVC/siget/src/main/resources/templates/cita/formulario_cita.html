@@ -112,6 +112,14 @@
                                             Guardar <i class="bi bi-check-circle"></i>
                                         </button>
                                     </div>
+
+                                </div>
+                                <div class="row mb-4 mt-2 mt-4 d-flex align-middle justify-content-center">
+                                    <div class="col-3 mt-4 d-flex align-middle justify-content-center" >
+                                        <button class="btn btn-info" type="button" id="botonPago">
+                                            Pagar <i class="bi bi-cash-coin"></i>
+                                        </button>
+                                    </div>
                                 </div>
                             </form>
 
@@ -148,10 +156,9 @@
 
     let configuracionTimePicker = {
         'minTime': "07:00am",
-        'maxTime':"09:00pm",
+        'maxTime': "09:00pm",
         'setTime': new Date(),
-        'disableTimeRanges': [
-        ],
+        'disableTimeRanges': [],
         // useSelect: true,
         step: 15
     };
@@ -200,6 +207,19 @@
         $('#informacionServicio').html(informacionHTML);
     }
 
+
+    let urlPago = null;
+    let obtenerInformacionPayPal = (respuesta) => {
+        console.log(respuesta);
+        urlPago = respuesta.objeto;
+    };
+
+    $("#botonPago").click(function (e) {
+        e.preventDefault();
+        window.open(urlPago, '_blank').focus();
+    });
+
+
     $('select[id="servicio"]').change(function (event) {
 
         event.preventDefault();
@@ -209,6 +229,9 @@
         $("#divCalendario").css({display: "block"});
 
         $.post(url, data, mostrarInformacion);
+
+        url = window.location.origin + "/siget/cita/autorizarPago"
+        $.post(url, data, obtenerInformacionPayPal);
 
         avanceBarra(20);
     });
@@ -281,7 +304,7 @@
                     citas = citas.map((cita) => {
 
                         let horaInicio = moment(cita.horaInicio);
-                        let horaFin = moment(cita.horaInicio).add({ minutes: 1});
+                        let horaFin = moment(cita.horaInicio).add({minutes: 1});
                         horaInicio = horaInicio.format('HH:mm a');
                         horaFin = horaFin.format('HH:mm a');
                         return [horaInicio, horaFin];

@@ -3,20 +3,21 @@ package utez.edu.mx.controller.cita;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import utez.edu.mx.controller.BaseController;
 import utez.edu.mx.core.bean.CitaBean;
+import utez.edu.mx.core.bean.ResponseRestBean;
+import utez.edu.mx.core.bean.ServicioBean;
 import utez.edu.mx.core.constants.PathConstants;
 import utez.edu.mx.core.exceptions.SigetException;
 import utez.edu.mx.dao.model.Cita;
+import utez.edu.mx.dao.model.Servicio;
 import utez.edu.mx.service.CitaService;
 import utez.edu.mx.service.impl.CitaServiceImpl;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class CitaRestController extends BaseController {
@@ -36,7 +37,14 @@ public class CitaRestController extends BaseController {
     }
 
 
-
+    @PostMapping(params = "idServicio", value = PathConstants.AUTORIZAR_PAGO)
+    public ResponseRestBean<String> autorizarPago(@RequestParam("idServicio") Integer idServicio){
+        try{
+            return new ResponseRestBean<>(Boolean.TRUE, citaService.autorizarPago(idServicio));
+        }catch (SigetException e){
+            return  new ResponseRestBean<>(e.getMessage());
+        }
+    }
 
 
 

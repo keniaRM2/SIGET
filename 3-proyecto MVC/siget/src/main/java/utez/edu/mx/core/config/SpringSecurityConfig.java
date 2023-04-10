@@ -54,7 +54,8 @@ public class SpringSecurityConfig {
     private static final String[] PATH_ROL_ALUMNO = {
             PathConstants.REGISTRAR_CITA,
             PathConstants.OBTENER_INFORMACION_SERVICIO,
-            PathConstants.LISTAR_CITAS_RESERVACION
+            PathConstants.LISTAR_CITAS_RESERVACION,
+            PathConstants.AUTORIZAR_PAGO
     };
 
 

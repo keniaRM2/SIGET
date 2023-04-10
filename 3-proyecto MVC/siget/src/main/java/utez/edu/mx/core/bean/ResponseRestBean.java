@@ -13,7 +13,9 @@ public class ResponseRestBean<KENINI> {
     private KENINI objeto;
     private List<KENINI> objetos;
 
-    public ResponseRestBean() {
+    public ResponseRestBean(Boolean respuesta, KENINI objeto) {
+        this.respuesta = respuesta;
+        this.objeto = objeto;
     }
 
     public ResponseRestBean(String mensaje) {
