@@ -35,6 +35,8 @@ public class VistasConstants {
     public static final String CALENDARIO_CITA_ADMIN = "/cita/calendario_admin";
     public static final String CALENDARIO_CITA_EMPLEADO = "/cita/calendario_empleado";
     public static final String INFORMACION_CITA = "/cita/informacion_cita";
+    public static final String FORMULARIO_CITA = "/cita/formulario_cita";
+
     private VistasConstants() {
     }
 }

@@ -20,11 +20,12 @@ public class SpringSecurityConfig {
     private static final String[] PATH_TODO_PERMITIDO = {
             PathConstants.ASSETS_ALL_SUBPATHS,
             "/error/**",
-            "/api/" + PathConstants.LISTAR_CITAS
     };
 
     private static final String[] PATH_SIN_SESION = {
-            PathConstants.LOGIN_ALL_SUBPATHS
+            PathConstants.LOGIN_ALL_SUBPATHS,
+            PathConstants.REGISTRAR_ALUMNO,
+            PathConstants.GUARDAR_ALUMNO
     };
     private static final String[] PATH_ROL_ADMIN = {
             PathConstants.LISTAR_EMPLEADOS + PathConstants.ALL_SUBPATHS,
@@ -34,7 +35,7 @@ public class SpringSecurityConfig {
             PathConstants.ACTUALIZAR_ESTATUS_EMPLEADO + PathConstants.ALL_SUBPATHS,
 
             PathConstants.LISTAR_DOCUMENTOS_SERVICIO,
-            PathConstants.LISTAR_SERVICIOS + PathConstants.ALL_SUBPATHS,
+            PathConstants.LISTAR_SERVICIOS,
             PathConstants.EDITAR_SERVICIO,
             PathConstants.REGISTRAR_SERVICIO,
             PathConstants.REMOVER_REMOVER_DOCUMENTO,
@@ -51,7 +52,9 @@ public class SpringSecurityConfig {
     };
 
     private static final String[] PATH_ROL_ALUMNO = {
-            PathConstants.EDITAR_ESTADO_CITA
+            PathConstants.REGISTRAR_CITA,
+            PathConstants.OBTENER_INFORMACION_SERVICIO,
+            PathConstants.LISTAR_CITAS_RESERVACION
     };
 
 

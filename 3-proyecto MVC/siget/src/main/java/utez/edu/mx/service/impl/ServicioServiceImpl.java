@@ -206,13 +206,23 @@ public class ServicioServiceImpl implements ServicioService {
     }
 
     @Override
-    public ServicioBean obtenerServicioConDocumentos(Integer idServicio) {
+    public List<Servicio> listarServiciosActivos() {
+        return servicioRepository.findAllByEstatus(GeneralConstants.ESTATUS_ACTIVO);
+    }
+
+    @Override
+    public ServicioBean obtenerInformacionServicio(Integer idServicio) {
         try{
-            Servicio servicio = servicioRepository.findById(idServicio).orElseThrow( () -> new SigetException("Servicio no encontrado"));
+            Servicio servicio = obtenerServicio(idServicio);
             return Utileria.mapper.map(servicio, ServicioBean.class);
         }catch (Exception e){
             System.err.println(e.getMessage());
             return null;
         }
+    }
+
+    @Override
+    public Servicio obtenerServicio(Integer id) throws SigetException {
+        return servicioRepository.findById(id).orElseThrow( () -> new SigetException("Servicio no encontrado"));
     }
 }

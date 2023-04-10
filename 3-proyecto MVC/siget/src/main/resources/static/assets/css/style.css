@@ -1367,3 +1367,10 @@ div.dataTables_wrapper div.dataTables_filter input {
 .nav-tabs-bordered .nav-link:focus {
   color: #fff0;
 }
+button[disabled] {
+ cursor: not-allowed !important;
+}
+
+.larger-font{
+  font-size: large !important;
+}

@@ -356,6 +356,8 @@
     }
 
 })();
-
+// $(function () {
+//     $('select').selectpicker();
+// });
 
 // $.post(window.location.origin + "/siget/servicio/removerDocumento", data, replaceItems);

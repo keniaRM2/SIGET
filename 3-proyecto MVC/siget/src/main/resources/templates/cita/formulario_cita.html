@@ -1,0 +1,310 @@
+<!doctype html>
+<html lang="en" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/bootstrap :: head}"></head>
+
+<body>
+
+
+<div id="siget">
+
+    <!-- HEADER, inciio -->
+    <nav th:replace="~{fragments/header :: header}"></nav>
+    <!-- HEADER, fin -->
+
+    <!--   ASIDE, INICIO-->
+    <nav th:replace="~{fragments/aside :: aside}"></nav>
+    <!--   ASIDE, FIN-->
+
+
+    <main id="main" class="main">
+
+        <div class="pagetitle">
+            <h1><strong>Registrar cita</strong></h1>
+            <nav>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">Registro de cita</a></li>
+                    <li class="breadcrumb-item active">Formulario de solicitud</li>
+                </ol>
+            </nav>
+        </div><!-- End Page Title -->
+
+        <section class="section">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div th:replace="~{fragments/mensajes :: div}"></div>
+                        <div class="card-body">
+
+
+                            <!-- Custom Styled Validation -->
+
+                            <form class="row g-3 needs-validation mt-2" method="POST" th:object="${cita}"
+                                  th:action="@{'/cita/guardar'}">
+                                <div class="progress mt-3">
+                                    <div class="progress-bar progress-bar-striped bg-success" role="progressbar"
+                                         style="width: 0%"
+                                         aria-valuenow="0%"
+                                         aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                                <hr/>
+                                <h5><strong>Información de trámite </strong></h5>
+                                <div class="row mb-4 mt-2 align-middle  justify-content-center">
+                                    <div class="col-6 justify-content-center">
+                                        <label for="servicio" class="form-label">Trámite*</label>
+                                        <div class="input-group has-validation">
+                                            <select class="form-select" data-live-search="true" id="servicio"
+                                                    name="servicio.id"
+                                                    th:value="*{servicio.id}"
+                                                    required>
+                                                <option selected="" disabled="" value="">Seleccione...</option>
+                                                <option th:each="item, iter: ${servicios}"
+                                                        th:value="${item.id}" th:text="${item.nombre}">
+                                                </option>
+                                            </select>
+                                            <div class="invalid-feedback">
+                                                Ingrese un valor valido.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mb-4 mt-2  align-middle d-flex justify-content-center"
+                                     id="informacionServicio">
+
+                                </div>
+                                <div class="row mb-4 mt-2 d-flex align-middle justify-content-center">
+                                    <div class="col-3 justify-content-center" id="divCalendario">
+                                        <label for="calendario" class="form-label">Fecha de cita*</label>
+                                        <div class="input-group has-validation">
+                                            <input type="text" id="calendario" class="form-control"
+                                                   aria-describedby="inputGroupPrepend"
+                                                   placeholder="Seleccione..."
+                                                   autocomplete="off" aria-autocomplete="none"
+                                                   name="persona.nombre"
+                                                   th:required="true"/>
+                                            <div class="invalid-feedback">
+                                                Ingrese un valor valido.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-3 justify-content-center" id="divReloj">
+                                        <label for="reloj" class="form-label">Hora de atención*</label>
+                                        <div class="input-group has-validation">
+                                            <input type="text" id="reloj" class="form-control"
+                                                   aria-describedby="inputGroupPrepend"
+                                                   placeholder="Seleccione..."
+                                                   autocomplete="off" aria-autocomplete="none"
+                                                   name="persona.nombre"
+                                                   th:required="true"/>
+                                            <div class="invalid-feedback">
+                                                Ingrese un valor valido.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row align-items-center">
+                                    <div class="col-md-4 offset-md-4 center-block" align="center">
+                                        <a class="btn btn-outline-danger mx-4 " th:href="@{'/'}"
+                                           type="button">
+                                            <i class="bi bi bi-backspace"></i> Volver
+                                        </a>
+                                        <button class="btn btn-success" type="button" disabled>
+                                            Guardar <i class="bi bi-check-circle"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+
+
+</div>
+
+<div th:replace="~{fragments/scrypt :: div}"></div>
+
+<script>
+
+    let configuracionDatePicker = {
+        weekStart: 1,
+        maxViewMode: 0,
+        clearBtn: false,
+        language: "es",
+        multidate: false,
+        daysOfWeekDisabled: "0,6",
+        daysOfWeekHighlighted: "1,2,3,4,5",
+        todayHighlight: true,
+        startDate: "09-04-2023",
+        endDate: "21-04-2023"
+    };
+
+    let configuracionTimePicker = {
+        'minTime': "07:00am",
+        'maxTime':"09:00pm",
+        'setTime': new Date(),
+        'disableTimeRanges': [
+        ],
+        // useSelect: true,
+        step: 15
+    };
+
+    let fechaSeleccionada = null;
+
+    let avanceBarra = (avance) => {
+        var bar = document.querySelector(".progress-bar");
+        if (avance < 100) {
+            bar.style.width = avance + "%";
+            bar.innerText = avance + "%";
+        }
+    };
+
+    let mostrarInformacion = (servicio) => {
+
+        let documentoHTML = `Documentación no requerida.`;
+
+        if (servicio?.documentos?.length !== 0) {
+            documentoHTML = servicio.documentos.map((documento) => documento.nombre).join(", ")
+        }
+
+        let informacionHTML = `
+                <div class="row align-middle d-flex justify-content-center">
+                    <div class="col-6 align-middle d-flex justify-content-center">
+                        <strong>Nombre:</strong>
+                        <span>${servicio.nombre}</span>
+                    </div>
+                    <div class="col-6 align-middle d-flex justify-content-center">
+                        <strong>Descripción:</strong>
+                        <span>${servicio.descripcion}</span>
+                    </div>
+                </div>
+                <div class="row mt-4 mb-2 align-middle d-flex justify-content-center">
+                    <div class="col-6 align-middle d-flex justify-content-center">
+                        <strong>Documentos:</strong>
+                        <span>${documentoHTML}</span>
+                    </div>
+                    <div class="col-6 align-middle d-flex justify-content-center">
+                        <strong>Costo:</strong>
+                        <span>$ ${servicio.costo}</span>
+                    </div>
+                </div>
+            `;
+
+        $('#informacionServicio').html(informacionHTML);
+    }
+
+    $('select[id="servicio"]').change(function (event) {
+
+        event.preventDefault();
+        let data = {idServicio: $(this).val()};
+        let url = window.location.origin + "/siget/servicio/obtenerInformacionServicio"
+
+        $("#divCalendario").css({display: "block"});
+
+        $.post(url, data, mostrarInformacion);
+
+        avanceBarra(20);
+    });
+
+
+    let validarDisponibilidad = (evento) => {
+
+        $("#divReloj").hide();
+
+        fechaSeleccionada = evento?.date || fechaSeleccionada;
+
+        if (fechaSeleccionada !== null && fechaSeleccionada !== undefined) {
+
+
+            let parametros = {fechaCita: fechaSeleccionada};
+
+            let url = window.location.origin + "/siget/horario/validarDisponibilidad";
+
+            $.ajax({
+                type: "POST",
+                contentType: "application/json",
+                url: url,
+                data: JSON.stringify(parametros),
+                dataType: 'json',
+                cache: false,
+                success: function (data) {
+                    let mensaje = data.mensaje;
+                    if (!data.respuesta && mensaje !== null && mensaje !== undefined) {
+                        avanceBarra(20);
+                        $.toast({
+                            heading: 'Atención',
+                            text: mensaje || 'Ingrese una fecha diferente',
+                            icon: 'error',
+                            position: 'top-right',
+                            loaderBg: 'white',
+                            class: 'larger-font',
+                            stack: false
+                        })
+                    } else {
+                        avanceBarra(40);
+                        $("#divReloj").show();
+
+                        deshabilitarHorarios();
+                    }
+                },
+            });
+        }
+
+
+    };
+
+    let deshabilitarHorarios = function () {
+
+        let url = window.location.origin + "/siget/cita/listarCitasReservacion";
+
+        let parametros = {fechaCita: fechaSeleccionada, servicio: {id: $("#servicio").val()}};
+
+        configuracionTimePicker["disableTimeRanges"] = [];
+        $('#reloj').timepicker(configuracionTimePicker);
+
+        $.ajax({
+            type: "POST",
+            contentType: "application/json",
+            url: url,
+            data: JSON.stringify(parametros),
+            dataType: 'json',
+            cache: false,
+            success: function (citas) {
+                if (citas !== null && citas !== undefined) {
+                    citas = citas.map((cita) => {
+
+                        let horaInicio = moment(cita.horaInicio);
+                        let horaFin = moment(cita.horaInicio).add({ minutes: 1});
+                        horaInicio = horaInicio.format('HH:mm a');
+                        horaFin = horaFin.format('HH:mm a');
+                        return [horaInicio, horaFin];
+                    });
+
+                    configuracionTimePicker["disableTimeRanges"] = citas;
+                    $('#reloj').timepicker(configuracionTimePicker);
+
+                }
+
+            },
+        });
+    };
+
+
+    $('#calendario').datepicker(configuracionDatePicker).on('clearDate', validarDisponibilidad).on('changeDate', validarDisponibilidad);
+    $('#reloj').timepicker(configuracionTimePicker);
+
+    $("#divCalendario").hide();
+    $("#divReloj").hide();
+
+
+</script>
+
+</body>
+</html>

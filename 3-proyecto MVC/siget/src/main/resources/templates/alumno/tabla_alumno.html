@@ -43,13 +43,6 @@
                                             <strong>Total:<span th:text="${#lists.size(alumnos)}"/></strong>
                                         </h5>
                                     </div>
-
-                                    <div class="col-1 offset-9 align-middle">
-                                        <a class="btn btn-link pull-right font-icon" type="button"
-                                           th:href="@{'/alumno/registrar'}">
-                                            <i class="bx bxs-plus-circle text-green-light"></i>
-                                        </a>
-                                    </div>
                                 </div>
 
                             </div>
@@ -82,10 +75,10 @@
                                         </span>
                                     </td>
                                     <td class="text-center">
-                                        <a class="btn btn-link" type="button"
-                                           th:href="@{/alumno/editar/{id} (id=${alumno.id})}">
-                                            <i class="bi bi-pencil text-warning"></i>
-                                        </a>
+<!--                                        <a class="btn btn-link" type="button"-->
+<!--                                           th:href="@{/alumno/editar/{id} (id=${alumno.id})}">-->
+<!--                                            <i class="bi bi-pencil text-warning"></i>-->
+<!--                                        </a>-->
                                         <a class="btn btn-link boton-estatus" type="button"
                                            th:href="@{/alumno/actualizarEstatus/{id} (id=${alumno.id})}">
                                             <i class="bi bi-trash text-danger"></i>

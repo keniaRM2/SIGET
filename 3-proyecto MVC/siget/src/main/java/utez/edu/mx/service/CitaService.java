@@ -22,4 +22,8 @@ public interface CitaService {
     CitaBean obtenerInforfmacionCita(Integer id) throws SigetException;
 
     List<Estado> obtenerEstadosCita(Integer id) throws SigetException;
+
+    Cita obtenerCitaRegistro();
+
+    List<CitaBean> listarCitasReservacion(CitaBean citaBean);
 }

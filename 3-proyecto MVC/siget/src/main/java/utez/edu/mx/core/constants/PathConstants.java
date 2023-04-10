@@ -15,6 +15,7 @@ public class PathConstants {
     public static final String INDEX_ALL_SUBPATHS = "/**";
     public static final String ERROR = "/error";
     public static final String ERROR_ALL_SUBPATHS = ERROR + ALL_SUBPATHS;
+    public static final String VALIDAR_DISPONIBILIDAD = "/horario/validarDisponibilidad";
 
     //DOCUMENTO
     private static final String DOCUMENTO_SERVICIO = "/documento";
@@ -48,6 +49,7 @@ public class PathConstants {
 
     public static final String ACTUALIZAR_ESTATUS_SERVICIO = SERVICIO_CONTROLLER + "/actualizarEstatus";
     public static final String GUARDAR_SERVICIO = SERVICIO_CONTROLLER + "/guardar";
+    public static final String OBTENER_INFORMACION_SERVICIO = SERVICIO_CONTROLLER + "/obtenerInformacionServicio";
 
 
     // CITA
@@ -55,6 +57,7 @@ public class PathConstants {
     public static final String CALENDARIO_CITA_ADMIN = CITAS_CONTROLLER;
     public static final String CALENDARIO_CITA_EMPLEADO = CITAS_CONTROLLER+"/calendario";
     public static final String LISTAR_CITAS = CITAS_CONTROLLER + "/listarCitas";
+    public static final String LISTAR_CITAS_RESERVACION = CITAS_CONTROLLER + "/listarCitasReservacion";
     public static final String GUARDAR_CITA = CITAS_CONTROLLER + "/cita";
     public static final String REGISTRAR_CITA = CITAS_CONTROLLER + "/registrar";
     public static final String EDITAR_ESTADO_CITA = CITAS_CONTROLLER + "/editarEstadoCita";
