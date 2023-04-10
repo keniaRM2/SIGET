@@ -39,8 +39,7 @@
 
                             <!-- Custom Styled Validation -->
 
-                            <form class="row g-3 needs-validation mt-2" method="POST" th:object="${cita}"
-                                  th:action="@{'/cita/guardar'}">
+                            <form action="#" class="row g-3 needs-validation mt-2" method="POST" th:object="${cita}">
                                 <div class="progress mt-3">
                                     <div class="progress-bar progress-bar-striped bg-success" role="progressbar"
                                          style="width: 0%"
@@ -54,7 +53,7 @@
                                         <label for="servicio" class="form-label">Trámite*</label>
                                         <div class="input-group has-validation">
                                             <select class="form-select" data-live-search="true" id="servicio"
-                                                    name="servicio.id"
+                                                    name="servicio"
                                                     th:value="*{servicio.id}"
                                                     required>
                                                 <option selected="" disabled="" value="">Seleccione...</option>
@@ -80,7 +79,7 @@
                                                    aria-describedby="inputGroupPrepend"
                                                    placeholder="Seleccione..."
                                                    autocomplete="off" aria-autocomplete="none"
-                                                   name="persona.nombre"
+                                                   name="fechaCita"
                                                    th:required="true"/>
                                             <div class="invalid-feedback">
                                                 Ingrese un valor valido.
@@ -94,7 +93,7 @@
                                                    aria-describedby="inputGroupPrepend"
                                                    placeholder="Seleccione..."
                                                    autocomplete="off" aria-autocomplete="none"
-                                                   name="persona.nombre"
+                                                   name="HoraInicio"
                                                    th:required="true"/>
                                             <div class="invalid-feedback">
                                                 Ingrese un valor valido.
@@ -103,13 +102,13 @@
                                     </div>
                                 </div>
                                 <div class="row align-items-center">
-                                    <div class="col-md-4 offset-md-4 center-block" align="center">
+                                    <div class="col-md-4 offset-md-4 center-block">
                                         <a class="btn btn-outline-danger mx-4 " th:href="@{'/'}"
                                            type="button">
-                                            <i class="bi bi bi-backspace"></i> Volver
+                                            <i class="bi bi-caret-left"></i> Volver
                                         </a>
-                                        <button class="btn btn-success" type="button" disabled>
-                                            Guardar <i class="bi bi-check-circle"></i>
+                                        <button class="btn btn-success" type="submit">
+                                            Seguir <i class="bi bi-caret-right"></i>
                                         </button>
                                     </div>
                                 </div>
@@ -133,7 +132,50 @@
 
 <script>
 
-    let configuracionDatePicker = {
+    var formulario = $('form');
+    var camposDeEntrada = formulario.serialize();
+    formulario.submit(function(e) {
+        e.preventDefault();
+        var values = {
+            archivosAnexos:[],
+        
+        };
+        $('form :input').each(function() {
+            if ($(this).attr('type') === 'file') {
+                 values.archivosAnexos.push($(this)[0].files[0]);
+            } else {
+                values[this.name] = $(this).val();
+            }
+        });
+        console.log(values);
+
+    });
+
+
+
+    $.ajax({
+        url: 'tu-url',
+        type: 'POST',
+        data: camposDeEntrada,
+        success: function(data) {
+
+            localStorage.setItem("data_respuesta", JSON.stringify(data));
+
+        },
+        error: function() {
+            $.toast({
+                heading: 'Atención',
+                text: mensaje || 'Intente de nuevo.',
+                icon: 'error',
+                position: 'top-right',
+                loaderBg: 'white',
+                class: 'larger-font',
+                stack: false
+            })
+        }
+    });
+// cofigurar este metodo
+  let configuracionDatePicker = {
         weekStart: 1,
         maxViewMode: 0,
         clearBtn: false,
@@ -171,7 +213,21 @@
         let documentoHTML = `Documentación no requerida.`;
 
         if (servicio?.documentos?.length !== 0) {
-            documentoHTML = servicio.documentos.map((documento) => documento.nombre).join(", ")
+            documentoHTML = servicio.documentos.map((documento) => {
+                
+                
+                return `
+                    <div class="col-sm-10">
+                    <ul>
+                    <li>${documento.nombre}</li>
+                    <input class="form-control"  type="file" name="archivoAnexo" id="formFile">
+                   </ul>
+                   </div>
+                
+                `;
+                
+                
+            });
         }
 
         let informacionHTML = `
