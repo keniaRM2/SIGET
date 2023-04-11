@@ -63,7 +63,7 @@ public class PayPalServiceImpl implements PayPalService {
     }
 
     @Override
-    public void autorizarPago(String idPago, String idEmisor) throws SigetException {
+    public void realizarPago(String idPago, String idEmisor) throws SigetException {
 
         try {
             PaymentExecution paymentExecution = new PaymentExecution();

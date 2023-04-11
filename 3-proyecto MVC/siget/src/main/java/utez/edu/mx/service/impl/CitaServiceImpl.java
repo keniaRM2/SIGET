@@ -322,7 +322,7 @@ public class CitaServiceImpl implements CitaService {
     @Override
     public void realizarPago(String idPago, String idEmisor) throws SigetException {
         try{
-            payPalService.autorizarPago(idPago, idEmisor);
+            payPalService.realizarPago(idPago, idEmisor);
         } catch (SigetException e) {
             throw new SigetException(e.getMessage());
         } catch (Exception e) {

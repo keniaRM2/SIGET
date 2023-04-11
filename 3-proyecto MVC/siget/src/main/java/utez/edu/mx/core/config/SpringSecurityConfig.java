@@ -63,7 +63,8 @@ public class SpringSecurityConfig {
             PathConstants.OBTENER_INFORMACION_SERVICIO,
             PathConstants.LISTAR_CITAS_RESERVACION,
             PathConstants.AUTORIZAR_PAGO,
-            PathConstants.REALIZAR_PAGO
+            PathConstants.REALIZAR_PAGO,
+            PathConstants.COMPROBANTE_PAGO
     };
 
 

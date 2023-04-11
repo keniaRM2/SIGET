@@ -73,9 +73,9 @@
                                 </div>
                                 <div class="row mb-4 mt-2 d-flex align-middle justify-content-center">
                                     <div class="col-3 justify-content-center" id="divCalendario">
-                                        <label for="calendario" class="form-label">Fecha de cita*</label>
+                                        <label for="fechaCita" class="form-label">Fecha de cita*</label>
                                         <div class="input-group has-validation">
-                                            <input type="text" id="calendario" class="form-control"
+                                            <input type="text" id="fechaCita" class="form-control"
                                                    aria-describedby="inputGroupPrepend"
                                                    placeholder="Seleccione..."
                                                    autocomplete="off" aria-autocomplete="none"
@@ -87,13 +87,14 @@
                                         </div>
                                     </div>
                                     <div class="col-3 justify-content-center" id="divReloj">
-                                        <label for="reloj" class="form-label">Hora de atención*</label>
+                                        <label for="horaInicio" class="form-label">Hora de atención*</label>
                                         <div class="input-group has-validation">
-                                            <input type="text" id="reloj" class="form-control"
+                                            <input type="text"  class="form-control"
                                                    aria-describedby="inputGroupPrepend"
                                                    placeholder="Seleccione..."
                                                    autocomplete="off" aria-autocomplete="none"
-                                                   name="HoraInicio"
+                                                   id="horaInicio"
+                                                   name="horaInicio"
                                                    th:required="true"/>
                                             <div class="invalid-feedback">
                                                 Ingrese un valor valido.
@@ -101,25 +102,48 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row align-items-center">
-                                    <div class="col-md-4 offset-md-4 center-block">
+
+                                <div class="row mb-4 mt-2 d-flex align-middle justify-content-center">
+                                    <div class="col-3 justify-content-center" id="divPago" >
+
+                                        <div class="card info-card revenue-card"
+                                             style="background-color: #0BAC87; color: white; cursor: pointer;"
+                                             id="botonPagar">
+
+                                            <div class="card-body">
+                                                <h4 class="card-title text-white"><i class="bi bi-cash-coin"></i> |
+                                                    Pagar con PayPal</h4>
+
+                                                <div class="d-flex align-items-center">
+                                                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                                        El pago es obligatorio para realizar el trámite en ventanilla.
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-3 justify-content-center" id="divComprobante" >
+                                        <ul>
+                                            <li>Comprobante de pago</li>
+                                            <input class="form-control" required  type="file" name="comprobantePago" id="comprobantePago"/>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-4 mt-2 mt-4 d-flex align-middle justify-content-center">
+                                    <div class="col-3 mt-4 d-flex align-middle justify-content-center">
                                         <a class="btn btn-outline-danger mx-4 " th:href="@{'/'}"
                                            type="button">
                                             <i class="bi bi-caret-left"></i> Volver
                                         </a>
-                                        <button class="btn btn-success" type="submit">
-                                            Seguir <i class="bi bi-caret-right"></i>
+                                        <button class="btn btn-success" type="submit" id="botonAgendar">
+                                            Agendar <i class="bi bi-caret-right"></i>
                                         </button>
                                     </div>
 
                                 </div>
-                                <div class="row mb-4 mt-2 mt-4 d-flex align-middle justify-content-center">
-                                    <div class="col-3 mt-4 d-flex align-middle justify-content-center" >
-                                        <button class="btn btn-info" type="button" id="botonPago">
-                                            Pagar <i class="bi bi-cash-coin"></i>
-                                        </button>
-                                    </div>
-                                </div>
+
                             </form>
 
 
@@ -140,50 +164,13 @@
 
 <script>
 
-    var formulario = $('form');
-    var camposDeEntrada = formulario.serialize();
-    formulario.submit(function(e) {
-        e.preventDefault();
-        var values = {
-            archivosAnexos:[],
-        
-        };
-        $('form :input').each(function() {
-            if ($(this).attr('type') === 'file') {
-                 values.archivosAnexos.push($(this)[0].files[0]);
-            } else {
-                values[this.name] = $(this).val();
-            }
-        });
-        console.log(values);
 
-    });
-
-
-
-    $.ajax({
-        url: 'tu-url',
-        type: 'POST',
-        data: camposDeEntrada,
-        success: function(data) {
-
-            localStorage.setItem("data_respuesta", JSON.stringify(data));
-
-        },
-        error: function() {
-            $.toast({
-                heading: 'Atención',
-                text: mensaje || 'Intente de nuevo.',
-                icon: 'error',
-                position: 'top-right',
-                loaderBg: 'white',
-                class: 'larger-font',
-                stack: false
-            })
-        }
-    });
-// cofigurar este metodo
-  let configuracionDatePicker = {
+    //Variable generales
+    let idServicio = null;
+    let informacionServicio = null;
+    let urlPago = null;
+    let fechaSeleccionada = null;
+    let configuracionDatePicker = {
         weekStart: 1,
         maxViewMode: 0,
         clearBtn: false,
@@ -192,10 +179,9 @@
         daysOfWeekDisabled: "0,6",
         daysOfWeekHighlighted: "1,2,3,4,5",
         todayHighlight: true,
-        startDate: "09-04-2023",
-        endDate: "21-04-2023"
+        startDate: moment(new Date()).format('DD-MM-YYYY'),
+        endDate: moment(new Date()).add('1', 'weeks').format('DD-MM-YYYY'),
     };
-
     let configuracionTimePicker = {
         'minTime': "07:00am",
         'maxTime': "09:00pm",
@@ -205,39 +191,133 @@
         step: 15
     };
 
-    let fechaSeleccionada = null;
-
-    let avanceBarra = (avance) => {
-        var bar = document.querySelector(".progress-bar");
-        if (avance < 100) {
-            bar.style.width = avance + "%";
-            bar.innerText = avance + "%";
+    function mostrardivPago() {
+        let costo = informacionServicio?.costo || 0;
+        urlPago = null;
+        if (costo > 0) {
+            $("#divPago").show();
+            $("#divComprobante").show();
+        } else {
+            $("#divPago").hide();
+            $("#divComprobante").hide();
         }
-    };
+    }
 
-    let mostrarInformacion = (servicio) => {
+    function deshabilitarHorarios() {
 
-        let documentoHTML = `Documentación no requerida.`;
+        $("#botonAgendar").hide();
+        $("#divPago").hide();
+        $("#divComprobante").hide();
 
-        if (servicio?.documentos?.length !== 0) {
-            documentoHTML = servicio.documentos.map((documento) => {
-                
-                
-                return `
-                    <div class="col-sm-10">
-                    <ul>
-                    <li>${documento.nombre}</li>
-                    <input class="form-control"  type="file" name="archivoAnexo" id="formFile">
-                   </ul>
-                   </div>
-                
-                `;
-                
-                
+        let url = URL_BACKED_SIGET + "cita/listarCitasReservacion";
+        let parametros = {fechaCita: fechaSeleccionada, servicio: {id: idServicio}};
+
+        configuracionTimePicker["disableTimeRanges"] = [];
+        $('#horaInicio').timepicker(configuracionTimePicker);
+
+        $.ajax({
+            type: "POST",
+            contentType: "application/json",
+            url: url,
+            data: JSON.stringify(parametros),
+            dataType: 'json',
+            cache: false,
+            success: function (citas) {
+                if (citas !== null && citas !== undefined) {
+
+                    citas = citas.map((cita) => {
+
+                        let horaInicio = moment(cita.horaInicio);
+                        let horaFin = moment(cita.horaInicio).add({minutes: 1});
+                        horaInicio = horaInicio.format('HH:mm a');
+                        horaFin = horaFin.format('HH:mm a');
+                        return [horaInicio, horaFin];
+                    });
+
+                    configuracionTimePicker["disableTimeRanges"] = citas;
+                    $('#horaInicio').timepicker(configuracionTimePicker);
+
+                    mostrardivPago();
+
+                }
+
+            },
+        });
+    }
+
+    function validarDisponibilidad(evento) {
+
+        $("#divReloj").hide();
+        $("#botonAgendar").hide();
+        $("#divPago").hide();
+        $("#divComprobante").hide();
+
+        fechaSeleccionada = evento?.date || fechaSeleccionada;
+
+        if (fechaSeleccionada !== null && fechaSeleccionada !== undefined) {
+
+            let parametros = {fechaCita: fechaSeleccionada};
+
+            let url = URL_BACKED_SIGET + "horario/validarDisponibilidad";
+
+            $.ajax({
+                type: "POST",
+                contentType: "application/json",
+                url: url,
+                data: JSON.stringify(parametros),
+                dataType: 'json',
+                cache: false,
+                success: function (data) {
+
+                    let mensaje = data.mensaje;
+                    let respuesta = data.respuesta;
+
+                    if (respuesta === true) {
+                        $("#divReloj").show();
+                        deshabilitarHorarios();
+                    } else {
+                        $.toast({
+                            heading: 'Atención',
+                            text: mensaje || 'Ingrese una fecha diferente.',
+                            icon: 'error',
+                            position: 'top-right',
+                            loaderBg: 'white',
+                            class: 'larger-font',
+                            stack: false
+                        });
+                    }
+                },
             });
         }
+    }
 
-        let informacionHTML = `
+
+    //Mostrar información de servicio seleccionado
+    function mostrarInformacionServicio() {
+
+        //Ocultar calendario
+        $("#divCalendario").hide();
+
+        let parametros = {idServicio: idServicio};
+        let url = URL_BACKED_SIGET + "servicio/obtenerInformacionServicio";
+
+        $.post(url, parametros, function (servicio) {
+            informacionServicio = servicio;
+
+            let documentoHTML = 'Documentación no requerida.';
+
+            if (servicio?.documentos?.length !== 0) {
+                documentoHTML = servicio.documentos.map((documento) => {
+                    return `<div class="col-sm-10">
+                        <ul>
+                            <li>${documento.nombre}</li>
+                            <input class="form-control" required  type="file" name="archivoAnexo"/>
+                        </ul>
+                   </div>`;
+                });
+            }
+
+            let informacionHTML = `
                 <div class="row align-middle d-flex justify-content-center">
                     <div class="col-6 align-middle d-flex justify-content-center">
                         <strong>Nombre:</strong>
@@ -260,127 +340,130 @@
                 </div>
             `;
 
-        $('#informacionServicio').html(informacionHTML);
+            $('#informacionServicio').html(informacionHTML);
+
+            //Mostrar calendario
+            $("#divCalendario").show();
+        });
+
     }
 
 
-    let urlPago = null;
-    let obtenerInformacionPayPal = (respuesta) => {
-        console.log(respuesta);
-        urlPago = respuesta.objeto;
-    };
-
-    $("#botonPago").click(function (e) {
+    // Click en botón de pago
+    $("#botonPagar").click(function (e) {
         e.preventDefault();
-        window.open(urlPago, '_blank').focus();
+        let url = URL_BACKED_SIGET + "cita/autorizarPago";
+        let parametros = {idServicio: idServicio};
+        $.post(url, parametros, function (data) {
+            if (data?.respuesta === true) {
+                urlPago = data.objeto
+                $("#divPago").show();
+                $("#divComprobante").show();
+                window.open(urlPago, '_blank').focus();
+            } else {
+                $.toast({
+                    heading: 'Atención',
+                    text: mensaje || 'Error al obtener información de pago.',
+                    icon: 'error',
+                    position: 'top-right',
+                    loaderBg: 'white',
+                    class: 'larger-font',
+                    stack: false
+                });
+            }
+        });
     });
 
 
+    //Selección de servicio
     $('select[id="servicio"]').change(function (event) {
-
         event.preventDefault();
-        let data = {idServicio: $(this).val()};
-        let url = window.location.origin + "/siget/servicio/obtenerInformacionServicio"
-
-        $("#divCalendario").css({display: "block"});
-
-        $.post(url, data, mostrarInformacion);
-
-        url = window.location.origin + "/siget/cita/autorizarPago"
-        $.post(url, data, obtenerInformacionPayPal);
-
-        avanceBarra(20);
+        idServicio = $(this).val();
+        mostrarInformacionServicio();
     });
 
+    $('#comprobantePago').change(function (event){
+        event.preventDefault();
+        $("#botonAgendar").hide();
+        let valor = $(this).val();
+        if(valor !== undefined && valor !== null && valor.length > 0){
+            $("#botonAgendar").show();
+        }
 
-    let validarDisponibilidad = (evento) => {
+    });
 
-        $("#divReloj").hide();
-
-        fechaSeleccionada = evento?.date || fechaSeleccionada;
-
-        if (fechaSeleccionada !== null && fechaSeleccionada !== undefined) {
+    var formulario = $('form');
+    formulario.submit(function (e) {
+        e.preventDefault();
 
 
-            let parametros = {fechaCita: fechaSeleccionada};
+        try {
+            let parametros = {
+                fechaCita: moment($("#fechaCita").val(), "DD/MM/YYYY").toDate(),
+                horaInicio: moment($("#horaInicio").val(), "HH:mm a").toDate(),
+                servicio:{id: idServicio},
+                archivosAnexos: []
+            };
 
-            let url = window.location.origin + "/siget/horario/validarDisponibilidad";
+            $('form :input').each(function () {
+                if ($(this).attr('type') === 'file' && this.name === 'comprobantePago') {
+                    parametros[this.name] = $(this)[0].files[0];
+                }else if ($(this).attr('type') === 'file') {
+                    parametros.archivosAnexos.push($(this)[0].files[0]);
+                }
+            });
 
-            $.ajax({
-                type: "POST",
-                contentType: "application/json",
-                url: url,
-                data: JSON.stringify(parametros),
-                dataType: 'json',
-                cache: false,
-                success: function (data) {
-                    let mensaje = data.mensaje;
-                    if (!data.respuesta && mensaje !== null && mensaje !== undefined) {
-                        avanceBarra(20);
-                        $.toast({
-                            heading: 'Atención',
-                            text: mensaje || 'Ingrese una fecha diferente',
-                            icon: 'error',
-                            position: 'top-right',
-                            loaderBg: 'white',
-                            class: 'larger-font',
-                            stack: false
-                        })
-                    } else {
-                        avanceBarra(40);
-                        $("#divReloj").show();
 
-                        deshabilitarHorarios();
-                    }
-                },
+
+            console.log(parametros);
+        }catch (e) {
+            console.log(e);
+            $.toast({
+                heading: 'Atención',
+                text: mensaje || 'Verifique los valores ingresados.',
+                icon: 'error',
+                position: 'top-right',
+                loaderBg: 'white',
+                class: 'larger-font',
+                stack: false
             });
         }
 
+    });
 
-    };
+    // Funcion inicial
+    $(document).ready(function () {
 
-    let deshabilitarHorarios = function () {
+        // Configurar calendario y reloj
+        $('#fechaCita').datepicker(configuracionDatePicker).on('clearDate', validarDisponibilidad).on('changeDate', validarDisponibilidad);
+        $('#horaInicio').timepicker(configuracionTimePicker);
 
-        let url = window.location.origin + "/siget/cita/listarCitasReservacion";
+        //Ocultar elementor
+        $("#divCalendario").hide();
+        $("#divReloj").hide();
+        $("#botonAgendar").hide();
+        $("#divPago").hide();
+        $("#divComprobante").hide();
 
-        let parametros = {fechaCita: fechaSeleccionada, servicio: {id: $("#servicio").val()}};
-
-        configuracionTimePicker["disableTimeRanges"] = [];
-        $('#reloj').timepicker(configuracionTimePicker);
-
-        $.ajax({
-            type: "POST",
-            contentType: "application/json",
-            url: url,
-            data: JSON.stringify(parametros),
-            dataType: 'json',
-            cache: false,
-            success: function (citas) {
-                if (citas !== null && citas !== undefined) {
-                    citas = citas.map((cita) => {
-
-                        let horaInicio = moment(cita.horaInicio);
-                        let horaFin = moment(cita.horaInicio).add({minutes: 1});
-                        horaInicio = horaInicio.format('HH:mm a');
-                        horaFin = horaFin.format('HH:mm a');
-                        return [horaInicio, horaFin];
-                    });
-
-                    configuracionTimePicker["disableTimeRanges"] = citas;
-                    $('#reloj').timepicker(configuracionTimePicker);
-
-                }
-
-            },
-        });
-    };
+    });
 
 
-    $('#calendario').datepicker(configuracionDatePicker).on('clearDate', validarDisponibilidad).on('changeDate', validarDisponibilidad);
-    $('#reloj').timepicker(configuracionTimePicker);
 
-    $("#divCalendario").hide();
-    $("#divReloj").hide();
+
+    function pendiente() {
+
+
+
+        //
+        // let avanceBarra = (avance) => {
+        //     var bar = document.querySelector(".progress-bar");
+        //     if (avance < 100) {
+        //         bar.style.width = avance + "%";
+        //         bar.innerText = avance + "%";
+        //     }
+        // };
+
+    }
 
 
 </script>

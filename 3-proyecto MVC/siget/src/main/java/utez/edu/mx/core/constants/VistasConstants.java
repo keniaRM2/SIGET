@@ -42,6 +42,7 @@ public class VistasConstants {
     public static final String ENVIAR_CORREO = "codigo";
     public static final String NUEVA_CONTRASENA = "nueva_contrasena";
     public static final String FORMULARIO_CITA = "/cita/formulario_cita";
+    public static final String COMPROBANTE_PAGO = "/pago/comprobante_pago";
 
     private VistasConstants() {
     }
