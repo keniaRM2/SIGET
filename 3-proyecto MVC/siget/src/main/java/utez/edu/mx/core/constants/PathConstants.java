@@ -59,6 +59,7 @@ public class PathConstants {
     public static final String LISTAR_CITAS = CITAS_CONTROLLER + "/listarCitas";
     public static final String LISTAR_CITAS_RESERVACION = CITAS_CONTROLLER + "/listarCitasReservacion";
     public static final String AUTORIZAR_PAGO = CITAS_CONTROLLER + "/autorizarPago";
+    public static final String REALIZAR_PAGO = CITAS_CONTROLLER + "/realizarPago";
     public static final String GUARDAR_CITA = CITAS_CONTROLLER + "/cita";
     public static final String REGISTRAR_CITA = CITAS_CONTROLLER + "/registrar";
     public static final String EDITAR_ESTADO_CITA = CITAS_CONTROLLER + "/editarEstadoCita";

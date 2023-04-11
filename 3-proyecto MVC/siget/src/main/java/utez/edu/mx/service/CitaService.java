@@ -29,4 +29,6 @@ public interface CitaService {
     List<CitaBean> listarCitasReservacion(CitaBean citaBean);
 
     String autorizarPago(Integer idServicio) throws SigetException;
+
+    void realizarPago(String idPago, String idEmisor) throws SigetException;
 }

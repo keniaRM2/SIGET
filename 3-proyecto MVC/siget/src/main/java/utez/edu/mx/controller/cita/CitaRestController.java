@@ -1,11 +1,15 @@
 package utez.edu.mx.controller.cita;
 
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import utez.edu.mx.controller.BaseController;
 import utez.edu.mx.core.bean.CitaBean;
 import utez.edu.mx.core.bean.ResponseRestBean;
 import utez.edu.mx.core.constants.PathConstants;
+import utez.edu.mx.core.constants.VistasConstants;
 import utez.edu.mx.core.exceptions.SigetException;
 import utez.edu.mx.service.CitaService;
 

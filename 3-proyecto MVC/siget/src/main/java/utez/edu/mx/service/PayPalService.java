@@ -12,4 +12,6 @@ public interface PayPalService {
      * @author Kenia Reyes Molina
      * */
     public String autorizarPago(PagoPayPalBean pagoPayPalBean) throws SigetException;
+
+    void autorizarPago(String idPago, String idEmisor) throws SigetException;
 }

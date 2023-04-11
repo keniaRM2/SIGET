@@ -31,7 +31,7 @@ public class PayPalServiceImpl implements PayPalService {
 
 
     @Override
-    public String autorizarPago(PagoPayPalBean pagoPayPalBean ) throws SigetException {
+    public String autorizarPago(PagoPayPalBean pagoPayPalBean) throws SigetException {
         try {
 
             Payer pagador = obtenerInformacionPagador();
@@ -49,6 +49,34 @@ public class PayPalServiceImpl implements PayPalService {
 
 
             return obtenerUrlProbada(pago);
+
+        } catch (PayPalRESTException e) {
+            System.err.println(e.getMessage());
+            throw new SigetException(e.getDetails().getMessage());
+        } catch (SigetException e) {
+            System.err.println(e.getMessage());
+            throw new SigetException(e.getMessage());
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+            throw new SigetException(Utileria.getErrorNull());
+        }
+    }
+
+    @Override
+    public void autorizarPago(String idPago, String idEmisor) throws SigetException {
+
+        try {
+            PaymentExecution paymentExecution = new PaymentExecution();
+            paymentExecution.setPayerId(idEmisor);
+
+            Payment payment = new Payment().setId(idPago);
+
+            APIContext apiContext = new APIContext(CLIENT_ID, CLIENT_SECRET, MODE);
+
+            Payment pago = payment.execute(apiContext, paymentExecution);
+
+            System.out.println(pago.getLinks());
+            System.out.println(pago.getLinks());
 
         } catch (PayPalRESTException e) {
             System.err.println(e.getMessage());
@@ -81,9 +109,10 @@ public class PayPalServiceImpl implements PayPalService {
     }
 
     private RedirectUrls getRedirectURLs() {
+        String url = "http://localhost/siget";
         RedirectUrls redirectUrls = new RedirectUrls();
-        redirectUrls.setCancelUrl(PathConstants.REGISTRAR_CITA);
-        redirectUrls.setReturnUrl(PathConstants.INDEX);
+        redirectUrls.setCancelUrl(url+PathConstants.REGISTRAR_CITA);
+        redirectUrls.setReturnUrl(url+PathConstants.REALIZAR_PAGO);
         return redirectUrls;
     }
 
@@ -92,7 +121,7 @@ public class PayPalServiceImpl implements PayPalService {
         String total = Utileria.formatoPagoPayPal(pago.getTotal());
         String costoCero = Utileria.formatoPagoPayPal(0F);
 
-        System.out.println("total : "+total);
+        System.out.println("total : " + total);
 
         Details detalles = new Details();
         detalles.setShipping(costoCero);

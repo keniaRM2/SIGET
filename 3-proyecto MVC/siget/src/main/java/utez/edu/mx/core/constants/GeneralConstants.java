@@ -36,6 +36,8 @@ public class GeneralConstants {
     public static final String MXN = "MXN";
     public static final String CANTIDAD_PAGO = "1";
     public static final String URL_APROBADO = "approval_url";
+    public static final String ID_PAGO_PAYPAL = "paymentId";
+    public static final String ID_EMISIOR_PAYPAL = "PayerID";
 
     private GeneralConstants() {
     }
