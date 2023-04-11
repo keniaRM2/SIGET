@@ -1,9 +1,13 @@
 package utez.edu.mx.controller.empleado;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -42,14 +46,14 @@ public class EmpleadoController extends BaseController {
     }
 
     @GetMapping(value = PathConstants.REGISTRAR_EMPLEADO)
-    public String registrarEmpleado(Model model){
+    public String registrarEmpleado(@ModelAttribute("empleado") Empleado empleado, Model model){
         model.addAttribute(EMPLEADO, empleadoService.obtenerEmpleadoRegistro());
         return VistasConstants.FORMULARIO_EMPLEADO;
     }
 
 
     @GetMapping(value = PathConstants.EDITAR_EMPLEADO+"/{id}")
-    public String editarEmpleado(@PathVariable Integer id, Model model, RedirectAttributes redirectAttributes){
+    public String editarEmpleado(@ModelAttribute("empleado") Empleado empleado, @PathVariable Integer id, Model model, RedirectAttributes redirectAttributes){
         try{
             model.addAttribute(EMPLEADO, empleadoService.obtenerEmpleadoEdicion(id));
             return VistasConstants.FORMULARIO_EMPLEADO;
@@ -59,7 +63,7 @@ public class EmpleadoController extends BaseController {
         }
     }
     @GetMapping(value = PathConstants.ACTUALIZAR_ESTATUS_EMPLEADO+"/{id}")
-    public String actualizarEstatus(@PathVariable Integer id, Model model, RedirectAttributes redirectAttributes){
+    public String actualizarEstatus(@ModelAttribute("empleado") Empleado empleado, @PathVariable Integer id, Model model, RedirectAttributes redirectAttributes){
         try{
             empleadoService.actualizarEstatus(id);
             mensajeExito(redirectAttributes, "Estatus actualizado correctamente.");
@@ -71,8 +75,36 @@ public class EmpleadoController extends BaseController {
     }
 
     @PostMapping(value = PathConstants.GUARDAR_EMPLEADO)
-    public String guardarEmpleado(Empleado empleado,  Model model, RedirectAttributes redirectAttributes){
+    public String guardarEmpleado(@Valid @ModelAttribute("empleado")Empleado empleado, BindingResult result, Model model, RedirectAttributes redirectAttributes){
         try{
+            String regex = "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
+
+            if(empleado.getPersona().getNombre().isBlank() || empleado.getPersona().getNombre().isEmpty()){
+
+                model.addAttribute("errorNombre", "El nombre no puede estar vacio");
+                return VistasConstants.FORMULARIO_EMPLEADO;
+            }
+
+            if (empleado.getPersona().getPrimerApellido().isBlank() || empleado.getPersona().getPrimerApellido().isEmpty()){
+                model.addAttribute("errorApellido", "El apellido paterno no puede estar vacio");
+                return VistasConstants.FORMULARIO_EMPLEADO;
+            }
+
+            if ( empleado.getNumeroEmpleado().isEmpty() || empleado.getNumeroEmpleado().isBlank()){
+                model.addAttribute("errorNumeroEmpleado", "El numero de empleado no puede estar vacio");
+                return VistasConstants.FORMULARIO_EMPLEADO;
+            }
+
+            if ( empleado.getPersona().getUsuario().getUsername().isEmpty() || empleado.getPersona().getUsuario().getUsername().isBlank()) {
+                model.addAttribute("errorUsername", "El nombre de usuario no puede estar vacio");
+                return VistasConstants.FORMULARIO_EMPLEADO;
+            }
+
+            if (!empleado.getPersona().getUsuario().getUsername().matches(regex)) {
+                model.addAttribute("errorCorreo", "El correo tiene un formato incorrecto");
+                return VistasConstants.FORMULARIO_EMPLEADO;
+            }
+
             empleadoService.guardar(empleado);
             mensajeExito(redirectAttributes);
             return redireccionar(PathConstants.LISTAR_EMPLEADOS);

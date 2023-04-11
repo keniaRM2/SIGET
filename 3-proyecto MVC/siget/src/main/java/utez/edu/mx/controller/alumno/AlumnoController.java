@@ -82,6 +82,7 @@ public class AlumnoController extends BaseController {
     public String inicioAlumno(Model model){
         return VistasConstants.INICIO_ALUMNO;
     }
+
     @GetMapping(value = PathConstants.HISTORIAL_ALUMNO)
     public String historialAlumno(Model model){
         return VistasConstants.HISTORIAL_ALUMNO;
