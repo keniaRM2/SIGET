@@ -32,9 +32,12 @@ public class HorarioEmpleadoServiceImpl  implements HorarioEmpleadoService {
     @Autowired
     private HorarioRepository horarioRepository;
 
+    @Autowired
+    private UsuarioServiceImpl usuarioService;
+
     @Override
     public List<Horario> listarHorario() {
-        return horarioRepository.findAll(Sort.by("id").ascending());
+        return horarioRepository.findAllByEmpleado(usuarioService.obtenerEmpleadoSesion());
     }
 
 

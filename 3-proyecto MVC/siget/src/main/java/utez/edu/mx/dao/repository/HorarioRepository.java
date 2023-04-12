@@ -28,5 +28,6 @@ public interface HorarioRepository extends JpaRepository<Horario, Integer> {
 
     List<Horario> findAllByIdInAndHoraInicioGreaterThanEqualAndHoraFinLessThan(List<Integer> ids, Timestamp horaInicio, Timestamp horaFin);
 
+    List <Horario> findAllByEmpleado (Empleado empleado);
 }
 

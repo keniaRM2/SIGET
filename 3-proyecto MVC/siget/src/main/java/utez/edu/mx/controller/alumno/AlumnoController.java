@@ -78,16 +78,11 @@ public class AlumnoController extends BaseController {
             String regex = "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
 
             if (result.hasErrors()){
-                for (ObjectError error : result.getAllErrors()) {
-                    System.out.println(error.getDefaultMessage());
-                }
-                model.addAttribute(ALUMNO, alumnoService.obtenerAlumnoRegistro());
                 model.addAttribute(CARRERAS, carreraService.listarCarreras());
                 return VistasConstants.FORMULARIO_ALUMNO;
             }
 
             if ( !alumno.getPersona().getUsuario().getUsername().matches(regex) ) {
-                model.addAttribute(ALUMNO, alumnoService.obtenerAlumnoRegistro());
                 model.addAttribute(CARRERAS, carreraService.listarCarreras());
                 model.addAttribute("errorCorreo", "El correo tiene un formato incorrecto");
                 return VistasConstants.FORMULARIO_ALUMNO;
