@@ -1,6 +1,5 @@
 package utez.edu.mx.service.impl;
 
-import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -63,7 +62,7 @@ public class CitaServiceImpl implements CitaService {
 
     @Override
     @Transactional
-    public void guardar(CitaRegistroBean citaBean) throws SigetException {
+    public Integer guardar(CitaRegistroBean citaBean) throws SigetException {
 
         try {
 
@@ -79,19 +78,22 @@ public class CitaServiceImpl implements CitaService {
                 throw new SigetException("Seleccione un trámite.");
             }
 
-            if (Utileria.isNull(citaBean.getComprobantePago())) {
+            Servicio servicio = servicioService.obtenerServicio(citaBean.getIdServicio());
+            boolean conCosto = servicio.getCosto() > 0;
+
+            if (conCosto && Utileria.isNull(citaBean.getComprobantePago())) {
                 throw new SigetException("Ingrese el comprobante de pago.");
             }
 
 
             List<DocumentoBean> documentos = documentoService.listarDocumentosPorServicio(citaBean.getIdServicio());
-            if(Utileria.nonEmptyList(documentos)){
+            if (Utileria.nonEmptyList(documentos)) {
 
                 if (Utileria.isEmptyList(citaBean.getArchivosAnexos())) {
                     throw new SigetException("Ingrese los documentos solicitados.");
                 }
 
-                if(documentos.size() != citaBean.getArchivosAnexos().size()){
+                if (documentos.size() != citaBean.getArchivosAnexos().size()) {
                     throw new SigetException("Todos los documentos son requeridos.");
                 }
 
@@ -100,13 +102,11 @@ public class CitaServiceImpl implements CitaService {
 
             Timestamp fechaCita = new Timestamp(citaBean.getFechaCita().getTime());
 
-//            if (!Utileria.fechaAntes(fechaCita)) {
-//                throw new SigetException("La cita no puede registrarse, por favor seleccione una fecha válida.");
-//            }
+            if (Utileria.fechaAntes(fechaCita)) {
+                throw new SigetException("Seleccione una fecha posterior.");
+            }
 
 
-
-            Servicio servicio = servicioService.obtenerServicio(citaBean.getIdServicio());
             String enProceso = GeneralConstants.ESTADO_CITA_PROCESO;
             String tipoCita = GeneralConstants.TIPO_ESTADO_CITA;
             Estado estadoEnProceso = estadoService.obtenerEstadoPorNombreyTipo(enProceso, tipoCita);
@@ -131,44 +131,51 @@ public class CitaServiceImpl implements CitaService {
 
             citaRepository.save(cita);
 
-            List<DocumentoAnexo> documentoAnexos = new ArrayList<>();
+            if (Utileria.nonEmptyList(citaBean.getArchivosAnexos())) {
+                List<DocumentoAnexo> documentoAnexos = new ArrayList<>();
 
-            for (MultipartFile anexoBean : citaBean.getArchivosAnexos()) {
-                Documento documento = documentoService.obtenerPorId(Integer.parseInt(anexoBean.getName()));
+                for (MultipartFile anexoBean : citaBean.getArchivosAnexos()) {
 
-                DocumentoAnexo documentoAnexo = new DocumentoAnexo();
-                documentoAnexo.setCita(cita);
-                documentoAnexo.setDocumento(documento);
-                documentoAnexo.setDocumentoAnexo(anexoBean.getBytes());
+                    Documento documento = documentoService.obtenerPorId(Integer.parseInt(anexoBean.getOriginalFilename()));
 
-                documentoAnexos.add(documentoAnexo);
+                    DocumentoAnexo documentoAnexo = new DocumentoAnexo();
+                    documentoAnexo.setCita(cita);
+                    documentoAnexo.setDocumento(documento);
+                    documentoAnexo.setDocumentoAnexo(anexoBean.getBytes());
+
+                    documentoAnexos.add(documentoAnexo);
+                }
+
+                documentoAnexoRepository.saveAll(documentoAnexos);
+
             }
-
-            documentoAnexoRepository.saveAll(documentoAnexos);
 
 
             String aceptado = GeneralConstants.ESTADO_PAGO_ACEPTADO;
             String tipoPago = GeneralConstants.TIPO_ESTADO_PAGO;
             Estado estadoAceptado = estadoService.obtenerEstadoPorNombreyTipo(aceptado, tipoPago);
 
-            Pago pago = new Pago();
-            pago.setCita(cita);
-            pago.setMonto(servicio.getCosto());
-            pago.setEstado(estadoAceptado);
+            if(conCosto){
+                Pago pago = new Pago();
+                pago.setCita(cita);
+                pago.setMonto(servicio.getCosto());
+                pago.setEstado(estadoAceptado);
 
-            pagoRepository.save(pago);
-
-
-            ComprobantePago comprobantePago = new ComprobantePago();
-            comprobantePago.setPago(pago);
-            comprobantePago.setComprobante(citaBean.getComprobantePago().getBytes());
-            comprobantePagoRepository.save(comprobantePago);
+                pagoRepository.save(pago);
 
 
+                ComprobantePago comprobantePago = new ComprobantePago();
+                comprobantePago.setPago(pago);
+                comprobantePago.setComprobante(citaBean.getComprobantePago().getBytes());
+                comprobantePagoRepository.save(comprobantePago);
+            }
+
+            return cita.getId();
         } catch (SigetException e) {
             System.out.println(e.getMessage());
             throw new SigetException(e.getMessage());
         } catch (Exception e) {
+            e.printStackTrace();
             System.err.println(e.getMessage());
             throw new SigetException(Utileria.getErrorNull());
         }
@@ -277,6 +284,8 @@ public class CitaServiceImpl implements CitaService {
 
                     }
                     citaRepository.save(cita);
+
+                    cita.getEmpleado().setHorarios(null);
                     citasBean.add(Utileria.mapper.map(cita, CitaBean.class));
 
                 }
@@ -307,6 +316,16 @@ public class CitaServiceImpl implements CitaService {
                     citaBean.getDocumentos().add(new DocumentoAnexoBean(documentoAnexo.getId(), documentoBean));
                 }
             }
+
+            Pago pago = pagoRepository.findByCita(cita);
+            if (Utileria.nonNull(pago)) {
+                citaBean.setPago(new PagoBean(pago.getId()));
+            }
+
+            if (Utileria.nonNull(citaBean.getEmpleado())) {
+                citaBean.getEmpleado().setHorarios(null);
+            }
+
 
             return citaBean;
         } catch (SigetException e) {
@@ -409,6 +428,38 @@ public class CitaServiceImpl implements CitaService {
             System.err.println(e.getMessage());
             throw new SigetException(Utileria.getErrorNull());
         }
+    }
+
+    @Override
+    public ArchivoBean obtenerArchivoAnexo(Integer id) throws SigetException {
+        ArchivoBean archivoBean = new ArchivoBean();
+        try {
+
+            DocumentoAnexo documentoAnexo = documentoAnexoRepository.findById(id).orElseThrow(() -> new SigetException("Archivo no encontrado"));
+
+            archivoBean.setNombre(documentoAnexo.getDocumento().getNombre() + GeneralConstants.PDF_FORMATO);
+            archivoBean.setArchivo(documentoAnexo.getDocumentoAnexo());
+
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
+        return archivoBean;
+    }
+
+    @Override
+    public ArchivoBean obtenerComprobantePago(Integer id) throws SigetException {
+        ArchivoBean archivoBean = new ArchivoBean();
+        try {
+
+            Pago pago = pagoRepository.findById(id).orElseThrow(() -> new SigetException("Archivo no encontrado"));
+            ComprobantePago comprobantePago = comprobantePagoRepository.findByPago(pago);
+            archivoBean.setNombre(GeneralConstants.COMPROBANTE_PAGO + GeneralConstants.PDF_FORMATO);
+            archivoBean.setArchivo(comprobantePago.getComprobante());
+
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
+        return archivoBean;
     }
 
 }

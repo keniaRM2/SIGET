@@ -1,5 +1,6 @@
 package utez.edu.mx.service;
 
+import utez.edu.mx.core.bean.ArchivoBean;
 import utez.edu.mx.core.bean.CitaBean;
 import utez.edu.mx.core.bean.CitaRegistroBean;
 import utez.edu.mx.core.exceptions.SigetException;
@@ -12,7 +13,7 @@ public interface CitaService {
 
     Cita obtenerCita(Integer id) throws SigetException;
 
-    void guardar(CitaRegistroBean cita) throws SigetException;
+    Integer guardar(CitaRegistroBean cita) throws SigetException;
 
     void cambiarEstadoCita(CitaBean cita) throws SigetException;
 
@@ -30,4 +31,9 @@ public interface CitaService {
     String autorizarPago(Integer idServicio) throws SigetException;
 
     void realizarPago(String idPago, String idEmisor) throws SigetException;
+
+    ArchivoBean obtenerArchivoAnexo(Integer id) throws SigetException;
+
+    ArchivoBean obtenerComprobantePago(Integer id) throws SigetException;
+
 }

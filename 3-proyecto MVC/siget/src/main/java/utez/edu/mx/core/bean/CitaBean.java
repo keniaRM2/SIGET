@@ -19,6 +19,9 @@ public class CitaBean {
     private EstadoBean estado;
     private VentanillaBean ventanilla;
     private EmpleadoBean empleado;
+
+    private PagoBean pago;
+
     private List<DocumentoAnexoBean> documentos;
 
     public CitaBean() {

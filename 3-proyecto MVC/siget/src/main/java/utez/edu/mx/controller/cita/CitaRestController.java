@@ -20,16 +20,6 @@ public class CitaRestController extends BaseController {
     @Autowired
     private CitaService citaService;
 
-    @PostMapping(value = PathConstants.GUARDAR_CITA)
-    public ResponseEntity<String> guardarCita(CitaRegistroBean cita) {
-        try {
-            citaService.guardar(cita);
-            return new ResponseEntity<>(null, HttpStatus.OK);
-        } catch (SigetException e) {
-            System.out.println(e.getMessage());
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-        }
-    }
 
     @GetMapping(value = PathConstants.LISTAR_CITAS)
     public List<CitaBean> listarCitas() {
@@ -39,6 +29,10 @@ public class CitaRestController extends BaseController {
     @PostMapping(value = PathConstants.LISTAR_CITAS_RESERVACION)
     public List<CitaBean> listarCitasReservacion(@RequestBody CitaBean citaBean) {
         return citaService.listarCitasReservacion(citaBean);
+    }
+    @PostMapping(value = PathConstants.OBTENER_INFORMACION_CITA)
+    public CitaBean obtenerInformacionCita(@RequestBody CitaBean citaBean) {
+        return citaService.obtenerInforfmacionCita(citaBean.getId());
     }
 
 

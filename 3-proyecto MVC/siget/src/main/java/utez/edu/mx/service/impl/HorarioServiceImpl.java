@@ -1,5 +1,6 @@
 package utez.edu.mx.service.impl;
 
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import utez.edu.mx.core.bean.CitaBean;
@@ -89,8 +90,19 @@ public class HorarioServiceImpl implements HorarioService {
         List<Horario> horarios = horarioRepository.findAllByDiaAndEmpleadoInOrderByHoraInicio(dia, empleados);
 
         if (Utileria.nonEmptyList(horarios) && Utileria.nonNull(citaBean.getHoraInicio()) && Utileria.nonNull(citaBean.getHoraFin())) {
-            List<Integer> ids = horarios.stream().map(Horario::getId).collect(Collectors.toList());
-            horarios = horarioRepository.findAllByIdInAndHoraInicioGreaterThanEqualAndHoraFinLessThan(ids, citaBean.getHoraInicio(), citaBean.getHoraFin());
+            horarios = horarios.stream().filter(horario -> {
+                DateTime horaInicio = new DateTime(horario.getHoraInicio());
+                DateTime horaFin = new DateTime(horario.getHoraFin());
+                DateTime horaCita = new DateTime(citaBean.getHoraInicio());
+                return (horaCita.getHourOfDay() >= horaInicio.getHourOfDay()
+                        && (horaCita.getHourOfDay() < horaFin.getHourOfDay()
+                        ||
+                        horaCita.getHourOfDay() == horaFin.getHourOfDay()
+                                && horaCita.getMinuteOfHour() < horaFin.getMinuteOfHour()
+                )
+
+                );
+            }).collect(Collectors.toList());
         }
 
         if (Utileria.isEmptyList(horarios)) {

@@ -77,6 +77,12 @@
                                     <strong>Costo:</strong>
                                     $ <span
                                         th:text="${#numbers.formatDecimal(cita.servicio.costo, 0, 'COMMA', 2, 'POINT')}"></span>
+                                    <br/>
+                                    <a class="btn btn-primary w-100 mt-2"
+                                       th:if="${cita.pago != null && cita.pago.id != null}"
+                                       th:href="@{/cita/descargarComprobantePago/{id} (id=${cita.pago.id})}">
+                                       Comprobante <i class="bi bi-cloud-download-fill text-white"></i>
+                                    </a>
                                 </div>
                                 <div class="col-4">
                                     <strong>Ventanilla:</strong>
@@ -89,10 +95,11 @@
                                 <form class="row g-3 needs-validation mt-2" method="POST" th:object="${cita}"
                                       th:action="@{'/cita/editarEstadoCita'}">
 
-                                    <div class="row mb-4 mt-2 align-middle d-flex justify-content-center"  th:if="${cita.estado.nombre != 'Cancelada' and cita.estado.nombre != 'Recibida' and cita.estado.nombre != 'No Recibida'}">
+                                    <div class="row mb-4 mt-2 align-middle d-flex justify-content-center"
+                                         th:if="${cita.estado.nombre != 'Cancelada' and cita.estado.nombre != 'Recibida' and cita.estado.nombre != 'No Recibida'}">
 
 
-                                    <input type="hidden" th:field="*{id}" th:value="*{id}"/>
+                                        <input type="hidden" th:field="*{id}" th:value="*{id}"/>
 
                                         <div class="col-md-4">
                                             <label for="estado" class="form-label">Estatus*</label>
@@ -122,7 +129,8 @@
                                                type="button">
                                                 <i class="bi bi bi-backspace"></i> Volver
                                             </a>
-                                            <button class="btn btn-success" type="submit" th:if="${cita.estado.nombre != 'Cancelada' and cita.estado.nombre != 'Recibida' and cita.estado.nombre != 'No Recibida'}">
+                                            <button class="btn btn-success" type="submit"
+                                                    th:if="${cita.estado.nombre != 'Cancelada' and cita.estado.nombre != 'Recibida' and cita.estado.nombre != 'No Recibida'}">
                                                 Guardar <i class="bi bi-check-circle"></i>
                                             </button>
                                         </div>
@@ -130,26 +138,24 @@
                                 </form>
 
                             </div>
-                            <h5 class="mt-4"><strong>Documentos anexos </strong></h5>
+                            <h5 class="mt-4"><strong>Documentos anexos</strong></h5>
                             <hr/>
                             <div class="row mb-2 mt-2 align-middle d-flex justify-content-center mb-4">
 
-                                <div class="col-3 " th:if="${#lists.isEmpty(tblUserList)}">
+                                <div class="col-3 " th:if="${#lists.isEmpty(cita.documentos)}">
                                     <span>Sin documentos agregados</span>
                                 </div>
-                                <div class="col-4 " th:each="documento, itemStat : ${cita.documentos}">
-
-                                    <label th:text="'Documento #'+${(itemStat.index+1)}+'*:'" class="form-label m-2">
+                                <div class="col-3 align-middle justify-content-center"
+                                     th:each="documento, itemStat : ${cita.documentos}">
+                                    <label th:text="'Documento #'+${(itemStat.index+1)}+'*:'" class="form-label">
                                     </label>
-
-                                    <div class="input-group has-validation">
-                                        <span th:text="${documento.documento.nombre}"></span>
-                                        <button class="btn btn-link boton-estatus" type="button"
-                                                th:attr="onclick=|removerDocumento('${documento.id}')|">
-                                            <i class="bi bi-trash text-danger"></i>
-                                        </button>
-
-                                    </div>
+                                    <br/>
+                                    <span th:text="${documento.documento.nombre}"></span>
+                                    <br/>
+                                    <a class="btn btn-primary w-100 mt-2"
+                                       th:href="@{/cita/descargarDocumento/{id} (id=${documento.id})}">
+                                    <i class="bi bi-cloud-download-fill text-white"></i>
+                                    </a>
                                 </div>
 
 

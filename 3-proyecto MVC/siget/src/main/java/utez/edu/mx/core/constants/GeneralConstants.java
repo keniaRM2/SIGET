@@ -38,6 +38,8 @@ public class GeneralConstants {
     public static final String URL_APROBADO = "approval_url";
     public static final String ID_PAGO_PAYPAL = "paymentId";
     public static final String ID_EMISIOR_PAYPAL = "PayerID";
+    public static final String PDF_FORMATO = ".pdf";
+    public static final String COMPROBANTE_PAGO = "COMPROBANTE DE PAGO";
 
     private GeneralConstants() {
     }

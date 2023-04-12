@@ -58,6 +58,7 @@ public class PathConstants {
     public static final String CALENDARIO_CITA_EMPLEADO = CITAS_CONTROLLER+"/calendario";
     public static final String LISTAR_CITAS = CITAS_CONTROLLER + "/listarCitas";
     public static final String LISTAR_CITAS_RESERVACION = CITAS_CONTROLLER + "/listarCitasReservacion";
+    public static final String OBTENER_INFORMACION_CITA = CITAS_CONTROLLER + "/obtenerInformacionCita";
     public static final String AUTORIZAR_PAGO = CITAS_CONTROLLER + "/autorizarPago";
     public static final String REALIZAR_PAGO = CITAS_CONTROLLER + "/realizarPago";
     public static final String COMPROBANTE_PAGO = CITAS_CONTROLLER + "/comprobantePago";
@@ -65,6 +66,8 @@ public class PathConstants {
     public static final String REGISTRAR_CITA = CITAS_CONTROLLER + "/registrar";
     public static final String EDITAR_ESTADO_CITA = CITAS_CONTROLLER + "/editarEstadoCita";
     public static final String INFORMACION_CITA = CITAS_CONTROLLER + "/informacionCita";
+    public static final String DESCARGAR_DOCUMENTO = CITAS_CONTROLLER + "/descargarDocumento";
+    public static final String DESCARGAR_COMPROBANTE_PAGO = CITAS_CONTROLLER + "/descargarComprobantePago";
 
 
     // ALUMNO
