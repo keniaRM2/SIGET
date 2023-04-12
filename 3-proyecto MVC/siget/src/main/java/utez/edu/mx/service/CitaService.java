@@ -36,4 +36,5 @@ public interface CitaService {
 
     ArchivoBean obtenerComprobantePago(Integer id) throws SigetException;
 
+    List<CitaBean> listarMisCitas() throws SigetException;
 }

@@ -24,4 +24,5 @@ public interface CitaRepository extends JpaRepository<Cita, Integer> {
 
     List<Cita> findAllByServicioAndEstadoIn(Servicio servicio, List<Estado> estados);
 
+    List<Cita> findAllByAlumnoOrderByFechaCitaDesc(Alumno alumno);
 }

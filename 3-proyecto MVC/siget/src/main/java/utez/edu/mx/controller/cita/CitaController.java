@@ -19,6 +19,7 @@ import utez.edu.mx.core.constants.GeneralConstants;
 import utez.edu.mx.core.constants.PathConstants;
 import utez.edu.mx.core.constants.VistasConstants;
 import utez.edu.mx.core.exceptions.SigetException;
+import utez.edu.mx.core.util.Utileria;
 import utez.edu.mx.service.CitaService;
 import utez.edu.mx.service.ServicioService;
 import utez.edu.mx.service.UsuarioService;
@@ -60,6 +61,12 @@ public class CitaController extends BaseController {
         return VistasConstants.FORMULARIO_CITA;
     }
 
+    @GetMapping(value = PathConstants.LISTAR_MIS_CITAS)
+    public String listarMisCitas(Model model) {
+        model.addAttribute(CITAS, citaService.listarMisCitas());
+        return VistasConstants.HISTORIAL_CITA;
+    }
+
     @PostMapping(value = PathConstants.EDITAR_ESTADO_CITA)
     public String editarEstadoCita(CitaBean cita, Model model, RedirectAttributes redirectAttributes) {
         try {
@@ -74,14 +81,14 @@ public class CitaController extends BaseController {
 
 
     @GetMapping(value = PathConstants.INFORMACION_CITA + "/{id}")
-    public String obtenerInforfmacionCita(@PathVariable Integer id, Model model, RedirectAttributes redirectAttributes) {
+    public String obtenerInforfmacionCita(@PathVariable Integer id, Model model, RedirectAttributes redirectAttributes, HttpServletRequest request) {
         try {
             model.addAttribute(CITA, citaService.obtenerInforfmacionCita(id));
             model.addAttribute(ESTADOS, citaService.obtenerEstadosCita(id));
             return VistasConstants.INFORMACION_CITA;
         } catch (SigetException e) {
             mensajeError(redirectAttributes, e.getMessage());
-            return redireccionar(PathConstants.CALENDARIO_CITA_EMPLEADO);
+            return redireccionar(PathConstants.INDEX);
         }
     }
 

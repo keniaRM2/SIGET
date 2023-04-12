@@ -5,10 +5,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import utez.edu.mx.core.exceptions.SigetException;
-import utez.edu.mx.dao.model.Alumno;
-import utez.edu.mx.dao.model.Persona;
-import utez.edu.mx.dao.model.Rol;
-import utez.edu.mx.dao.model.Usuario;
+import utez.edu.mx.dao.model.*;
 import utez.edu.mx.dao.repository.AlumnoRepository;
 import utez.edu.mx.dao.repository.RolRepository;
 import utez.edu.mx.dao.repository.UsuarioRepository;
@@ -91,6 +88,24 @@ public class UsuarioServiceImpl  implements UsuarioService {
     @Override
     public void actualizarUsuario(Usuario usuario) {
         usuarioRepository.save(usuario);
+    }
+
+    @Override
+    public Empleado obtenerEmpleadoSesion() throws SigetException {
+
+        Usuario usuarioSesion= obtenerUsuarioSesion();
+        if(usuarioSesion == null){
+            throw new SigetException("Usuario no encontrado");
+        }
+        Persona persona= usuarioSesion.getPersona();
+        if(persona == null){
+            throw new SigetException("Persona no encontrada");
+        }
+        Empleado empleado = persona.getEmpleado();
+        if(empleado == null){
+            throw new SigetException("Alumno no encontrado");
+        }
+        return empleado;
     }
 
 }

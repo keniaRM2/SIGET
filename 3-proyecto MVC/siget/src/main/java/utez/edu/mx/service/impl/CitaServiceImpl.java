@@ -155,7 +155,7 @@ public class CitaServiceImpl implements CitaService {
             String tipoPago = GeneralConstants.TIPO_ESTADO_PAGO;
             Estado estadoAceptado = estadoService.obtenerEstadoPorNombreyTipo(aceptado, tipoPago);
 
-            if(conCosto){
+            if (conCosto) {
                 Pago pago = new Pago();
                 pago.setCita(cita);
                 pago.setMonto(servicio.getCosto());
@@ -303,7 +303,27 @@ public class CitaServiceImpl implements CitaService {
     public CitaBean obtenerInforfmacionCita(Integer id) throws SigetException {
         try {
 
+            Rol rol = usuarioServiceImpl.obtenerRolSesion();
+
+
             Cita cita = obtenerCita(id);
+
+            if(rol.getAuthority().equals(GeneralConstants.ROL_EMPLEADO)){
+
+                Empleado empleado = usuarioServiceImpl.obtenerEmpleadoSesion();
+                if (Utileria.isNull(cita.getEmpleado()) || !Objects.equals(empleado.getId(), cita.getEmpleado().getId())) {
+                    throw new SigetException("Cita no asignada a su usuario");
+                }
+
+            }else if(rol.getAuthority().equals(GeneralConstants.ROL_ALUMNO)){
+
+                Alumno alumno = usuarioServiceImpl.obtenerAlumnoSesion();
+                if (!Objects.equals(alumno.getId(), cita.getAlumno().getId())) {
+                    throw new SigetException("Cita no asignada a su usuario");
+                }
+
+            }
+
 
             CitaBean citaBean = Utileria.mapper.map(cita, CitaBean.class);
 
@@ -460,6 +480,27 @@ public class CitaServiceImpl implements CitaService {
             System.err.println(e.getMessage());
         }
         return archivoBean;
+    }
+
+    @Override
+    public List<CitaBean> listarMisCitas() throws SigetException {
+        try {
+
+            Alumno alumno = usuarioServiceImpl.obtenerAlumnoSesion();
+            List<CitaBean> citaBeans = new ArrayList<>();
+
+            List<Cita> citas = citaRepository.findAllByAlumnoOrderByFechaCitaDesc(alumno);
+
+            for (Cita cita : citas) {
+                citaBeans.add(obtenerInforfmacionCita(cita.getId()));
+            }
+
+            return citaBeans;
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.err.println(e.getMessage());
+            return new ArrayList<>();
+        }
     }
 
 }

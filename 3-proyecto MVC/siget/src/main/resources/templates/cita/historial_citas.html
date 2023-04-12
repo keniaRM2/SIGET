@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/bootstrap :: head}"></head>
+<body>
+<div id="siget">
+
+    <nav th:replace="~{fragments/header :: header}"></nav>
+    <!-- HEADER, fin -->
+
+    <!--   ASIDE, INICIO-->
+    <nav th:replace="~{fragments/aside :: aside}"></nav>
+    <!--   ASIDE, FIN-->
+
+    <main id="main" class="main">
+        <div class="pagetitle">
+            <h1><strong>Citas</strong></h1>
+            <nav>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">Historial de citas</a></li>
+                </ol>
+            </nav>
+        </div>
+
+        <section class="section">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div th:replace="~{fragments/mensajes :: div}"></div>
+                            <div class="box-header with-border">
+                                <div class="row">
+
+                                    <div class="col-2 align-middle">
+                                        <h5>
+                                            <strong>Total:<span th:text="${#lists.size(citas)}"/></strong>
+                                        </h5>
+                                    </div>
+
+                                    <div class="col-1 offset-9 align-middle">
+                                        <a class="btn btn-link pull-right font-icon" type="button"
+                                           th:href="@{'/cita/registrar'}">
+                                            <i class="bx bxs-plus-circle text-green-light"></i>
+                                        </a>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <!-- Table with stripped rows -->
+                            <table class="table table-striped bdr table-sm table-hover tabla-siget">
+                                <thead class="bg-green-dark">
+                                <tr>
+                                    <th class="text-center align-middle" scope="col">#</th>
+                                    <th class="text-center align-middle" scope="col">Ventanilla</th>
+                                    <th class="text-center align-middle" scope="col">Fecha de cita</th>
+                                    <th class="text-center align-middle" scope="col">Trámite</th>
+                                    <th class="text-center align-middle" scope="col">Costo</th>
+                                    <th class="text-center align-middle" scope="col">Documentos</th>
+                                    <th class="text-center align-middle" scope="col">Empleado</th>
+                                    <th class="text-center align-middle" scope="col">Estado</th>
+                                    <th class="text-center" scope="col">Acciones</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="cita, iter: ${citas}">
+                                    <td class="text-center align-middle" th:text="${iter.index+1}"/>
+                                    <td class="text-center align-middle"
+                                        th:text="${cita.ventanilla.nombre}"/>
+                                    <td class="text-center align-middle">
+                                        <span th:text="${#dates.format(cita.fechaCita, 'dd/MM/yyyy')}"></span>
+                                        <span th:text="${#dates.format(cita.horaInicio, 'HH:mm')}"></span>
+                                    </td>
+                                    <td class="text-center align-middle"
+                                        th:text="${cita.servicio.nombre} + ': '+${cita.servicio.descripcion}"/>
+                                    <td class="text-center align-middle">
+                                        $ <span
+                                            th:text="${#numbers.formatDecimal(cita.servicio.costo, 0, 'COMMA', 2, 'POINT')}"></span>
+                                    </td>
+                                    <td class="text-center align-middle">
+                                        <a class="btn btn-link" type="button"
+                                           th:attr="onclick=|mostrarDocumentos('${cita.servicio.id}')|">
+                                            <i class="bi bi-stack"></i>
+                                        </a>
+                                    </td>
+                                    <td class="text-center align-middle">
+                                        <span th:if="${cita.empleado != null}">
+                                            <span th:text="${cita.empleado.persona.nombreCompleto}"></span>
+                                        </span>
+                                        <span th:if="${cita.empleado == null}">
+                                            <span>No definido.</span>
+                                        </span>
+                                    </td>
+                                    <td class="text-center align-middle"
+                                        th:text="${cita.estado.nombre}"/>
+                                    <td class="text-center">
+                                        <a class="btn btn-link" type="button"
+                                           th:href="@{/cita/informacionCita/{id} (id=${cita.id})}">
+                                            <i class="bi bi-eye-fill text-warning"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <!-- End Table with stripped rows -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <div class="modal fade" id="modalDocumento" tabindex="-1" role="dialog" aria-labelledby="modalDocumentoLabel"
+             aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header modal-bg-blue">
+                        <h5 class="modal-title text-white" id="titulo">
+                            Documentos
+                        </h5>
+                        <button type="button" class="btn-close text-white" data-bs-dismiss="modal"
+                                aria-label="Cerrar"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="listaDocumentos">
+
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn  btn-primary" data-bs-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+<div th:replace="~{fragments/scrypt :: div}"></div>
+
+<script type="text/javascript">
+
+    let listarDocumentos = function (documentos) {
+        let documentosHTML = documentos.map((documento) => {
+            return `
+              <div class="activity">
+                <div class="activity-item d-flex">
+                  <i class='bi bi-circle-fill activity-badge text-muted align-self-start'></i>
+                  <div class="activity-content ms-4">
+                    ${documento.nombre}
+                  </div>
+                </div>
+              </div>`;
+        });
+
+        if (documentos?.length === 0) {
+            documentosHTML = ` <div class="activity">Sin documentos registrados</div>`
+        }
+
+        $('#listaDocumentos').html(documentosHTML);
+        let modal = new bootstrap.Modal($('#modalDocumento'), {});
+        modal.show();
+    };
+    let mostrarDocumentos = function (idServicio) {
+        let data = 'idServicio=' + idServicio;
+        let url = URL_BACKED_SIGET + "documento/listarDocumentosPorServicio";
+        $.post(url, data, listarDocumentos);
+    }
+
+</script>
+
+</body>
+</html>
