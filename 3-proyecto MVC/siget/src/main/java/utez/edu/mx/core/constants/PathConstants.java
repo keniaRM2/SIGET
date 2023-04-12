@@ -36,6 +36,7 @@ public class PathConstants {
     public static final String LISTAR_HORARIOS_EMPLEADO = HORARIO_EMPLEADO_CONTROLLER;
     public static final String LISTAR_HORARIO_DIAS = HORARIO_EMPLEADO_CONTROLLER+"/listarDias";
     public static final String INICIO_HORARIO_EMPLEADO = HORARIO_EMPLEADO_CONTROLLER + "/inicio";
+    public static final String REGISTRAR_HORARIO_EMPLEADO = HORARIO_EMPLEADO_CONTROLLER + "/registrar";
 
 
 

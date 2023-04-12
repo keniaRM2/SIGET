@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -41,7 +42,7 @@ public class CitaController extends BaseController {
     @PostMapping(value = PathConstants.GUARDAR_CITA)
     public ResponseEntity<String> guardarCita(CitaRegistroBean cita) {
         try {
-            Integer idCita = citaService.guardar(cita);
+             Integer idCita = citaService.guardar(cita);
             return ResponseEntity.status(HttpStatus.OK)
                     .header("idCita", idCita.toString())
                     .body(null);
@@ -55,6 +56,7 @@ public class CitaController extends BaseController {
     }
 
     @GetMapping(value = PathConstants.REGISTRAR_CITA)
+    @Secured({"ROLE_ALUMNO"})
     public String registrarCita(Model model) {
         model.addAttribute(CITA, citaService.obtenerCitaRegistro());
         model.addAttribute(SERVICIOS, servicioService.listarServiciosActivos());
@@ -62,6 +64,7 @@ public class CitaController extends BaseController {
     }
 
     @GetMapping(value = PathConstants.LISTAR_MIS_CITAS)
+    @Secured({"ROLE_ALUMNO"})
     public String listarMisCitas(Model model) {
         model.addAttribute(CITAS, citaService.listarMisCitas());
         return VistasConstants.HISTORIAL_CITA;
@@ -81,6 +84,7 @@ public class CitaController extends BaseController {
 
 
     @GetMapping(value = PathConstants.INFORMACION_CITA + "/{id}")
+    @Secured({"ROLE_ALUMNO"})
     public String obtenerInforfmacionCita(@PathVariable Integer id, Model model, RedirectAttributes redirectAttributes, HttpServletRequest request) {
         try {
             model.addAttribute(CITA, citaService.obtenerInforfmacionCita(id));
@@ -94,6 +98,7 @@ public class CitaController extends BaseController {
 
 
     @GetMapping(value = PathConstants.REALIZAR_PAGO)
+    @Secured({"ROLE_ALUMNO"})
     public String realizarPago(HttpServletRequest request, Model model, RedirectAttributes redirectAttributes) {
         try {
 

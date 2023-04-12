@@ -2,6 +2,7 @@ package utez.edu.mx.controller.servicio;
 
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,6 +36,7 @@ public class ServicioController extends BaseController {
     }
 
     @GetMapping(value = PathConstants.REGISTRAR_SERVICIO)
+    @Secured({"ROLE_ADMIN"})
     public String registrarServicio(Servicio servicio, Model model, HttpServletRequest request) {
 
         servicio = servicioService.obtenerServicioRegistro(servicio);
@@ -55,6 +57,7 @@ public class ServicioController extends BaseController {
     }
 
     @GetMapping(value = PathConstants.EDITAR_SERVICIO + "/{id}")
+    @Secured({"ROLE_ADMIN"})
     public String editarServicio(@PathVariable Integer id, Model model, RedirectAttributes redirectAttributes) {
         try {
             model.addAttribute("tipoServicio", tipoServicio.listarTipoServicios());
@@ -68,6 +71,7 @@ public class ServicioController extends BaseController {
     }
 
     @GetMapping(value = PathConstants.ACTUALIZAR_ESTATUS_SERVICIO + "/{id}")
+    @Secured({"ROLE_ADMIN"})
     public String actualizarServicio(@PathVariable Integer id, Model model, RedirectAttributes redirectAttributes) {
         try {
             servicioService.actualizarEstatus(id);

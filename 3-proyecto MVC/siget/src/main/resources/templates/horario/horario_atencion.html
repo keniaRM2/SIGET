@@ -30,7 +30,7 @@
                             <div th:replace="~{fragments/mensajes :: div}"></div>
                             <div class="box-header with-border">
                                 <div class="row mt-4">
-
+                                    <form th:action="@{/horario/registrar}" method="post">
                                     <div class="col-3 text-center fs-4">
                                         <label style="margin-bottom: 5px ">Días</label>
                                         <select class="form-select" id="dia" name="dia"
@@ -41,7 +41,6 @@
                                                     th:value="${itemDia.id}" th:text="${itemDia.nombre}">
                                             </option>
                                         </select>
-
 
                                     </div>
 
@@ -75,14 +74,15 @@
 
                                     <div class="col-1 ">
 
-                                        <button class="btn btn-link pull-right font-icon" type="button"
+                                        <button class="btn btn-link pull-right font-icon" type="submit"
                                                 tooltip-animation="false" uib-tooltip="Nuevo"
                                                 tooltip-placement="top"
-                                                >
+                                        >
                                             <i class="bx bxs-plus-circle text-green-light"></i>
                                         </button>
 
                                     </div>
+                                    </form>
                                 </div>
                             </div>
 

@@ -2,6 +2,72 @@
 <html lang="en" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns:th="http://www.thymeleaf.org">
 
 <head th:replace="~{fragments/bootstrap :: head}"></head>
+<style>
+        .divp1 {
+            width: 15px;
+            height: 15px;
+            background-color: #99A3A4;
+            margin-right: 10px;
+            float : left;
+            clear : none;
+        }
+
+        .divp2 {
+            width: 15px;
+            height: 15px;
+            background-color: #2ECC71;
+            float : left;
+            clear : none;
+            margin-right: 10px;
+        }
+
+        .divp3 {
+            width: 15px;
+            height: 15px;
+            background-color: #E74C3C;
+            float : left;
+            clear : none;
+            margin-right: 10px;
+        }
+
+        .divp4 {
+            width: 15px;
+            height: 15px;
+            background-color: #3498DB;
+            float : left;
+            clear : none;
+            margin-right: 10px;
+        }
+
+        .divp5 {
+            width: 15px;
+            height: 15px;
+            background-color: #E67E22;
+            float : left;
+            clear : none;
+            margin-right: 10px;
+        }
+
+
+        .divp6 {
+            width: 15px;
+            height: 15px;
+            background-color: #2ECC71;
+            float : left;
+            clear : none;
+            margin-right: 10px;
+        }
+
+
+        .divp7 {
+            width: 15px;
+            height: 15px;
+            background-color: #E74C3C;
+            float : left;
+            clear : none;
+            margin-right: 10px;
+        }
+</style>
 
 <body>
 
@@ -36,6 +102,32 @@
 
                     <div class="card">
                         <div class="card-body">
+                            <div class="container row">
+                                <br>
+                                <br>
+                                <h4>Citas Estatus</h4>
+                                <br>
+                                <div class="col-md-2">
+                                    <div class="divp1"></div>
+                                    <p> En proceso </p>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="divp2"></div>
+                                    <p> Aceptada </p>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="divp3"></div>
+                                    <p> Cancelada </p>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="divp4"></div>
+                                    <p> Recibida </p>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="divp5"></div>
+                                    <p> No recibida </p>
+                                </div>
+                            </div>
                             <div th:replace="~{fragments/mensajes :: div}"></div>
 
                             <div class="row mt-4" >
