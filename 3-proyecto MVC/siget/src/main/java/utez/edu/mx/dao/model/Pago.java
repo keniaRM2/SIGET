@@ -21,7 +21,7 @@ public class Pago {
 
     @NotNull
     @Column(name = "monto", nullable = false, precision = 19, scale = 4)
-    private BigDecimal monto;
+    private Double monto;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)

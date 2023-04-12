@@ -2,10 +2,12 @@ package utez.edu.mx.core.util;
 
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
+import org.joda.time.DateTime;
 import org.modelmapper.ModelMapper;
 import utez.edu.mx.core.exceptions.SigetException;
 
 import java.sql.Timestamp;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -47,7 +49,7 @@ public class Utileria {
     }
 
     public static String getErrorNull() {
-        return "Ocurrió un error al acceder a la información.";
+        return "Lo sentimos, ocurrió una incidencia al procesar la información";
     }
 
     public static Timestamp getFechaHoraActual() {
@@ -87,5 +89,29 @@ public class Utileria {
 
     public static String formatoPagoPayPal(Float total) {
         return String.format("%.2f", total);
+    }
+
+    public static Timestamp obtenerHoraFinCita(Timestamp horaInicio) {
+        return new Timestamp(new DateTime(horaInicio).plusMinutes(15).toDate().getTime());
+    }
+
+    public static Date obtenerFechaFormato(String fecha) {
+        if(isEmpty(fecha)){
+            return null;
+        }
+        String[] formatos = {"yyyy-MM-dd HH:mm", "yyyy-MM-dd"};
+
+        for (String formato : formatos){
+            Date date = null;
+            try{
+                 date = new SimpleDateFormat(formato).parse(fecha);
+            }catch (ParseException ex){
+            }
+            if(nonNull(date)){
+                return date;
+            }
+        }
+
+        return null;
     }
 }

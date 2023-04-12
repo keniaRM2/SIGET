@@ -10,12 +10,10 @@ import utez.edu.mx.core.util.Utileria;
 import utez.edu.mx.dao.model.Dia;
 import utez.edu.mx.dao.model.Empleado;
 import utez.edu.mx.dao.model.Horario;
-import utez.edu.mx.dao.model.Servicio;
 import utez.edu.mx.dao.repository.HorarioRepository;
 import utez.edu.mx.service.DiaService;
 import utez.edu.mx.service.EmpleadoService;
 import utez.edu.mx.service.HorarioService;
-import utez.edu.mx.service.ServicioService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,37 +28,20 @@ public class HorarioServiceImpl implements HorarioService {
 
     @Autowired
     private HorarioRepository horarioRepository;
+
     @Autowired
     private EmpleadoService empleadoService;
-    @Autowired
-    private ServicioService servicioService;
 
     @Override
-    public List<HorarioBean> validarDisponilidad(CitaBean citaBean) throws SigetException{
+    public List<HorarioBean> validarDisponilidad(CitaBean citaBean) throws SigetException {
         try {
 
 
-            String nombreDia = Utileria.obteneDiaSemana(citaBean.getFechaCita());
-            Dia dia = diaService.obtenerPorNombre(nombreDia);
-
-            Integer activo = GeneralConstants.ESTATUS_ACTIVO;
-            List<Empleado> empleados = empleadoService.listarEmpleados().stream().filter(empleado ->
-                    Objects.equals(empleado.getPersona().getUsuario().getEnabled(), activo)
-            ).toList();
-
-            if (Utileria.isEmptyList(empleados)) {
-                throw new SigetException("Sin empleados disponibles, para atender.");
-            }
-
-
-            List<Horario> horarios = horarioRepository.findAllByDiaAndEmpleadoInOrderByHoraInicio(dia, empleados);
-            if (Utileria.isEmptyList(horarios)) {
-                throw new SigetException("Sin empleados disponibles en ese día, para atender.");
-            }
+            List<Horario> horarios = obtenerHorariosAtencion(citaBean);
 
             List<HorarioBean> horariosBean = new ArrayList<>();
 
-            for(Horario horario : horarios){
+            for (Horario horario : horarios) {
                 horario.getEmpleado().setHorarios(null);
 
                 HorarioBean horarioBean = Utileria.mapper.map(horario, HorarioBean.class);
@@ -74,5 +55,48 @@ public class HorarioServiceImpl implements HorarioService {
             System.err.println(e.getMessage());
             throw new SigetException(Utileria.getErrorNull());
         }
+    }
+
+    @Override
+    public Horario obtenerHorarioAtencionCita(CitaBean citaBean) throws SigetException {
+        try {
+
+            List<Horario> horarios = obtenerHorariosAtencion(citaBean);
+            return horarios.stream().findFirst().orElse(null);
+        } catch (SigetException e) {
+            throw new SigetException(e.getMessage());
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+            throw new SigetException(Utileria.getErrorNull());
+        }
+    }
+
+    private List<Horario> obtenerHorariosAtencion(CitaBean citaBean) {
+
+        String nombreDia = Utileria.obteneDiaSemana(citaBean.getFechaCita());
+        Dia dia = diaService.obtenerPorNombre(nombreDia);
+
+        Integer activo = GeneralConstants.ESTATUS_ACTIVO;
+        List<Empleado> empleados = empleadoService.listarEmpleados().stream().filter(empleado ->
+                Objects.equals(empleado.getPersona().getUsuario().getEnabled(), activo)
+        ).toList();
+
+        if (Utileria.isEmptyList(empleados)) {
+            throw new SigetException("Sin empleados disponibles, para atender.");
+        }
+
+
+        List<Horario> horarios = horarioRepository.findAllByDiaAndEmpleadoInOrderByHoraInicio(dia, empleados);
+
+        if (Utileria.nonEmptyList(horarios) && Utileria.nonNull(citaBean.getHoraInicio()) && Utileria.nonNull(citaBean.getHoraFin())) {
+            List<Integer> ids = horarios.stream().map(Horario::getId).collect(Collectors.toList());
+            horarios = horarioRepository.findAllByIdInAndHoraInicioGreaterThanEqualAndHoraFinLessThan(ids, citaBean.getHoraInicio(), citaBean.getHoraFin());
+        }
+
+        if (Utileria.isEmptyList(horarios)) {
+            throw new SigetException("Sin horarios disponibles en ese día, para atender.");
+        }
+
+        return horarios;
     }
 }

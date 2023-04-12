@@ -14,7 +14,6 @@ import utez.edu.mx.core.constants.GeneralConstants;
 import utez.edu.mx.core.constants.PathConstants;
 import utez.edu.mx.core.constants.VistasConstants;
 import utez.edu.mx.core.exceptions.SigetException;
-import utez.edu.mx.dao.model.Cita;
 import utez.edu.mx.service.CitaService;
 import utez.edu.mx.service.ServicioService;
 import utez.edu.mx.service.UsuarioService;
@@ -52,18 +51,6 @@ public class CitaController extends BaseController {
         }
     }
 
-    @PostMapping(value = PathConstants.GUARDAR_CITA)
-    public String guardarCita(Cita cita, Model model, RedirectAttributes redirectAttributes) {
-        try {
-            citaService.guardar(cita);
-            mensajeExito(redirectAttributes);
-            return redireccionar(PathConstants.LISTAR_CITAS);
-        } catch (SigetException e) {
-            mensajeError(model, e.getMessage());
-            model.addAttribute(CITA, cita);
-            return "cita/index";
-        }
-    }
 
     @GetMapping(value = PathConstants.INFORMACION_CITA + "/{id}")
     public String obtenerInforfmacionCita(@PathVariable Integer id, Model model, RedirectAttributes redirectAttributes) {

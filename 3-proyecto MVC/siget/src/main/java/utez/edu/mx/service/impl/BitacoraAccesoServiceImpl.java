@@ -1,24 +1,14 @@
 package utez.edu.mx.service.impl;
 
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
-import utez.edu.mx.core.exceptions.SigetException;
 import utez.edu.mx.core.util.Utileria;
 import utez.edu.mx.dao.model.BitacoraAcceso;
 import utez.edu.mx.dao.model.Usuario;
-import utez.edu.mx.dao.model.Ventanilla;
 import utez.edu.mx.dao.repository.BitacoraAccesoRepository;
 import utez.edu.mx.dao.repository.UsuarioRepository;
-import utez.edu.mx.dao.repository.VentanillaRepository;
 import utez.edu.mx.service.BitacoraAccesoService;
-import utez.edu.mx.service.VentanillaService;
 
-import java.sql.Timestamp;
-import java.util.Date;
 import java.util.List;
 
 @Service

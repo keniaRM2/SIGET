@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import utez.edu.mx.core.constants.PathConstants;
 import utez.edu.mx.core.constants.VistasConstants;
 import utez.edu.mx.dao.model.EmailDetails;
-import utez.edu.mx.dao.model.Persona;
 import utez.edu.mx.dao.model.Usuario;
 import utez.edu.mx.service.impl.EmailServiceImpl;
 import utez.edu.mx.service.impl.UsuarioServiceImpl;

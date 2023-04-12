@@ -12,7 +12,6 @@ import utez.edu.mx.core.constants.PathConstants;
 import utez.edu.mx.core.constants.VistasConstants;
 import utez.edu.mx.core.exceptions.SigetException;
 import utez.edu.mx.dao.model.Alumno;
-import utez.edu.mx.dao.model.DivisionAcademica;
 import utez.edu.mx.service.AlumnoService;
 import utez.edu.mx.service.CarreraService;
 import utez.edu.mx.service.DivisionAcademicaService;

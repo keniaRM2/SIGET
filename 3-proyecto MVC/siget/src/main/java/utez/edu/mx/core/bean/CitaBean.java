@@ -28,4 +28,10 @@ public class CitaBean {
         this.horaInicio = horaInicio;
         this.horaFin = horaFin;
     }
+
+    public CitaBean(Timestamp fechaCita, Timestamp horaInicio, Timestamp horaFin) {
+        this.fechaCita = fechaCita;
+        this.horaInicio = horaInicio;
+        this.horaFin = horaFin;
+    }
 }
