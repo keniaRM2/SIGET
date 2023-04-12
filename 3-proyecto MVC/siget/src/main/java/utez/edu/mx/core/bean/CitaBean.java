@@ -19,12 +19,21 @@ public class CitaBean {
     private EstadoBean estado;
     private VentanillaBean ventanilla;
     private EmpleadoBean empleado;
+
+    private PagoBean pago;
+
     private List<DocumentoAnexoBean> documentos;
 
     public CitaBean() {
     }
 
     public CitaBean(Timestamp horaInicio, Timestamp horaFin) {
+        this.horaInicio = horaInicio;
+        this.horaFin = horaFin;
+    }
+
+    public CitaBean(Timestamp fechaCita, Timestamp horaInicio, Timestamp horaFin) {
+        this.fechaCita = fechaCita;
         this.horaInicio = horaInicio;
         this.horaFin = horaFin;
     }

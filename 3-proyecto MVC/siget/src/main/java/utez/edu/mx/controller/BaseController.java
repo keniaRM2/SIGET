@@ -7,8 +7,11 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 @Controller
 public class BaseController {
@@ -53,8 +56,11 @@ public class BaseController {
 
     @InitBinder
     public void initBinder(WebDataBinder webDataBinder) {
-        SimpleDateFormat formateador = new SimpleDateFormat("dd-MM-yyyy");
-        webDataBinder.registerCustomEditor(Date.class, new CustomDateEditor(formateador, false));
+        List<String> formatos = Arrays.asList("yyyy-MM-dd", "dd-MM-yyyy", "yyyy/MM/dd", "dd/MM/yyyy", "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", "HH:mm", "hh:mm a");
+        for (String formato : formatos) {
+            webDataBinder.registerCustomEditor(Date.class, new CustomDateEditor(new SimpleDateFormat(formato), false));
+            webDataBinder.registerCustomEditor(Timestamp.class, new CustomDateEditor(new SimpleDateFormat(formato), false));
+        }
     }
 
     public String redireccionar(String vista) {

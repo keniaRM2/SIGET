@@ -29,6 +29,13 @@
 
                                         <h5><strong>Información personal </strong></h5>
                                         <hr />
+                                        <br>
+                                        <div th:if="${errorCorreo}" th:text = "${errorCorreo}" class="alert alert-warning alert-dismissible fade show" role="alert">
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <br>
 
                                         <div class="row mb-6 ">
                                             <input type="hidden" th:field="*{id}" th:value="*{id}" />
@@ -45,6 +52,11 @@
                                                     <div class="invalid-feedback">
                                                         Ingrese un valor valido.
                                                     </div>
+                                                    <p
+                                                            class="alert alert-danger"
+                                                            th:if="${#fields.hasErrors('persona.nombre')}"
+                                                            th:errors="*{persona.nombre}"
+                                                    ></p>
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
@@ -60,6 +72,11 @@
                                                     <div class="invalid-feedback">
                                                         Ingrese un valor valido.
                                                     </div>
+                                                    <p
+                                                            class="alert alert-danger"
+                                                            th:if="${#fields.hasErrors('persona.primerApellido')}"
+                                                            th:errors="*{persona.primerApellido}"
+                                                    ></p>
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
@@ -97,6 +114,7 @@
                                                     <div class="invalid-feedback">
                                                         Ingrese un valor valido.
                                                     </div>
+
                                                 </div>
 
 
@@ -112,6 +130,11 @@
                                                     <div class="invalid-feedback">
                                                         Ingrese un valor valido.
                                                     </div>
+                                                    <p
+                                                            class="alert alert-danger"
+                                                            th:if="${#fields.hasErrors('matricula')}"
+                                                            th:errors="*{matricula}"
+                                                    ></p>
                                                 </div>
                                             </div>
                                             <div class="col-md-4 ">

@@ -43,6 +43,7 @@ public class VistasConstants {
     public static final String NUEVA_CONTRASENA = "nueva_contrasena";
     public static final String FORMULARIO_CITA = "/cita/formulario_cita";
     public static final String COMPROBANTE_PAGO = "/pago/comprobante_pago";
+    public static final String HISTORIAL_CITA = "/cita/historial_citas";
 
     private VistasConstants() {
     }

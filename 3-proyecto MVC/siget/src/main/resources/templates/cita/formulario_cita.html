@@ -71,6 +71,8 @@
                                      id="informacionServicio">
 
                                 </div>
+                                <hr/>
+                                <h5><strong>Información de cita </strong></h5>
                                 <div class="row mb-4 mt-2 d-flex align-middle justify-content-center">
                                     <div class="col-3 justify-content-center" id="divCalendario">
                                         <label for="fechaCita" class="form-label">Fecha de cita*</label>
@@ -89,7 +91,7 @@
                                     <div class="col-3 justify-content-center" id="divReloj">
                                         <label for="horaInicio" class="form-label">Hora de atención*</label>
                                         <div class="input-group has-validation">
-                                            <input type="text"  class="form-control"
+                                            <input type="text" class="form-control"
                                                    aria-describedby="inputGroupPrepend"
                                                    placeholder="Seleccione..."
                                                    autocomplete="off" aria-autocomplete="none"
@@ -102,9 +104,10 @@
                                         </div>
                                     </div>
                                 </div>
-
+                                <hr/>
+                                <h5><strong>Información de pago </strong></h5>
                                 <div class="row mb-4 mt-2 d-flex align-middle justify-content-center">
-                                    <div class="col-3 justify-content-center" id="divPago" >
+                                    <div class="col-4 justify-content-center" id="divPago">
 
                                         <div class="card info-card revenue-card"
                                              style="background-color: #0BAC87; color: white; cursor: pointer;"
@@ -123,16 +126,17 @@
 
                                         </div>
                                     </div>
-                                    <div class="col-3 justify-content-center" id="divComprobante" >
+                                    <div class="col-4 justify-content-center" id="divComprobante">
                                         <ul>
                                             <li>Comprobante de pago</li>
-                                            <input class="form-control" required  type="file" name="comprobantePago" id="comprobantePago"/>
+                                            <input class="form-control" required type="file" name="comprobantePago"
+                                                   id="comprobantePago"/>
                                         </ul>
                                     </div>
                                 </div>
 
                                 <div class="row mb-4 mt-2 mt-4 d-flex align-middle justify-content-center">
-                                    <div class="col-3 mt-4 d-flex align-middle justify-content-center">
+                                    <div class="col-6 mt-4 d-flex align-middle justify-content-center">
                                         <a class="btn btn-outline-danger mx-4 " th:href="@{'/'}"
                                            type="button">
                                             <i class="bi bi-caret-left"></i> Volver
@@ -154,6 +158,57 @@
             </div>
 
         </section>
+
+
+        <div class="modal fade" id="modalCita" tabindex="-1" role="dialog" aria-labelledby="modalCitaLabel" data-keyboard="false"
+             aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header modal-bg-blue">
+                        <h5 class="modal-title text-white" id="titulo">
+                        </h5>
+                        <button type="button" class="btn-close text-white" data-bs-dismiss="modal"
+                                aria-label="Cerrar"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-6">
+                                <strong>Fecha:</strong>
+                                <span id="fecha"></span>
+                            </div>
+                            <div class="col-6">
+                                <strong>Horario:</strong>
+                                <span id="horario"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <strong>Solicitud:</strong>
+                                <span id="solicitud"></span>
+                            </div>
+                            <div class="col-6">
+                                <strong>Estado:</strong>
+                                <span id="estado"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <strong>Costo:</strong>
+                                <span id="costo"></span>
+                            </div>
+                            <div class="col-6">
+                                <strong>Ventanilla:</strong>
+                                <span id="ventanilla"></span>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn  btn-primary" onclick="volver()" data-bs-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
     </main>
 
@@ -205,7 +260,6 @@
 
     function deshabilitarHorarios() {
 
-        $("#botonAgendar").hide();
         $("#divPago").hide();
         $("#divComprobante").hide();
 
@@ -248,7 +302,6 @@
     function validarDisponibilidad(evento) {
 
         $("#divReloj").hide();
-        $("#botonAgendar").hide();
         $("#divPago").hide();
         $("#divComprobante").hide();
 
@@ -311,7 +364,8 @@
                     return `<div class="col-sm-10">
                         <ul>
                             <li>${documento.nombre}</li>
-                            <input class="form-control" required  type="file" name="archivoAnexo"/>
+                            <input class="form-control" required  type="file" name="documentoAnexo"/>
+                            <input class="form-control" required value="${documento.id}"  type="hidden" name="idDocumento"/>
                         </ul>
                    </div>`;
                 });
@@ -382,45 +436,115 @@
         mostrarInformacionServicio();
     });
 
-    $('#comprobantePago').change(function (event){
-        event.preventDefault();
-        $("#botonAgendar").hide();
-        let valor = $(this).val();
-        if(valor !== undefined && valor !== null && valor.length > 0){
-            $("#botonAgendar").show();
-        }
 
-    });
+    function volver() {
+        window.location.href = URL_BACKED_SIGET;
+    }
 
     var formulario = $('form');
-    formulario.submit(function (e) {
+    formulario.submit(async function (e) {
         e.preventDefault();
 
+        $("#botonAgendar").hide();
 
         try {
-            let parametros = {
-                fechaCita: moment($("#fechaCita").val(), "DD/MM/YYYY").toDate(),
-                horaInicio: moment($("#horaInicio").val(), "HH:mm a").toDate(),
-                servicio:{id: idServicio},
-                archivosAnexos: []
-            };
+
+
+            let formularioEnvio = new FormData();
+
+            formularioEnvio.append("fechaCita", moment(fechaSeleccionada).format("yyyy-MM-DD"));
+            formularioEnvio.append("horaInicio", moment($("#horaInicio").val(), 'HH:mm a').format("yyyy-MM-DD HH:mm"));
+            formularioEnvio.append("idServicio", idServicio);
+
+
+            let indice = 0;
+            $("input[name='documentoAnexo']").each(function () {
+                formularioEnvio.append("archivosAnexos[]", $(this)[0].files[0], $("input[name='idDocumento']")[indice].value);
+                indice++;
+            });
 
             $('form :input').each(function () {
                 if ($(this).attr('type') === 'file' && this.name === 'comprobantePago') {
-                    parametros[this.name] = $(this)[0].files[0];
-                }else if ($(this).attr('type') === 'file') {
-                    parametros.archivosAnexos.push($(this)[0].files[0]);
+                    formularioEnvio.append("comprobantePago", $(this)[0].files[0]);
                 }
             });
 
+            let url = URL_BACKED_SIGET + "cita/guardar";
+
+            try {
+                const respuesta = await fetch(url, {method: 'POST', body: formularioEnvio});
+                if (respuesta.status === 200) {
+
+                    $.toast({
+                        heading: 'Notificación',
+                        text: 'Cita agendada correctamente.',
+                        icon: 'success',
+                        position: 'top-right',
+                        loaderBg: 'white',
+                        class: 'larger-font',
+                        stack: false
+                    });
+
+                    let parametros = {id: respuesta.headers.get("idCita")};
+                    let url = URL_BACKED_SIGET + "cita/obtenerInformacionCita";
+
+                    $.ajax({
+                        type: "POST",
+                        contentType: "application/json",
+                        url: url,
+                        data: JSON.stringify(parametros),
+                        dataType: 'json',
+                        cache: false,
+                        success:  function (cita) {
+                            let modal = new bootstrap.Modal($('#modalCita'), {});
+
+                            $('#titulo').text(cita.servicio.nombre);
+                            $('#fecha').text(moment(cita.fechaCita).format('MM/DD/YYYY'));
+                            $('#horario').text(moment(cita.horaInicio).format('HH:mm') + " a " + moment(cita.horaFin).format('HH:mm'));
+                            $('#estado').text(cita.estado.nombre);
+                            $('#costo').text(cita.servicio.costo);
+                            $('#ventanilla').text(cita.ventanilla.nombre);
+                            $('#solicitud').text(moment(cita.fechaRegistro).format('MM/DD/YYYY'));
+
+                            modal.show();
+                        }
+                    });
 
 
-            console.log(parametros);
-        }catch (e) {
+
+                } else {
+                    $.toast({
+                        heading: 'Atención',
+                        text: respuesta.headers.get("mensajeError") || 'La cita no pudo ser agendada.',
+                        icon: 'error',
+                        position: 'top-right',
+                        loaderBg: 'white',
+                        class: 'larger-font',
+                        stack: false
+                    });
+                    $("#botonAgendar").show();
+                }
+
+            } catch (error) {
+                $.toast({
+                    heading: 'Atención',
+                    text: 'Error de conexión al agendar cita.',
+                    icon: 'error',
+                    position: 'top-right',
+                    loaderBg: 'white',
+                    class: 'larger-font',
+                    stack: false
+                });
+                $("#botonAgendar").show();
+            }
+
+
+        } catch (e) {
+            $("#botonAgendar").show();
             console.log(e);
             $.toast({
                 heading: 'Atención',
-                text: mensaje || 'Verifique los valores ingresados.',
+                text: 'Verifique los valores ingresados.',
                 icon: 'error',
                 position: 'top-right',
                 loaderBg: 'white',
@@ -441,29 +565,10 @@
         //Ocultar elementor
         $("#divCalendario").hide();
         $("#divReloj").hide();
-        $("#botonAgendar").hide();
         $("#divPago").hide();
         $("#divComprobante").hide();
 
     });
-
-
-
-
-    function pendiente() {
-
-
-
-        //
-        // let avanceBarra = (avance) => {
-        //     var bar = document.querySelector(".progress-bar");
-        //     if (avance < 100) {
-        //         bar.style.width = avance + "%";
-        //         bar.innerText = avance + "%";
-        //     }
-        // };
-
-    }
 
 
 </script>

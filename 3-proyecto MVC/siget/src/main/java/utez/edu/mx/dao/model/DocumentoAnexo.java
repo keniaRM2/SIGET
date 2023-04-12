@@ -12,8 +12,9 @@ import lombok.Data;
         @Index(name = "fk_documento_anexo_documento1_idx", columnList = "documento_id")
 })
 public class DocumentoAnexo {
+
     @Id
-@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_documento_anexo", nullable = false)
     private Integer id;
 

@@ -7,10 +7,10 @@ spring:
   ddl-auto: update
   # MySql
   datasource:
-#    url: jdbc:mysql://localhost:3306/siget?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC
-    url: jdbc:mysql://192.168.100.15:3306/siget?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC
-    username: invitado
-    password: invitado
+    url: jdbc:mysql://localhost:3306/siget?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=America/Mexico_City
+#    url: jdbc:mysql://192.168.100.15:3306/siget?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC
+    username: root
+    password: root
     #password : 2$TCxQb*GDAy
     # Connection Pool
     hikari:

@@ -1,6 +1,9 @@
 package utez.edu.mx.dao.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
@@ -21,10 +24,12 @@ public class Alumno {
     private Integer id;
 
     @Size(max = 12)
-    @NotNull
+    @NotEmpty(message = "La matrícula no puede estar vacía")
+    @NotBlank(message = "La matrícula no puede contener solo espacios en blanco")
     @Column(name = "matricula", nullable = false, length = 12)
     private String matricula;
 
+    @Valid
     @NotNull
     @OneToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "persona_id", nullable = false)

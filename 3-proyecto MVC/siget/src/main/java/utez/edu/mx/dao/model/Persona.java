@@ -1,6 +1,9 @@
 package utez.edu.mx.dao.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
@@ -17,12 +20,14 @@ public class Persona {
     private Integer id;
 
     @Size(max = 45)
-    @NotNull
+    @NotEmpty(message = "El nombre no puede estar vacío")
+    @NotBlank(message = "El nombre no puede contener solo espacios en blanco")
     @Column(name = "nombre", nullable = false, length = 45)
     private String nombre;
 
     @Size(max = 45)
-    @NotNull
+    @NotEmpty(message = "El primer apellido no puede estar vacío")
+    @NotBlank(message = "El primer apellido no puede contener solo espacios en blanco")
     @Column(name = "primer_apellido", nullable = false, length = 45)
     private String primerApellido;
 

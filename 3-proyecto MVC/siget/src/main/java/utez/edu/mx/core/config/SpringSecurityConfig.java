@@ -26,7 +26,8 @@ public class SpringSecurityConfig {
             PathConstants.NUEVA_CONTRASENA,
             PathConstants.ENVIAR_CAMBIOS,
             PathConstants.VALIDAR_CODIGO_RECUPERAR_CONTRASENA,
-            PathConstants.ENVIAR_CODIGO_RECUPERAR_CONTRASENA
+            PathConstants.ENVIAR_CODIGO_RECUPERAR_CONTRASENA,
+            PathConstants.HISTORIAL_ALUMNO
     };
 
     private static final String[] PATH_SIN_SESION = {
@@ -41,7 +42,7 @@ public class SpringSecurityConfig {
             PathConstants.EDITAR_EMPLEADO + PathConstants.ALL_SUBPATHS,
             PathConstants.ACTUALIZAR_ESTATUS_EMPLEADO + PathConstants.ALL_SUBPATHS,
 
-            PathConstants.LISTAR_DOCUMENTOS_SERVICIO,
+//            PathConstants.LISTAR_DOCUMENTOS_SERVICIO,
             PathConstants.LISTAR_SERVICIOS,
             PathConstants.EDITAR_SERVICIO,
             PathConstants.REGISTRAR_SERVICIO,
@@ -54,7 +55,7 @@ public class SpringSecurityConfig {
     };
     private static final String[] PATH_ROL_EMPLEADO = {
             PathConstants.CALENDARIO_CITA_EMPLEADO,
-            PathConstants.INFORMACION_CITA + PathConstants.ALL_SUBPATHS,
+//            PathConstants.INFORMACION_CITA + PathConstants.ALL_SUBPATHS,
             PathConstants.EDITAR_ESTADO_CITA
     };
 
@@ -64,7 +65,10 @@ public class SpringSecurityConfig {
             PathConstants.LISTAR_CITAS_RESERVACION,
             PathConstants.AUTORIZAR_PAGO,
             PathConstants.REALIZAR_PAGO,
-            PathConstants.COMPROBANTE_PAGO
+            PathConstants.COMPROBANTE_PAGO,
+            PathConstants.OBTENER_INFORMACION_CITA,
+//            PathConstants.INFORMACION_CITA + PathConstants.ALL_SUBPATHS
+//            PathConstants.LISTAR_DOCUMENTOS_SERVICIO
     };
 
 

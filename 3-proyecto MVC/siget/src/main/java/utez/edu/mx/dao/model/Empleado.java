@@ -1,6 +1,9 @@
 package utez.edu.mx.dao.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
@@ -18,15 +21,17 @@ import java.util.List;
 })
 public class Empleado{
     @Id
-@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_empleado", nullable = false)
     private Integer id;
 
     @Size(max = 20)
-    @NotNull
+    @NotEmpty(message = "El número de empleado no puede estar vacío")
+    @NotBlank(message = "El número de empleado no puede contener solo espacios en blanco")
     @Column(name = "numero_empleado", nullable = false, length = 20)
     private String numeroEmpleado;
 
+    @Valid
     @NotNull
     @OneToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "persona_id", nullable = false)

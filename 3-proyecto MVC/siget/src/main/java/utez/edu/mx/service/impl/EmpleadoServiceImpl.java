@@ -1,14 +1,15 @@
 package utez.edu.mx.service.impl;
 
 import jakarta.transaction.Transactional;
-import jakarta.validation.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import utez.edu.mx.core.constants.GeneralConstants;
 import utez.edu.mx.core.exceptions.SigetException;
 import utez.edu.mx.core.util.Utileria;
-import utez.edu.mx.dao.model.*;
+import utez.edu.mx.dao.model.Empleado;
+import utez.edu.mx.dao.model.Persona;
+import utez.edu.mx.dao.model.Usuario;
 import utez.edu.mx.dao.repository.*;
 import utez.edu.mx.service.EmpleadoService;
 
@@ -172,30 +173,6 @@ public class EmpleadoServiceImpl implements EmpleadoService {
 
     }
 
-    @Override
-    public Empleado obtenerEmpleadoConVentanilla(Cita cita) throws SigetException {
-        try {
-            String nombreDia = Utileria.obteneDiaSemana(cita.getFechaCita());
-            Dia dia = diaRepository.findByNombreIgnoreCase(nombreDia);
-            List<Horario> horarios = horarioRepository.findAllByVentanillaAndDiaAndHoraInicioBetween(
-                    cita.getVentanilla(),
-                    dia,
-                    cita.getHoraInicio(),
-                    cita.getHoraFin()
-            );
-            if (Utileria.nonEmptyList(horarios)) {
-                return horarios.get(0).getEmpleado();
-            }
-
-        } catch (SigetException e) {
-            throw new SigetException(e.getMessage());
-        } catch (Exception e) {
-            System.err.println(e.getMessage());
-            throw new SigetException(Utileria.getErrorNull());
-        }
-
-        return null;
-    }
 
 
 }

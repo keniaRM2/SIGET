@@ -43,24 +43,60 @@
                                   th:action="@{'/empleado/guardar'}">
                                 <h5><strong>Información personal </strong></h5>
                                 <hr/>
+                                <br>
+<!--                                <div th:if="${errorNombre}" th:text = "${errorNombre}" class="alert alert-warning alert-dismissible fade show" role="alert">-->
+<!--                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">-->
+<!--                                        <span aria-hidden="true">&times;</span>-->
+<!--                                    </button>-->
+<!--                                </div>-->
+<!--                                <div th:if="${errorApellido}" th:text = "${errorApellido}" class="alert alert-warning alert-dismissible fade show" role="alert">-->
+<!--                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">-->
+<!--                                        <span aria-hidden="true">&times;</span>-->
+<!--                                    </button>-->
+<!--                                </div>-->
+<!--                                <div th:if="${errorNumeroEmpleado}" th:text = "${errorNumeroEmpleado}" class="alert alert-warning alert-dismissible fade show" role="alert">-->
+<!--                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">-->
+<!--                                        <span aria-hidden="true">&times;</span>-->
+<!--                                    </button>-->
+<!--                                </div>-->
+<!--                                <div th:if="${errorUsername}" th:text = "${errorUsername}" class="alert alert-warning alert-dismissible fade show" role="alert">-->
+<!--                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">-->
+<!--                                        <span aria-hidden="true">&times;</span>-->
+<!--                                    </button>-->
+<!--                                </div>-->
+                                <div th:if="${errorCorreo}" th:text = "${errorCorreo}" class="alert alert-warning alert-dismissible fade show" role="alert">
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+
+                                <br>
                                 <div class="row mb-4 mt-2">
                                     <input type="hidden" th:field="*{id}" th:value="*{id}" />
 
-                                    <div class="col-md-4">
-                                        <label for="nombre" class="form-label">Nombre*</label>
-                                        <div class="input-group has-validation">
-                                            <input type="text" class="form-control" aria-describedby="inputGroupPrepend"
-                                                   placeholder="Ingrese..." pattern="[a-zA-Z ]+"
-                                                   autocomplete="off" aria-autocomplete="none"
-                                                   id="nombre" name="persona.nombre"
-                                                   th:field="*{persona.nombre}" th:value="*{persona.nombre}"
-                                                   th:maxlength="45"
-                                                   th:required="true"/>
-                                            <div class="invalid-feedback">
-                                                Ingrese un valor valido.
+                                        <div class="col-md-4">
+                                            <label for="nombre" class="form-label">Nombre*</label>
+                                            <div class="input-group has-validation">
+                                                <input type="text" class="form-control" aria-describedby="inputGroupPrepend"
+                                                       placeholder="Ingrese..." pattern="[a-zA-Z ]+"
+                                                       autocomplete="off" aria-autocomplete="none"
+                                                       id="nombre" name="persona.nombre"
+                                                       th:field="*{persona.nombre}" th:value="*{persona.nombre}"
+                                                       th:maxlength="45"
+                                                       th:required="true"/>
+                                                <div class="invalid-feedback">
+                                                    Ingrese un valor valido.
+                                                </div>
+                                                <br>
+                                                <p
+                                                    class="alert alert-danger"
+                                                    th:if="${#fields.hasErrors('persona.nombre')}"
+                                                    th:errors="*{persona.nombre}"
+                                                ></p>
                                             </div>
                                         </div>
-                                    </div>
+
+
                                     <div class="col-md-4">
                                         <label for="primerApellido" class="form-label">Primer apellido*</label>
                                         <div class="input-group has-validation">
@@ -74,6 +110,11 @@
                                             <div class="invalid-feedback">
                                                 Ingrese un valor valido.
                                             </div>
+                                            <p
+                                                    class="alert alert-danger"
+                                                    th:if="${#fields.hasErrors('persona.primerApellido')}"
+                                                    th:errors="*{persona.primerApellido}"
+                                            ></p>
                                         </div>
                                     </div>
                                     <div class="col-md-4">
@@ -109,6 +150,11 @@
                                             <div class="invalid-feedback">
                                                 Ingrese un valor valido.
                                             </div>
+                                            <p
+                                                    class="alert alert-danger"
+                                                    th:if="${#fields.hasErrors('numeroEmpleado')}"
+                                                    th:errors="*{numeroEmpleado}"
+                                            ></p>
                                         </div>
                                     </div>
                                     <div class="col-md-3 ">
@@ -125,6 +171,7 @@
                                             <div class="invalid-feedback">
                                                 Ingrese un valor valido.
                                             </div>
+                                            <br>
                                         </div>
                                     </div>
                                 </div>

@@ -1,20 +1,19 @@
 package utez.edu.mx.service.impl;
 
-import jakarta.validation.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 import utez.edu.mx.core.bean.*;
 import utez.edu.mx.core.constants.GeneralConstants;
 import utez.edu.mx.core.exceptions.SigetException;
 import utez.edu.mx.core.util.Utileria;
 import utez.edu.mx.dao.model.*;
 import utez.edu.mx.dao.repository.CitaRepository;
+import utez.edu.mx.dao.repository.ComprobantePagoRepository;
 import utez.edu.mx.dao.repository.DocumentoAnexoRepository;
-import utez.edu.mx.service.CitaService;
-import utez.edu.mx.service.EstadoService;
-import utez.edu.mx.service.PayPalService;
-import utez.edu.mx.service.ServicioService;
+import utez.edu.mx.dao.repository.PagoRepository;
+import utez.edu.mx.service.*;
 
 import java.sql.Timestamp;
 import java.util.*;
@@ -28,14 +27,18 @@ public class CitaServiceImpl implements CitaService {
 
     @Autowired
     private DocumentoAnexoRepository documentoAnexoRepository;
+
+    @Autowired
+    private PagoRepository pagoRepository;
+
+    @Autowired
+    private ComprobantePagoRepository comprobantePagoRepository;
+
     @Autowired
     private UsuarioServiceImpl usuarioServiceImpl;
 
     @Autowired
     private EstadoService estadoService;
-
-    @Autowired
-    private EmpleadoServiceImpl empleadoServiceImpl;
 
     @Autowired
     private EmailServiceImpl emailService;
@@ -46,6 +49,11 @@ public class CitaServiceImpl implements CitaService {
     @Autowired
     private PayPalService payPalService;
 
+    @Autowired
+    private DocumentoService documentoService;
+
+    @Autowired
+    private HorarioService horarioService;
     @Override
     public Cita obtenerCita(Integer id) throws SigetException {
         return citaRepository.findById(id).orElseThrow(() -> new SigetException("Cita no encontrada"));
@@ -53,42 +61,120 @@ public class CitaServiceImpl implements CitaService {
 
     @Override
     @Transactional
-    public void guardar(Cita cita) throws SigetException {
+    public Integer guardar(CitaRegistroBean citaBean) throws SigetException {
 
         try {
-            if (!Utileria.fechaAntes(cita.getFechaCita())) {
-                throw new SigetException("La cita no puede registrarse, por favor seleccione una fecha válida.");
-            }
-            Estado estado = estadoService.obtenerEstadoPorNombreyTipo(
-                    GeneralConstants.ESTADO_CITA_CANCELADA,
-                    GeneralConstants.TIPO_ESTADO_CITA);
 
-            List<Cita> citaEnpalmada = citaRepository.
-                    findAllByFechaCitaAndHoraInicioBetweenOrHoraFinBetweenAndEstadoIsNotAndVentanilla(
-                            cita.getFechaCita(),
-                            cita.getHoraInicio(),
-                            cita.getHoraFin(),
-                            cita.getHoraInicio(),
-                            cita.getHoraFin(),
-                            estado,
-                            cita.getVentanilla());
-            ;
-            if (Utileria.nonEmptyList(citaEnpalmada)) {
-                throw new SigetException("La cita no puede registrarse, por favor ingrese otra fecha disponible.");
+            if (Utileria.isNull(citaBean.getFechaCita())) {
+                throw new SigetException("Seleccione una fecha valida.");
             }
-            //// PENDIENTE ESTATUS PAGO EN PAYPAY y documentos anexos  PARA GUARDAR LA CITA
+
+            if (Utileria.isNull(citaBean.getHoraInicio())) {
+                throw new SigetException("Seleccione un horario valido.");
+            }
+
+            if (Utileria.isNull(citaBean.getIdServicio())) {
+                throw new SigetException("Seleccione un trámite.");
+            }
+
+            Servicio servicio = servicioService.obtenerServicio(citaBean.getIdServicio());
+            boolean conCosto = servicio.getCosto() > 0;
+
+            if (conCosto && Utileria.isNull(citaBean.getComprobantePago())) {
+                throw new SigetException("Ingrese el comprobante de pago.");
+            }
+
+
+            List<DocumentoBean> documentos = documentoService.listarDocumentosPorServicio(citaBean.getIdServicio());
+            if (Utileria.nonEmptyList(documentos)) {
+
+                if (Utileria.isEmptyList(citaBean.getArchivosAnexos())) {
+                    throw new SigetException("Ingrese los documentos solicitados.");
+                }
+
+                if (documentos.size() != citaBean.getArchivosAnexos().size()) {
+                    throw new SigetException("Todos los documentos son requeridos.");
+                }
+
+            }
+
+
+            Timestamp fechaCita = new Timestamp(citaBean.getFechaCita().getTime());
+
+            if (Utileria.fechaAntes(fechaCita)) {
+                throw new SigetException("Seleccione una fecha posterior.");
+            }
+
+
+            String enProceso = GeneralConstants.ESTADO_CITA_PROCESO;
+            String tipoCita = GeneralConstants.TIPO_ESTADO_CITA;
+            Estado estadoEnProceso = estadoService.obtenerEstadoPorNombreyTipo(enProceso, tipoCita);
+
+            Timestamp horaInicio = new Timestamp(citaBean.getHoraInicio().getTime());
+            Timestamp horaFin = Utileria.obtenerHoraFinCita(horaInicio);
+
+
+            Horario horario = horarioService.obtenerHorarioAtencionCita(new CitaBean(fechaCita, horaInicio, horaFin));
+
+            Cita cita = new Cita();
+
+            cita.setFechaCita(fechaCita);
+            cita.setHoraInicio(horaInicio);
+            cita.setHoraFin(horaFin);
             cita.setFechaRegistro(Utileria.getFechaHoraActual());
             cita.setAlumno(usuarioServiceImpl.obtenerAlumnoSesion());
-            Estado estadoPorDefecto = estadoService.
-                    obtenerEstadoPorNombreyTipo(GeneralConstants.ESTADO_CITA_PROCESO,
-                            GeneralConstants.TIPO_ESTADO_CITA);
-            cita.setEstado(estadoPorDefecto);
-            Empleado empleado = empleadoServiceImpl.obtenerEmpleadoConVentanilla(cita);
-            cita.setEmpleado(empleado);
+            cita.setServicio(servicio);
+            cita.setEstado(estadoEnProceso);
+            cita.setEmpleado(horario.getEmpleado());
+            cita.setVentanilla(horario.getVentanilla());
+
             citaRepository.save(cita);
+
+            if (Utileria.nonEmptyList(citaBean.getArchivosAnexos())) {
+                List<DocumentoAnexo> documentoAnexos = new ArrayList<>();
+
+                for (MultipartFile anexoBean : citaBean.getArchivosAnexos()) {
+
+                    Documento documento = documentoService.obtenerPorId(Integer.parseInt(anexoBean.getOriginalFilename()));
+
+                    DocumentoAnexo documentoAnexo = new DocumentoAnexo();
+                    documentoAnexo.setCita(cita);
+                    documentoAnexo.setDocumento(documento);
+                    documentoAnexo.setDocumentoAnexo(anexoBean.getBytes());
+
+                    documentoAnexos.add(documentoAnexo);
+                }
+
+                documentoAnexoRepository.saveAll(documentoAnexos);
+
+            }
+
+
+            String aceptado = GeneralConstants.ESTADO_PAGO_ACEPTADO;
+            String tipoPago = GeneralConstants.TIPO_ESTADO_PAGO;
+            Estado estadoAceptado = estadoService.obtenerEstadoPorNombreyTipo(aceptado, tipoPago);
+
+            if (conCosto) {
+                Pago pago = new Pago();
+                pago.setCita(cita);
+                pago.setMonto(servicio.getCosto());
+                pago.setEstado(estadoAceptado);
+
+                pagoRepository.save(pago);
+
+
+                ComprobantePago comprobantePago = new ComprobantePago();
+                comprobantePago.setPago(pago);
+                comprobantePago.setComprobante(citaBean.getComprobantePago().getBytes());
+                comprobantePagoRepository.save(comprobantePago);
+            }
+
+            return cita.getId();
         } catch (SigetException e) {
+            System.out.println(e.getMessage());
             throw new SigetException(e.getMessage());
         } catch (Exception e) {
+            e.printStackTrace();
             System.err.println(e.getMessage());
             throw new SigetException(Utileria.getErrorNull());
         }
@@ -138,7 +224,7 @@ public class CitaServiceImpl implements CitaService {
 
             // Si la cita fue aceptada o cancelada enviara un correo al alumno informando de la cituación
             String recipient = cita.getAlumno().getPersona().getUsuario().getUsername();
-            if ( nombreNuevoEstado.equals(aceptada) ) {
+            if (nombreNuevoEstado.equals(aceptada)) {
                 Calendar calendar = Calendar.getInstance();
                 calendar.setTime(cita.getFechaCita());
                 // obtener día, mes y año sin horas
@@ -147,11 +233,11 @@ public class CitaServiceImpl implements CitaService {
                 int anio = calendar.get(Calendar.YEAR);
 
                 String fecha = dia + "/" + mes + "/" + anio;
-                String msgBody = "Buen día "+cita.getAlumno().getPersona().getNombre()+" "+cita.getAlumno().getPersona().getPrimerApellido()+" "+cita.getAlumno().getPersona().getSegundoApellido()+", su cita ha sido aceptada para el día , "+fecha+" a la hora : "+ cita.getHoraInicio() +" puede consultar su estado directamente en la pagina SIGET, deberá llegar con 15 minutos de anticipación.";
-                emailService.sendSimpleMail(new EmailDetails( recipient, msgBody, "Cita aceptada"));
-            } else if ( nombreNuevoEstado.equals(cancelada) ) {
-                String msgBody = "Buen día "+cita.getAlumno().getPersona().getNombre()+" "+cita.getAlumno().getPersona().getPrimerApellido()+" "+cita.getAlumno().getPersona().getSegundoApellido()+", su cita ha sido cancelada, para más detalles puede consultar su estado directamente en ventanilla de manera presencial o en la plataforma SIGET.";
-                emailService.sendSimpleMail(new EmailDetails( recipient, msgBody , "Cita cancelada"));
+                String msgBody = "Buen día " + cita.getAlumno().getPersona().getNombre() + " " + cita.getAlumno().getPersona().getPrimerApellido() + " " + cita.getAlumno().getPersona().getSegundoApellido() + ", su cita ha sido aceptada para el día , " + fecha + " a la hora : " + cita.getHoraInicio() + " puede consultar su estado directamente en la pagina SIGET, deberá llegar con 15 minutos de anticipación.";
+                emailService.sendSimpleMail(new EmailDetails(recipient, msgBody, "Cita aceptada"));
+            } else if (nombreNuevoEstado.equals(cancelada)) {
+                String msgBody = "Buen día " + cita.getAlumno().getPersona().getNombre() + " " + cita.getAlumno().getPersona().getPrimerApellido() + " " + cita.getAlumno().getPersona().getSegundoApellido() + ", su cita ha sido cancelada, para más detalles puede consultar su estado directamente en ventanilla de manera presencial o en la plataforma SIGET.";
+                emailService.sendSimpleMail(new EmailDetails(recipient, msgBody, "Cita cancelada"));
             }
 
             cita.setEstado(nuevoEstado);
@@ -197,6 +283,8 @@ public class CitaServiceImpl implements CitaService {
 
                     }
                     citaRepository.save(cita);
+
+                    cita.getEmpleado().setHorarios(null);
                     citasBean.add(Utileria.mapper.map(cita, CitaBean.class));
 
                 }
@@ -214,7 +302,27 @@ public class CitaServiceImpl implements CitaService {
     public CitaBean obtenerInforfmacionCita(Integer id) throws SigetException {
         try {
 
+            Rol rol = usuarioServiceImpl.obtenerRolSesion();
+
+
             Cita cita = obtenerCita(id);
+
+            if(rol.getAuthority().equals(GeneralConstants.ROL_EMPLEADO)){
+
+                Empleado empleado = usuarioServiceImpl.obtenerEmpleadoSesion();
+                if (Utileria.isNull(cita.getEmpleado()) || !Objects.equals(empleado.getId(), cita.getEmpleado().getId())) {
+                    throw new SigetException("Cita no asignada a su usuario");
+                }
+
+            }else if(rol.getAuthority().equals(GeneralConstants.ROL_ALUMNO)){
+
+                Alumno alumno = usuarioServiceImpl.obtenerAlumnoSesion();
+                if (!Objects.equals(alumno.getId(), cita.getAlumno().getId())) {
+                    throw new SigetException("Cita no asignada a su usuario");
+                }
+
+            }
+
 
             CitaBean citaBean = Utileria.mapper.map(cita, CitaBean.class);
 
@@ -227,6 +335,16 @@ public class CitaServiceImpl implements CitaService {
                     citaBean.getDocumentos().add(new DocumentoAnexoBean(documentoAnexo.getId(), documentoBean));
                 }
             }
+
+            Pago pago = pagoRepository.findByCita(cita);
+            if (Utileria.nonNull(pago)) {
+                citaBean.setPago(new PagoBean(pago.getId()));
+            }
+
+            if (Utileria.nonNull(citaBean.getEmpleado())) {
+                citaBean.getEmpleado().setHorarios(null);
+            }
+
 
             return citaBean;
         } catch (SigetException e) {
@@ -307,10 +425,10 @@ public class CitaServiceImpl implements CitaService {
 
     @Override
     public String autorizarPago(Integer idServicio) throws SigetException {
-        try{
+        try {
             Servicio servicio = servicioService.obtenerServicio(idServicio);
             PagoPayPalBean pagoPayPalBean = new PagoPayPalBean(servicio.getNombre(), servicio.getCosto().floatValue());
-            return  payPalService.autorizarPago(pagoPayPalBean);
+            return payPalService.autorizarPago(pagoPayPalBean);
         } catch (SigetException e) {
             throw new SigetException(e.getMessage());
         } catch (Exception e) {
@@ -321,13 +439,66 @@ public class CitaServiceImpl implements CitaService {
 
     @Override
     public void realizarPago(String idPago, String idEmisor) throws SigetException {
-        try{
+        try {
             payPalService.realizarPago(idPago, idEmisor);
         } catch (SigetException e) {
             throw new SigetException(e.getMessage());
         } catch (Exception e) {
             System.err.println(e.getMessage());
             throw new SigetException(Utileria.getErrorNull());
+        }
+    }
+
+    @Override
+    public ArchivoBean obtenerArchivoAnexo(Integer id) throws SigetException {
+        ArchivoBean archivoBean = new ArchivoBean();
+        try {
+
+            DocumentoAnexo documentoAnexo = documentoAnexoRepository.findById(id).orElseThrow(() -> new SigetException("Archivo no encontrado"));
+
+            archivoBean.setNombre(documentoAnexo.getDocumento().getNombre() + GeneralConstants.PDF_FORMATO);
+            archivoBean.setArchivo(documentoAnexo.getDocumentoAnexo());
+
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
+        return archivoBean;
+    }
+
+    @Override
+    public ArchivoBean obtenerComprobantePago(Integer id) throws SigetException {
+        ArchivoBean archivoBean = new ArchivoBean();
+        try {
+
+            Pago pago = pagoRepository.findById(id).orElseThrow(() -> new SigetException("Archivo no encontrado"));
+            ComprobantePago comprobantePago = comprobantePagoRepository.findByPago(pago);
+            archivoBean.setNombre(GeneralConstants.COMPROBANTE_PAGO + GeneralConstants.PDF_FORMATO);
+            archivoBean.setArchivo(comprobantePago.getComprobante());
+
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
+        return archivoBean;
+    }
+
+    @Override
+    public List<CitaBean> listarMisCitas() throws SigetException {
+        try {
+
+            Alumno alumno = usuarioServiceImpl.obtenerAlumnoSesion();
+            List<CitaBean> citaBeans = new ArrayList<>();
+
+            List<Cita> citas = citaRepository.findAllByAlumnoOrderByFechaCitaDesc(alumno);
+
+            for (Cita cita : citas) {
+                citaBeans.add(obtenerInforfmacionCita(cita.getId()));
+            }
+
+            return citaBeans;
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.err.println(e.getMessage());
+            return new ArrayList<>();
         }
     }
 

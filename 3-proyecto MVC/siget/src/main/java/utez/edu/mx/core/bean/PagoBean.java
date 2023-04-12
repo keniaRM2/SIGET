@@ -15,4 +15,10 @@ public class PagoBean {
     private CitaBean cita;
     private EstadoBean estado;
 
+    public PagoBean() {
+    }
+
+    public PagoBean(Integer id) {
+        this.id = id;
+    }
 }

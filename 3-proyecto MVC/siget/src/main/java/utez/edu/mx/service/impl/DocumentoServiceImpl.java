@@ -3,6 +3,7 @@ package utez.edu.mx.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import utez.edu.mx.core.bean.DocumentoBean;
+import utez.edu.mx.core.exceptions.SigetException;
 import utez.edu.mx.core.util.Utileria;
 import utez.edu.mx.dao.model.Documento;
 import utez.edu.mx.dao.model.Servicio;
@@ -29,5 +30,10 @@ public class DocumentoServiceImpl implements DocumentoService {
             System.err.println(e.getMessage());
             return new ArrayList<>();
         }
+    }
+
+    @Override
+    public Documento obtenerPorId(Integer id) throws SigetException {
+        return documentoRepository.findById(id).orElseThrow(()-> new SigetException("Documento no encontrado."));
     }
 }

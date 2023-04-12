@@ -2,8 +2,7 @@ package utez.edu.mx.dao.model;
 
 import jakarta.persistence.*;
 
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.Data;
 
 @Data
@@ -22,7 +21,10 @@ public class Usuario {
     private Long id;
 
     @Size(max = 255)
-    @NotNull
+    @NotEmpty(message = "El correo no puede estar vacío")
+    @NotBlank(message = "El correo no puede contener solo espacios en blanco")
+    @Email(message = "El correo no es válido")
+    @Pattern(regexp = "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$", message = "El correo no es válido")
     @Column(name = "username", nullable = false, length = 255)
     private String username;
 
