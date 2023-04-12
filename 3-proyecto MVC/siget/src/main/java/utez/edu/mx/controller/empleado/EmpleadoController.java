@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -74,28 +76,14 @@ public class EmpleadoController extends BaseController {
     }
 
     @PostMapping(value = PathConstants.GUARDAR_EMPLEADO)
-    public String guardarEmpleado(@Valid @ModelAttribute("empleado")Empleado empleado, BindingResult result, Model model, RedirectAttributes redirectAttributes){
+    public String guardarEmpleado(@Valid @ModelAttribute("empleado")Empleado empleado, BindingResult result,Errors errors,  Model model, RedirectAttributes redirectAttributes){
         try{
-            String regex = "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
+          String regex = "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
+            if (result.hasErrors()) {
+                for (ObjectError error : result.getAllErrors()) {
+                    System.out.println(error.getDefaultMessage());
+                }
 
-            if(empleado.getPersona().getNombre().isBlank() || empleado.getPersona().getNombre().isEmpty()){
-
-                model.addAttribute("errorNombre", "El nombre no puede estar vacio");
-                return VistasConstants.FORMULARIO_EMPLEADO;
-            }
-
-            if (empleado.getPersona().getPrimerApellido().isBlank() || empleado.getPersona().getPrimerApellido().isEmpty()){
-                model.addAttribute("errorApellido", "El apellido paterno no puede estar vacio");
-                return VistasConstants.FORMULARIO_EMPLEADO;
-            }
-
-            if ( empleado.getNumeroEmpleado().isEmpty() || empleado.getNumeroEmpleado().isBlank()){
-                model.addAttribute("errorNumeroEmpleado", "El numero de empleado no puede estar vacio");
-                return VistasConstants.FORMULARIO_EMPLEADO;
-            }
-
-            if ( empleado.getPersona().getUsuario().getUsername().isEmpty() || empleado.getPersona().getUsuario().getUsername().isBlank()) {
-                model.addAttribute("errorUsername", "El nombre de usuario no puede estar vacio");
                 return VistasConstants.FORMULARIO_EMPLEADO;
             }
 
