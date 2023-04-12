@@ -4,8 +4,6 @@
 <head th:replace="~{fragments/bootstrap :: head}"></head>
 
 <body>
-
-
 <div id="siget">
 
     <!-- HEADER, inciio -->
@@ -35,7 +33,7 @@
 
                                     <div class="col-3 text-center fs-4">
                                         <label style="margin-bottom: 5px ">Días</label>
-                                        <select class="form-select" id="dia" name="dia.id"
+                                        <select class="form-select" id="dia" name="dia"
                                                 aria-label="Default select example"
                                                 required>
                                             <option selected="" disabled="" value="">Seleccione...</option>
@@ -49,7 +47,7 @@
 
                                     <div class="col-4 text-center fs-4">
                                         <label style="margin-bottom: 5px " for="horaInicio">Inicio</label>
-                                        <select class="form-select" id="horaInicio" name="horaInicio.id"
+                                        <select class="form-select" id="horaInicio" name="horaInicio"
                                                 aria-label="Default select example"
                                                 required>
                                             <option selected="" disabled="" value="">Seleccione...</option>
@@ -63,7 +61,7 @@
 
                                     <div class="col-3 text-center fs-4">
                                         <label style="margin-bottom: 5px " for="horaFin">Fin</label>
-                                        <select class="form-select" id="horaFin" name="horaFin.id"
+                                        <select class="form-select" id="horaFin" name="horaFin"
                                                 aria-label="Default select example"
                                                 required>
                                             <option selected="" disabled="" value="">Seleccione...</option>
@@ -76,10 +74,11 @@
                                     </div>
 
                                     <div class="col-1 ">
+
                                         <button class="btn btn-link pull-right font-icon" type="button"
                                                 tooltip-animation="false" uib-tooltip="Nuevo"
                                                 tooltip-placement="top"
-                                                ng-click="ctr.cambiarAccion(1)" ng-show="ctr.verAccion(0)">
+                                                onclick="agregarFila()">
                                             <i class="bx bxs-plus-circle text-green-light"></i>
                                         </button>
 
@@ -89,36 +88,8 @@
 
                             <br>
                             <br>
-                            <fieldset id="items">
-                                <div class="row align-middle d-flex justify-content-center mb-4">
-                                    <div class="col-4 " th:each="horario, itemStat : ${nuevoHorarioEmpleado.horario}"
-                                         th:id="${itemStat.index+'inputDocumento'}">
 
-                                        <label th:for="${itemStat.index+'inputDocumento'}"
-                                               th:text="'Documento #'+${(itemStat.index+1)}+'*:'"
-                                               class="form-label m-2">
-                                        </label>
-
-                                        <div class="input-group has-validation">
-                                            <input type="text" class="form-control"
-                                                   aria-describedby="inputGroupPrepend" placeholder="Ingrese..."
-                                                   autocomplete="off" aria-autocomplete="none"
-                                                   th:field="${servicio.documentos[__${itemStat.index}__].nombre}"
-                                                   th:value="${servicio.documentos[__${itemStat.index}__].nombre}"
-                                                   th:maxlength="45" th:required="true"/>
-                                            <div class="invalid-feedback">
-                                                Ingrese un valor valido.
-                                            </div>
-                                            <button class="btn btn-link boton-estatus" type="button" name="removeItem"
-                                                    th:attr="onclick=|removerDocumento('${itemStat.index}')|">
-                                                <i class="bi bi-trash text-danger"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </fieldset>
-                            <!-- Table with stripped rows -->
-                            <table class="table table-striped bdr">
+                            <table class="table table-striped bdr" id="tabla">
                                 <thead class="bg-green-dark">
                                 <tr>
                                     <th class="text-center" scope="col">#</th>
@@ -131,24 +102,21 @@
                                 <tbody>
 
                                 <tr th:each="horario, iter: ${horarios}">
-                                    <td class="text-center align-middle" th:text="${iter.index+1}"/>
+                                 <td class="text-center align-middle" th:text="${iter.index+1}"/>
                                     <td class="text-center align-middle" th:text="${horario.dia.nombre}"/>
-                                    <td class="text-center align-middle"  th:text="${#dates.format(horario.horaInicio, 'HH:mm')}"/>
-                                    <td class="text-center align-middle"  th:text="${#dates.format(horario.horaFin, 'HH:mm')}"/>
+                                    <td class="text-center align-middle"
+                                        th:text="${#dates.format(horario.horaInicio, 'HH:mm')}"/>
+                                    <td class="text-center align-middle"
+                                        th:text="${#dates.format(horario.horaFin, 'HH:mm')}"/>
                                     <td class="text-center">
-                                        <a class="btn btn-link" type="button"
-                                           th:href="@{/horario/editar/{id} (id=${horario.id})}">
-                                            <i class="bi bi-pencil text-warning"></i>
-                                        </a>
-                                        <a class="btn btn-link boton-estatus" type="button"
-                                           th:href="@{/horario/eliminar/{id} (id=${horario.id})}">
-                                            <i class="bi bi-trash text-danger"></i>
-                                        </a>
+
                                     </td>
                                 </tr>
                                 </tbody>
                             </table>
                             <!-- End Table with stripped rows -->
+
+
                         </div>
                     </div>
 
@@ -163,6 +131,6 @@
 </div>
 
 <div th:replace="~{fragments/scrypt :: div}"></div>
-
+<script th:src="@{/assets/js/horario.js}"></script>
 </body>
 </html>
