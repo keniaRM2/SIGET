@@ -26,7 +26,8 @@ public class SpringSecurityConfig {
             PathConstants.NUEVA_CONTRASENA,
             PathConstants.ENVIAR_CAMBIOS,
             PathConstants.VALIDAR_CODIGO_RECUPERAR_CONTRASENA,
-            PathConstants.ENVIAR_CODIGO_RECUPERAR_CONTRASENA
+            PathConstants.ENVIAR_CODIGO_RECUPERAR_CONTRASENA,
+            PathConstants.HISTORIAL_ALUMNO
     };
 
     private static final String[] PATH_SIN_SESION = {

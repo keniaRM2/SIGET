@@ -54,7 +54,6 @@ public class CitaServiceImpl implements CitaService {
 
     @Autowired
     private HorarioService horarioService;
-
     @Override
     public Cita obtenerCita(Integer id) throws SigetException {
         return citaRepository.findById(id).orElseThrow(() -> new SigetException("Cita no encontrada"));

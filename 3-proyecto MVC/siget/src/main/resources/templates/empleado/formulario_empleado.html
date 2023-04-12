@@ -44,26 +44,26 @@
                                 <h5><strong>Información personal </strong></h5>
                                 <hr/>
                                 <br>
-                                <div th:if="${errorNombre}" th:text = "${errorNombre}" class="alert alert-warning alert-dismissible fade show" role="alert">
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div th:if="${errorApellido}" th:text = "${errorApellido}" class="alert alert-warning alert-dismissible fade show" role="alert">
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div th:if="${errorNumeroEmpleado}" th:text = "${errorNumeroEmpleado}" class="alert alert-warning alert-dismissible fade show" role="alert">
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div th:if="${errorUsername}" th:text = "${errorUsername}" class="alert alert-warning alert-dismissible fade show" role="alert">
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
+<!--                                <div th:if="${errorNombre}" th:text = "${errorNombre}" class="alert alert-warning alert-dismissible fade show" role="alert">-->
+<!--                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">-->
+<!--                                        <span aria-hidden="true">&times;</span>-->
+<!--                                    </button>-->
+<!--                                </div>-->
+<!--                                <div th:if="${errorApellido}" th:text = "${errorApellido}" class="alert alert-warning alert-dismissible fade show" role="alert">-->
+<!--                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">-->
+<!--                                        <span aria-hidden="true">&times;</span>-->
+<!--                                    </button>-->
+<!--                                </div>-->
+<!--                                <div th:if="${errorNumeroEmpleado}" th:text = "${errorNumeroEmpleado}" class="alert alert-warning alert-dismissible fade show" role="alert">-->
+<!--                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">-->
+<!--                                        <span aria-hidden="true">&times;</span>-->
+<!--                                    </button>-->
+<!--                                </div>-->
+<!--                                <div th:if="${errorUsername}" th:text = "${errorUsername}" class="alert alert-warning alert-dismissible fade show" role="alert">-->
+<!--                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">-->
+<!--                                        <span aria-hidden="true">&times;</span>-->
+<!--                                    </button>-->
+<!--                                </div>-->
                                 <div th:if="${errorCorreo}" th:text = "${errorCorreo}" class="alert alert-warning alert-dismissible fade show" role="alert">
                                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
@@ -88,7 +88,11 @@
                                                     Ingrese un valor valido.
                                                 </div>
                                                 <br>
-
+                                                <p
+                                                    class="alert alert-danger"
+                                                    th:if="${#fields.hasErrors('persona.nombre')}"
+                                                    th:errors="*{persona.nombre}"
+                                                ></p>
                                             </div>
                                         </div>
 
@@ -106,6 +110,11 @@
                                             <div class="invalid-feedback">
                                                 Ingrese un valor valido.
                                             </div>
+                                            <p
+                                                    class="alert alert-danger"
+                                                    th:if="${#fields.hasErrors('persona.primerApellido')}"
+                                                    th:errors="*{persona.primerApellido}"
+                                            ></p>
                                         </div>
                                     </div>
                                     <div class="col-md-4">
@@ -141,6 +150,11 @@
                                             <div class="invalid-feedback">
                                                 Ingrese un valor valido.
                                             </div>
+                                            <p
+                                                    class="alert alert-danger"
+                                                    th:if="${#fields.hasErrors('numeroEmpleado')}"
+                                                    th:errors="*{numeroEmpleado}"
+                                            ></p>
                                         </div>
                                     </div>
                                     <div class="col-md-3 ">
@@ -157,6 +171,7 @@
                                             <div class="invalid-feedback">
                                                 Ingrese un valor valido.
                                             </div>
+                                            <br>
                                         </div>
                                     </div>
                                 </div>
